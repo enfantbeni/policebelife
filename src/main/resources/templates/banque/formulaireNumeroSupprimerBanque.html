@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title>Formualaire numero suppression Guichet</title>
+</head>
+<body>
+
+		<div class="row " th:fragment="formulaireNumeroSupprimerBanque">
+           
+            <form th:action="@{/resultatSupprimerGuichet}" class="col-md-12 col-xs-12" method="POST">
+             <div class="row labelAjout">
+                  <h2>Supprimer un Guichet par son code Guichet </h2>
+             </div>
+             
+            
+              <input type="hidden" name="idBanque" value=" " />
+              <input type="hidden" name="estSupprimer" />
+              <input type="hidden" name="nomBanque" value=" " />
+              <input type="hidden" name="codeBanque" />
+             
+           
+            
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 np">
+                  	<label> Code Guichet : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="text" name="codeGuichet" value=" " maxlength="5" class="form-control"  autocomplete="off"/>
+             	 </div>           
+             </div>  
+             <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div> 
+             
+                              
+          </form>        
+           
+           
+     </div>
+
+</body>
+</html>

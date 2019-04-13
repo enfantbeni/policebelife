@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Menu navigation</title>
+</head>
+<body>
+        <div class="dropdown outils-bouton" th:fragment="menuNavigation">
+	  	          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" >
+	                  Outils   <span class="caret"></span>
+	              </button>
+	   		<ul class="dropdown-menu menu" >
+						<li><a href="soumission"> Soumission</a></li>
+						<li><a href="#">Consultation LB</a></li>
+						<li><a href="#">Consultation Alpha Inquery</a></li>
+						<li><a href="#">Export EXcel</a></li>				
+	   		</ul>
+         </div> 
+</body>
+</html>

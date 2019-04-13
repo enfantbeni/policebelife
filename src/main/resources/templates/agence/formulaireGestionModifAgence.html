@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Formulaire gestion modification Agence</title>
+</head>
+<body>
+
+		<form th:action="@{/resultatModifAgence}" th:object="${Agence}" class="col-md-12 col-xs-12 formulaireGestionAgence" th:fragment="formulaireGestionModifAgence" method="POST">
+             <div class="row labelAjout">
+                  <h2>Modifier les données d'un Guichet</h2>
+             </div>
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-4 erreur"  th:if="${formErreurAgence}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>                        
+							   <li  th:if="${codeAgenceErreur}" th:utext="${codeAgenceErreur}"> </li>
+							   <li  th:if="${codeDirectErreur}" th:utext="${codeDirectErreur}"> </li>
+							   <li  th:if="${nomDirectErreur}" th:utext="${nomDirectErreur}"> </li>
+							   <li  th:if="${nomDirectExistantErreur}" th:utext="${nomDirectExistantErreur}"> </li>
+							   <li  th:if="${codeDirectExistantErreur}" th:utext="${codeDirectExistantErreur}"> </li>
+							                         	   
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-4"></div>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+              
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Code Agence : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input type="text" name="codeAgence" class="form-control" maxlength="50" data-th-value="${agenceRecherche.codeAgence}" />					
+             	 </div>  
+             	          
+             </div> 
+                
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Code Direct : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input type="text" name="codeDirect" class="form-control" maxlength="50" data-th-value="${agenceRecherche.codeDirect}" />					
+             	 </div>  
+             	          
+             </div> 
+             
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Direct : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input type="text" name="nomDirect" class="form-control" data-th-value="${agenceRecherche.nomDirect}" maxlength="50"/>					
+             	 </div>  
+             	          
+             </div>
+             
+             <input type="hidden" name="estSupprimer" />
+                        
+                     
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>

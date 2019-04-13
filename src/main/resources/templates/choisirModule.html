@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Choix modules</title>
+</head>
+<body>
+
+   <form th:action="@{/ajoutModuleSucces}" class="col-md-12 col-xs-12" th:fragment="formulaireChoisirModule">
+             <div class="row labelAjout">
+                  <h2>Choisir module utilisateur</h2>
+             </div>
+              <div class="row ajoutDonneeModule">
+              
+                
+                 <div class="col-lg-4 col-xs-4 ">
+                  	<label> Gestion utilisateur : <input type="checkbox" name="GestionUtilisateur"/></label>
+             	 </div>
+             	 <div class="col-lg-4 col-xs-4 ">
+                  	<label> Gestion module : <input type="checkbox" name="GestionUtilisateur"/> </label>
+             	 </div>
+             	 <div class="col-lg-4 col-xs-4 role">
+                  	<label> Banques <input type="checkbox" name="GestionUtilisateur"/> </label>
+             	 </div>
+              </div> 	 
+              <div class="row ajoutDonneeModule">	 
+             	 <div class="col-lg-4 col-xs-4 ">
+                  	<label> Gestion Agence : <input type="checkbox" name="GestionUtilisateur"/> </label>
+             	 </div>
+             	 <div class="col-lg-4 col-xs-4 ">
+                  	<label> Gestion Sous agence : <input type="checkbox" name="GestionUtilisateur"/> </label>
+             	 </div>
+             	 <div class="col-lg-4 col-xs-4 role">
+                  	<label> Soumission <input type="checkbox" name="GestionUtilisateur"/> </label>
+             	 </div>
+              </div>	 
+              <div class="row ajoutDonneeModule"> 
+             	 
+             	 <div class="col-lg-4 col-xs-4 ">
+                  	<label> Consultation LB : <input type="checkbox" name="GestionUtilisateur"/> </label>
+             	 </div>
+             	 <div class="col-lg-4 col-xs-4 role">
+                  	<label>Consultation Alpha Inquery<input type="checkbox" name="GestionUtilisateur"/> </label>
+             	 </div>
+             	 <div class="col-lg-4 col-xs-4 role">
+                  	<label>Export EXcel <input type="checkbox" name="GestionUtilisateur"/> </label>
+             	 </div>
+             	
+             	           
+             </div>           
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>

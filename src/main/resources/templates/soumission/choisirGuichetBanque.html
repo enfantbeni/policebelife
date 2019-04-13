@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Choisir Guichet de Banque </title>
+</head>
+<body>
+
+<div  class="row"  th:fragment="choisirGuichetBanque">
+  <div class="col-lg-12">
+  		<div class="row " >
+        	  <div class="col-lg-4"></div>
+	          <div class="col-lg-8 sourceForm"> <h3>Choisir le Guichet de la Banque </h3> </div>        	      	   
+	          <div></div>
+	    </div>
+  
+  </div>
+  
+  <form action="soumissionProposition@@Individuel" th:object="${BanqueDto}" class="col-lg-12 sourceForms" method="POST">
+		       <div class="row sourceForm">						  					  		
+					<div class="col-lg-4 labelSource"> <label> Nom du Guichet : </label></div>								  		 
+				    <div class="col-lg-6 ajoutDonneeUtilisateur">						  
+							<select name="nomGuichet"  required   >                      
+			                         <option  th:each="nomGuichet : ${nomGuichets}" th:value="${nomGuichet}" th:utext="${nomGuichet}"/>
+			                </select>
+					</div>	
+					<div class="col-lg-2"> </div>								  
+				</div> 
+				<div class="row">
+					<div class="col-lg-4"> </div>
+					<div class="col-lg-6 validerSource"><input  type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /></div>			  		 
+					<div class="col-lg-2"> </div>
+				</div>
+  </form>
+
+</div>
+
+</body>
+</html>

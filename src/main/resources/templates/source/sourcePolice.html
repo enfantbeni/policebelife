@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Source de prélèvement</title>
+</head>
+<body>
+	
+	
+	 <div th:fragment="sourcePolice">
+         
+         
+        
+         
+          <div class="row" >
+          	  <div class="col-lg-6"></div>                 
+              <div  th:replace="source/troisBoutonSource :: troisBoutonSource" ></div>      
+          </div>
+          			
+          
+          <div class="row">
+         	<div class="col-lg-2">  </div>
+         	
+         	<div th:if="${ajoutSuccesSource}">
+         		<div  class="col-lg-8 ajoutSucces"  > <h4>Source de prélèvement ajouté avec succès </h4></div>  
+			</div>
+         	
+         	<div class="col-lg-2"></div>
+          </div>
+          
+          
+          
+          <div class="row">
+         	<div class="col-lg-2">  </div>
+         	
+         	<div th:if="${formulaireGestionSource}" >
+         		<div  th:replace="source/formulaireGestionSource :: formulaireGestionSource" ></div>  
+			</div>
+         	
+         	<div class="col-lg-2"></div>
+          </div>
+         
+          
+          <div  th:replace="source/listeSourcePrelevement :: listeSourcePrelevement" ></div> 
+
+     </div>
+	
+
+</body>
+</html>

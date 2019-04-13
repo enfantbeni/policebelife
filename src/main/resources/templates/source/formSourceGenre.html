@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Formulaire source de prélèvement</title>
+</head>
+<body>
+		<form th:action="@{/ajoutUtilisateur}" th:object="${Utilisateur}" class="col-md-12 col-xs-12 formSourceGenre" th:fragment="formSourceGenre" method="POST">
+             <div class="row labelAjout">
+                  <h2>Choisir la nature de la source de prélèvement</h2>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+             
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Soure de prélèvement : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+             	 
+                  	<select id="select" class="form-control" name="source">
+                  	
+						 
+						
+					</select>
+             	 </div>           
+             </div> 
+             
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nature : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<select id="select" class="form-control" name="genrePolice">
+						<option>Individual</option>
+						<option>Groupe</option>
+						
+					</select>
+             	 </div>           
+             </div>  
+             
+            
+             
+                     
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>

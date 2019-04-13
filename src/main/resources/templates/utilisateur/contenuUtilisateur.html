@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Contenu utilisateur</title>
+</head>
+<body>
+
+	<div class="row listeUtilisateur" th:fragment="listeUtilisateur">
+      <div class="col-lg-12" >
+        <div class="row quatre_bt">
+          	 <div class="col-lg-6 liste"></div>
+          	 
+             <div class="col-lg-6 ajouter">
+                                  <a href="formulaireAjoutUtilisateur" class="btn btn-success" role="button" aria-pressed="true">Ajouter</a>
+                                  <a href="numeroModifUtilisateur" class="btn btn-success" role="button" aria-pressed="true">Modifier</a>
+                                  <a href="rechercheUtilisateur" class="btn btn-success" role="button" aria-pressed="true">Rechercher</a>
+                                  <a href="supprimerUtilisateur" class="btn btn-success" role="button" aria-pressed="true">Supprimer</a>                                                              
+             </div>
+             
+        </div>
+            
+      </div>
+      
+      <div class="col-lg-12 ">
+        
+        <div th:if="${actionTroisBouton}">
+          <div class="row resultatAjout">
+          
+              <div class="col-lg-12 formulaireAjout">
+                  
+                   <div  th:if="${formulaireAjoutUtil}">
+		       			<div  th:replace="formulaireAjoutUtilisateur :: formulaireAjoutUtilisateur" ></div>
+		    	   </div>
+		    	   
+		    	   <div  th:if="${formNumeroModifUtil}">
+		       			<div  th:replace="formNumeroModifUtilisateur :: formNumeroModifUtilisateur" ></div>
+		    	   </div>
+		    	   
+		    	   <div  th:if="${formModifDonneeUtil}">
+		       			<div  th:replace="formModifDonneeUtil :: modifDonneeUtilisateur" ></div>
+		    	   </div>
+		    	   
+		    	   <div  th:if="${rechercheUtilisateur}">
+		       			<div  th:replace="rechercheUtilisateur :: rechercheUtilisateur" >
+		       			
+ 		       			</div>
+		    	   </div>
+		    	   
+		    	   <div  th:if="${succesRecherche}">
+		       			<div  th:replace="rechercheUtilisateurResultat :: rechercheUtilisateurResultat" >
+		       			
+ 		       			</div>
+		    	   </div>
+		    	   <div  th:if="${supprimerUtilisateur}">
+		       			<div  th:replace="supprimerUtilisateur :: supprimerUtilisateur" >
+		       			
+ 		       			</div>
+		    	   </div>    
+		    	   
+		    	   <div  th:if="${messageUtilisateurNonRetrouver}">
+		       			<div  >
+		       			    L'utilisateur n'existe dans le système.
+ 		       			</div>
+		    	   </div>
+		    	   
+		    	   <div  th:if="${succesSuppression}">
+		       			<div  >
+		       			     Utilisateur supprimé avec succès
+ 		       			</div>
+		    	   </div>
+		    	     
+		    	   <div  th:if="${succes}">
+		       			<div  th:replace="succesAjoutUtilisateur :: succesAjoutUtilisateur" ></div>
+		    	   </div>  
+		    	   <div  th:if="${choisirRole}" >   	   
+		    	       <div  th:replace="choisirModule :: formulaireChoisirModule" ></div>    	   
+		    	   </div>     
+              </div>
+              
+          </div> 
+        </div> 
+        
+      </div>
+      
+      <div class="col-lg-12">
+              
+      </div>
+      <div  th:if="${afficheTableau}">
+      		<h2>Liste des utilisateurs</h2> 
+		    <div  th:replace="afficheTableauUtilisateur :: afficheTableauUtilisateur" ></div>
+	  </div>  
+      
+ 
+      
+     </div>
+	
+
+</body>
+</html>

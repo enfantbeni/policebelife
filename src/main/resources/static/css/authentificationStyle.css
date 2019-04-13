@@ -1,0 +1,70 @@
+@charset "ISO-8859-1";
+body {
+padding-top: 10px;
+}
+[class*="col-"] , footer {
+background-color: light;
+border: 1px solid none;
+line-height: 10px;
+}
+.img_logo{
+ 	display: inline-block; 
+	padding: 10px;
+
+border: 1px solid #0000ff;
+}	
+#logo{text-align: center; padding-top:10px 10px}
+
+.authentification{display: inline-block; margin:50px 0 50px 0}
+.authentification h1{border:margin: 0px; font-size: 40px; font-weight: bold; text-align:center; color:#b8840b; }
+.messageErreur p{border: 1px solid none; text-align:center; margin-top:0px}
+.messageErreur p span{border: 1px solid black;margin-top:0px}
+.formulaire label{
+	font: 20px Arial Bold, Helvetica, sans-serif;
+	color: #000000;
+	font-weight:bold;
+}
+div.con {
+	text-align:left;
+}
+div.leftAlign{
+	text-align:left;
+}
+div.leftAlign input{
+	width:100%;border: 2px solid black;font: 20px Arial Bold; height:50px;
+}
+div.leftAlign input:focus{
+	border: 2px solid blue;
+}
+input[type="text"],input[type="password"]:focus{
+	background-color:#ffffff;
+}
+.contenuBlanc{Background-color:#ffffff; min-height:580px;}
+section{Background-color:#ffffff}
+form{margin:0px}
+form div{text-align:center}
+.password{margin-top: 40px}
+.pm{text-align:center;}
+.messageErreur p span{font:2em;border: 1px solid black;margin-top:0px}
+.envoi{
+	width: 100px;
+	padding: 8px;
+	height: 50px;
+	color: #fffffff;
+	margin:40px 0 0 0;
+}
+.envoi:hover{
+	width: 100px;
+	padding: 8px;
+	height: 50px;
+	color: #ffa500;
+	background-color:#008000;
+	border:1px solid #008000;
+	
+}
+.mot {text-align:right; font-size: 20px;font-style:italic;padding:20px 20% 20px 0px}
+.contenu{background-color: #ffffff}
+
+
+
+

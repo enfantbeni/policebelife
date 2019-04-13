@@ -1,0 +1,109 @@
+<!DOCTYPE html >
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+ 		<meta charset="UTF-8">
+		<title>Authentification police manager</title>
+		<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+<!-- 		<link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css"/> -->
+		<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/authentificationStyle.css"/>
+		<link rel="stylesheet" type="text/css" href="css/styleCommun.css"/>
+</head>
+<body>	 
+	<div class="container">
+		<header class="row">		
+			 <div class="col-lg-6 col-sm-12 " id="logo"><img class="img_logo" src="images/LOGO-BELIFE.png" alt="logo_belife" /></div>
+			 <div class="col-lg-6 col-sm-12 pm"><span> Police Manager de Belife Insurance</span></div>
+		</header>
+		
+		<div class=" contenuBlanc">
+		<div class="row contenu">
+			<div class="col-lg-12 authentification" ><h1>Authentification</h1></div>
+		</div>	
+		<div class="row contenu">
+			<div class="col-lg-4 " ></div>
+			
+			    <div th:if="${hasError}" >		    
+			  		 <div class="col-lg-4 erreur"   > 
+			  		 	<div class="alert alert-danger">
+                      		Identifiant ou mot de passe invalide
+                    	</div> 
+                     </div>
+			    </div>
+			    <div id="afficheErreur" >		    
+			  		 <div class="col-lg-4 erreur"   > 
+			  		 	<div class="alert alert-danger">
+                      		Identifiant ou mot de passe invalide
+                    	</div> 
+                     </div>
+			    </div>
+			   
+			    
+			<div class="col-lg-4 " ></div>
+		</div>	
+		<section class="row formulaire" >
+
+		    <div class="col-lg-4"></div>
+			<div  class="col-lg-4">
+			<form  th:action="@{/accueil}"  th:object="${Utilisateur}"  method="POST" > 
+			  		<div class="row">
+			  		  <input type="hidden" name="idUtilisateur" value=" " />
+			  		</div>  
+			  		<div class="row">
+			  		  <div class="col-lg-12 leftAlign"> <label> Identifiant :  </label></div>
+			  		  <div class="col-lg-12 leftAlign"><input type="text" name="identifiant" maxlength="20" id="identifiant" value=" " class="form-control" autocomplete="off"/></div>
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="fonction" maxlength=""  />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="nomEtPrenom" maxlength=""  />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="estSupprimer" maxlength=""  />
+			  		</div>
+			  		<div class="row password">
+			  		  <div class="col-lg-12 leftAlign"> <label> Mot de passe :   </label></div>
+			  		  <div class="col-lg-12 leftAlign"><input type="password" required name="password" id="password" maxlength="20" class="form-control" value="" autocomplete="off"/></div>
+			  		</div>
+			  		<div class="row">
+<!-- 			  		 <div class="col-lg-12"><label>bhgvvg</label></div> -->
+			  		 <div class="col-lg-12 con"><input type="submit" required value=" Connexion " onclick="checkAuthentification(); "  class="btn btn-primary pullright envoi" /></div>			  		 
+			  		</div>
+			  </form>
+			  </div>
+			  
+			  <div class="col-lg-4"></div>
+			  
+		</section>	
+		<div class="row contenu">
+			        <div class="col-lg-12 mot"><a href="utilisateurListe" > Mot de passe oublié ?</a></div>	
+		</div>		
+		</div>
+		
+		<footer class="row pied"> </footer>
+	</div>	
+	
+	 
+ 
+  <script src="webjars/bootstrap/3.3.6/js/modal.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular-resource.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular-route.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/controller.js"></script> 
+  <script src="webjars/bootstrap/3.3.6/js/dropdown.js"></script>
+  <script src="js/pmControle.js"></script> 
+  
+ 
+  
+	
+	
+</body>
+  <head>
+  		<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+  		<link rel="stylesheet" type="text/css" href="css/authentificationStyle.css"/>
+		<link rel="stylesheet" type="text/css" href="css/styleCommun.css"/>
+		<script src="js/pmControle.js"></script> 
+  </head>
+</html>

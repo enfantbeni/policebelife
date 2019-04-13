@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta  charset="utf-8">
+<title> Liste Agence </title>
+</head>
+<body>
+
+		<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeAgence">
+	    <h2> Liste des Agences de Belife Insurance </h2>
+		<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Agence </th><th> Code Direct </th> <th> Nom Direct </th> <th> </th></tr>
+					<tr th:each ="agence : ${agences}">  									
+  						<td  width="100" th:utext="${agence.codeAgence}" style="padding-left:10px" ></td> 
+  						<td  width="100" th:utext="${agence.codeDirect}" ></td>					
+  						<td  width="100" th:utext="${agence.nomDirect}" ></td>
+  						<td width="100" >
+  						   <input  class="btn btn-danger supprimer"  data-th-name="${agence.codeDirect}" onclick="supprimer(this);" type="button" value="Supprimer" >                
+  						   <button class="btn btn-primary"  data-th-name="${agence.codeDirect}" onclick="modifier(this);"> Modifier</button>
+  						</td>
+					</tr>					            
+		 </table>
+		 	 
+				 <div th:if="${dialog_boxAgence}">
+					<div id="dialog_boxAgence"  >
+					     
+							 <form th:action="@{/succesSuppressionAgence}" th:object="${Agence}" class="col-md-12 col-xs-12"  method="POST">
+		                           <h4> Voulez-vous supprimer l'agence de code <b  th:utext="${codeDirect}"></b> </h4>
+		                         
+						           <div class="row envoiCancel">
+						           			 
+						           		<input type="hidden" name="idAgence" value=" " />	  
+						           		 <input type="hidden" name="estSupprimer" value=" " />	  
+						           		<input type="hidden" name="codeDirect"   />	 
+						           		<input type="hidden" name="nomDirect"   />	 
+						           			                
+						             	 <div class="col-md-6 col-xs-4 ">
+						                 	<input type="submit" value="Valider" class="btn btn-primary pullright envoi" />				                  	
+						             	 </div>			
+						             	              	 
+						             	 <div class="col-md-6 col-xs-8 cancel">
+						                  	<input class="btn btn-primary pullright cancel" type="button" value="Cancel" onclick="dialog_cancel();">
+						             	 </div>   
+						             	         
+				             	  </div>           
+				          </form>	
+				          
+					</div>
+				 </div>
+				 
+				 
+				 <form id="envoiCacheAgence" th:action="@{/resultatModifDonneeAgence}"  th:object="${Agence}"  method="POST" >			  		
+			  		  <input type="hidden" name="idAgence" value=" " />			  		
+			  		  <input type="hidden"  name="codeAgence"  value=" " />	
+			  		  <input type="hidden"  name="nomDirect"  value=" " />	  		
+			  		  <input type="hidden" name="codeDirect"  id="identifiantSupprAgence" />  		 		
+			  		  <input type="hidden" name="estSupprimer"  />		  				  		
+			     </form>
+			  
+				  <form id="envoiCacheModifAgence" th:action="@{/envoiDonneeCacheeAgence}"  th:object="${Agence}"  method="POST" > 			  		
+				  		  <input type="hidden" name="idAgence" value=" " />			  		  		 
+				  		  <input type="hidden" id="identifiantModifAgence" name="codeDirect" />	  		
+				  		  <input type="hidden" name="nomDirect"   />
+				  		   <input type="hidden" name="codeAgence"   />			  					  		
+				  		  <input type="hidden" name="estSupprimer"  />			  			  					  		
+				  </form>
+		 
+		 
+		 		 <script type="text/javascript">
+		 		 
+				 		function desactiveAfficheFormulaire(){
+							var afficheFormulaire=document.getElementById('dialog_boxAgence');
+							afficheFormulaire.style.display = 'none' ;	
+						}			
+						desactiveAfficheFormulaire();
+		 		 
+				 		function modifier(objet){
+			                var identifiant=objet.name;			                
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objetModif=document.getElementById("identifiantModifAgence");
+				        	objetModif.value=identifiant;
+				        	document.getElementById('envoiCacheModifAgence').submit();	        	
+				        }
+				        
+				        function supprimer(objet){
+		                    var identifiant=objet.name;				
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objetSupprimer=document.getElementById("identifiantSupprAgence");
+				        	 objetSupprimer.value=identifiant;				        	
+				        	document.getElementById('envoiCacheAgence').submit();	
+			       		 }				 		 
+		 		 		
+				 		function dialog_open(){					    	
+			 		    	//Affiche de la zone de fond translucide pour eviter la selection
+			 		    	  //d'objet sur la page d'origine			 		    	  
+			 		    	  var dialog_background = document.getElementById ('dialog_backgroundAgence'); 
+			 		    	  dialog_background.style.display ="block";
+			 		    	  
+			 		    	//affichage de la boite de dialogue
+			 		    	  var dialog_box = document.getElementById('dialog_boxAgence'); 
+			 		    	  dialog_box.style.display ="block";		    	  
+			 		    } 
+				        
+			 		    dialog_open();
+			 		    
+			 		   function dialog_close(){
+				 			  //masque la zone de fond de la boite de dialogue
+				 			  dialog_win = document.getElementById('dialog_backgroundAgence'); 
+				 			  dialog_win.style.display ="none";
+				 			  
+				 			  //masque la boite de dialogue
+				 			  var dialog_box = document.getElementById('dialog_boxAgence'); 
+				 			  dialog_box.style.display ="none";
+				 			 
+				 			  //remet les scrollbarre de la page 
+				 			  document.body.style.overflow='scroll'; 
+				 			}
+				 		   
+				 		  function dialog_cancel(){
+				 			  //fermeture de la boite de dialogue et retour à l'état initial
+				 			  dialog_close();
+				 			}
+		 		 
+		 		 
+		 		 </script>
+		 
+		 </div>
+
+</body>
+</html>

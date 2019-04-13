@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Gestion Guichets</title>
+</head>
+<body>
+
+		<div th:fragment="gestionBanque">
+         
+         
+         
+          <div class="row" >
+          	  <div class="col-lg-6"></div>                 
+              <div  th:replace="banque/troisBoutonBanque :: troisBoutonBanque" ></div>      
+          </div>
+          			
+          <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${ajoutSuccesBanque}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;">Guichet de code <b th:utext="${ajoutSuccesBanque}" > </b> ajoutée avec succès </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${resultatModifBanque}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Guichet de code <b th:utext="${banqueRecherche.codeGuichet}" ></b> modifié avec succès </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${messageBanqueNonExistante}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Guichet de code <b th:utext="${codeGuichet}" ></b> non existant dans le système </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${resultatSuppressionGuichet}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Guichet de code <b th:utext="${codeGuichet}" ></b> supprimé avec succès. </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   	
+
+		<div th:if="${formulaireGestionBanque}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="banque/formulaireGestionBanque :: formulaireGestionBanque" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         <div th:if="${formulaireGestionModifBanque}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="banque/formulaireGestionModifBanque :: formulaireGestionModifBanque" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+          <div th:if="${formulaireNumeroRechercheBanque}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="banque/formulaireNumeroRechercheBanque :: formulaireNumeroRechercheBanque" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${formulaireNumeroModifBanque}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="banque/formulaireNumeroModifBanque :: formulaireNumeroModifBanque" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${formulaireNumeroSupprimerBanque}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="banque/formulaireNumeroSupprimerBanque :: formulaireNumeroSupprimerBanque" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${resultatRechercheGuichet}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="banque/resultatRechercheGuichet :: resultatRechercheGuichet" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+          <div th:if="${listeBanque}" >
+          		<div  th:replace="banque/listeBanque :: listeBanque" ></div> 
+          </div>
+
+     </div>
+
+</body>
+</html>

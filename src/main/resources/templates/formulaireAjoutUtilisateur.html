@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Ajout utilisateur</title>
+</head>
+<body>
+ 
+           <form th:action="@{/ajoutUtilisateur}" th:object="${UtilisateurDto}" class="col-md-12 col-xs-12" th:fragment="formulaireAjoutUtilisateur" method="POST">
+             <div class="row labelAjout">
+                  <h2>Ajouter un utilisateur</h2>
+             </div>
+             
+             <div class="row">
+             <div class="col-lg-4"></div>
+             <div class="col-lg-4 erreur"  th:if="${formErreur}" > 
+			  	 <div class="alert alert-danger">
+
+                     <ul>                        
+						   <li  th:if="${identifiantErreur}" th:utext="${identifiantErreur}"> </li>
+                      	   <li  th:if="${passwordErreur}" th:utext="${passwordErreur}"> </li>
+                           <li  th:if="${nomEtPrenomErreur}" th:utext="${nomEtPrenomErreur}"> </li>
+                           <li  th:if="${fonctionErreur}" th:utext="${fonctionErreur}"> </li>
+                     </ul>
+                     
+                  </div> 
+             </div>
+             <div class="col-lg-4"></div>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+             <input type="hidden" name="estSupprimer" />
+              
+              
+              
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 np">
+                  	<label> Nom et prenom : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="text" required name="nomEtPrenom" value=" " class="form-control" autocomplete="off"/>
+             	 </div>           
+             </div>
+             
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Fonction : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<select id="select" class="form-control" name="fonction" required >
+						<option>Commercial</option>
+						<option>Technicien</option>
+						<option>Secretaire</option>
+						<option>Medecin</option>
+						<option>Chef Agence</option>
+						<option>Chef Sous Agence</option>
+						<option>Employé</option>
+						<option>Administrateur</option>
+					</select>
+             	 </div>           
+             </div>   
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 np">
+                  	<label> Identifiant : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="text" required name="identifiant" value=" " class="form-control"  autocomplete="off"/>
+             	 </div>           
+             </div>
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Mot de passe : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="text" required name="password" value=" " class="form-control" autocomplete="off"/>
+             	 </div>           
+             </div>
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Agence : </label>
+             	 </div>
+             	 
+             	 
+             	 
+             	 <div class="col-md-8 col-xs-8">
+             	 
+                  	<select required name="nomAgence" class="form-control" >                      
+                         		<option  th:each="agence : ${agences}" th:value="${agence}" th:utext="${agence}"/>
+                  	 </select>
+             	   </div> 
+             	 
+             	           
+             </div>
+             
+                     
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Ajouter " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+   
+</body>
+</html>

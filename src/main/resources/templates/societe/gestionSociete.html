@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Gestion SOciete</title>
+</head>
+<body>
+
+		<div th:fragment="gestionSociete">
+         
+         
+          <div class="row" >
+          	  <div class="col-lg-6"></div>                 
+              <div  th:replace="societe/quatreBoutonSociete :: quatreBoutonSociete" ></div>      
+          </div>
+          			
+          <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${ajoutSuccesSociete}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;">Une société ajoutée avec succès </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${resultatModifSociete}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Société  modifiée avec succès </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${messageSocieteNonExistante}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Société de code <b th:utext="${codeSociete}" ></b> non existante dans le système </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${resultatSuppressionSociete}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Société de code <b th:utext="${codeSociete}" ></b> supprimée avec succès. </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   	
+
+		<div th:if="${formulaireGestionSociete}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="societe/formulaireGestionSociete :: formulaireGestionSociete" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         <div th:if="${formulaireGestionModifSociete}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="societe/formulaireGestionModifSociete :: formulaireGestionModifSociete" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+          <div th:if="${formulaireNumeroRechercheSociete}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="societe/formulaireNumeroRechercheSociete :: formulaireNumeroRechercheSociete" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${formulaireNumeroModifSociete}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="societe/formulaireNumeroModifSociete :: formulaireNumeroModifSociete" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${formulaireNumeroSupprimerSociete}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="societe/formulaireNumeroSupprimerSociete :: formulaireNumeroSupprimerSociete" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${resultatRechercheSociete}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="societe/resultatRechercheSociete :: resultatRechercheSociete" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+             
+          <div th:if="${listeSociete}" >
+          		<div  th:replace="societe/listeSociete :: listeSociete" ></div> 
+          		
+          </div>
+
+     </div>
+
+</body>
+</html>

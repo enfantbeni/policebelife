@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+	<title> Contenu accueil utilisateur</title>
+	<link rel="stylesheet" type="text/css" href="css/espaceUtilisateurStyle.css"/>
+</head>
+<body>
+     <div th:fragment="choisirSourcePrelevement">
+         
+         <div class="row" ><div class="col-lg-6"></div><div class="col-lg-6"></div></div>
+        <div class="row"  >
+        	 <div class="col-lg-2"  ></div>  
+        	 <div class="col-lg-8" >
+        	      <div class="row ">
+        	           <div class="col-lg-12 " >
+        	             <div class="row " >
+        	             	<div class="col-lg-2"></div>
+	        	      	    <div class="col-lg-10 sourceForm"> <h3>Choisir la source de prélèvement </h3> </div>
+	        	      	   
+	        	      	    <div></div>
+	        	      	 </div>
+        	      	   </div>
+  	      	   
+        	      	   
+        	      	     
+        	      	   		<form  th:action="@{/soumissionProposition}"  th:object="${SourcePrelevementDto}" class="col-lg-12 sourceForms"  method="POST" > 
+        	      	   				<div class="row">
+        	      	   					<div class="col-lg-4">   </div>
+        	      	   					<div class="col-lg-6"> 
+											
+											<div class=" erreur"  th:if="${erreurConvention}" > 
+											  	 <div class="alert alert-danger">
+								
+								                     <ul>                        
+														   
+														   <li   th:utext="${erreurConvention}"> </li>
+														                         	   
+								                     </ul>
+								                     
+								                  </div> 
+	             							</div>
+<!-- 	             							<div id="afficheErreur" >		     -->
+<!-- 										  		 <div class="col-lg-4 erreur"   >  -->
+<!-- 										  		 	<div class="alert alert-danger"> -->
+<!-- 							                      		Identifiant ou mot de passe invalide -->
+<!-- 							                    	</div>  -->
+<!-- 							                     </div> -->
+<!-- 										    </div> -->
+	             							
+
+										 </div>			
+        	      	   				</div>
+        	      	   				
+<!--         	      	   				<div class="row"> -->
+<!--         	      	   				  <div class="col-lg-4"></div> -->
+<!--         	      	   				  <div class="col-lg-6"> -->
+<!--         	      	   				  		<div id="afficheErreur" >		     -->
+<!-- 										  		 <div class=" erreur"   >  -->
+<!-- 										  		 	<div class="alert alert-danger"> -->
+<!-- 							                      		Identifiant ou mot de passe invalide -->
+<!-- 							                    	</div>  -->
+<!-- 							                     </div> -->
+<!-- 										    </div> -->
+        	      	   				  
+<!--         	      	   				  </div> -->
+<!--         	      	   				  <div class="col-lg-2"></div> -->
+<!--         	      	   				</div> -->
+        	      	   		  
+	        	      	   		   <div class="row" >
+	        	      	   		   		      	   		   		
+	        	      	   		   		  	<div class="col-lg-6 indGroupe">
+	        	      	   		   		  		<div class="row">
+	        	      	   		   		  			<div class="col-lg-8 labelIndividuel" > <label>Individuel</label> </div> 
+	        	      	   		   		  			<div  class="col-lg-4 genreConvInd" ><input required type="radio" name="genreConvention" value="individuel"  th:checked="${checkedIndividuel}"   id="individuel" onclick="choisirGenre(this);" ></div>
+	        	      	   		   		  		</div>
+	        	      	   		   		  	</div>
+	        	      	   		   		  	
+	        	      	   		   		  	<div class="col-lg-6 indGroupe">
+	        	      	   		   		  		<div class="row">
+	        	      	   		   		  			<div class="col-lg-6 labelGroupe" style="text-align:right" > <label>Groupe</label>  </div> 
+	        	      	   		   		  			<div  class="col-lg-6 genreConv"><input required type="radio"  name="genreConvention" value="groupe" th:checked="${checkedGroupe}" id="groupe" onclick="choisirGenre(this);"></div>
+	        	      	   		   		  		</div>
+	        	      	   		   		  	</div>        	      	   		   		
+	        	      	   		   </div>
+	        	      	   		
+	        	      	   		 <div th:if="${nomBanquePrincipales}" >   
+		        	      	   		   <div class="row sourceForm">
+								  					  		
+								  		  <div class="col-lg-4 labelSource"> <label> Nom de la Banque : </label></div>
+								  		 
+									  		  <div class="col-lg-8 ajoutDonneeUtilisateur">						  
+													  <select name="nomSource" id="nomBanquee" required   >                      
+			                         						<option  th:each="nomBanque : ${nomBanques}" th:value="${nomBanque}" th:utext="${nomBanque}"/>
+			                  	 					  </select>
+											  </div>
+										  
+								  		</div>
+								  		
+
+        	      	   		   	 </div>
+						  		
+						  		
+						  		 <div th:if="${nomSociete}">	
+								  		<div class="row sourceForm">
+								  						  		 								
+								  		  	<div class="col-lg-4 labelSource"> <label> Nom Société : </label></div>
+								  		  
+									  		  <div class="col-lg-8 ajoutDonneeUtilisateur">						  
+													  <select name="nomSource" id="nomSource" required>                      
+			                         						<option  th:each="nomSource : ${nomSources}" th:value="${nomSource}" th:utext="${nomSource}"/>
+			                  	 					  </select>
+											  </div>				  
+								  		</div>
+						  		</div> 
+						  		<div class="row">
+						  			<div class="col-lg-4"> </div>
+						  		 	<div class="col-lg-8 validerSource"><input  type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /></div>			  		 
+						  		</div>
+			 				 </form>
+			 				 
+			 				 <form id="envoiCacheGenre" th:action="@{/envoiCacheGenre}"  th:object="${SourcePrelevementDto}"  method="POST" >			  							  		    		
+						  		  <input type="hidden" name="nomSource"  id="identifiantGenre" />  
+						  		  <input type="hidden" name="genreConvention"  id="genreConvention" /> 		 								  				  		
+			     			 </form>
+        	      	   
+        	      	  
+        	      	   
+        	      </div>     	 
+        	 </div>
+        	 <div class="col-lg-2"></div>
+        </div>
+        
+                <script type="text/javascript">		
+                
+				 		function choisirGenre(objet){
+				            var identifiant=objet.id;
+				            var valeur=objet.value;
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objet=document.getElementById("identifiantGenre");
+				        	var objet2=document.getElementById("genreConvention");
+				        	objet.value=identifiant;
+				        	objet2.value=valeur;
+					        document.getElementById('envoiCacheGenre').submit();						
+				        }  
+				 						 		
+				 		
+				 		function cache(){
+				 			var erreur=document.getElementById('afficheErreur') ;
+				 			erreur.style.display = 'none' ;	
+				 		}
+				 		cache();
+				 		
+				 		
+				 		
+				 		function choisirNatureConvention(){
+				 			var objetNomSource=document.getElementById('nomSource') ;
+				 			var afficheErreur=document.getElementById('afficheErreur') ;
+				 			var valeurNomSource=objetNomSource.value;	
+				 			if(valeurNomSource == '' ){
+	 				 				afficheErreur.style.display = 'inline-block' ;	
+	 				 				return false;
+					 				
+	 				 			}	
+				 			else{
+				 				return true; 
+				 			}
+				 		}
+		 		
+				 		
+				 		
+				 		
+				 		
+				 		
+				 		
+                 </script>
+         
+            
+     </div>
+    
+     
+</body>
+
+</html>

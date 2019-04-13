@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeSourcePrelevement">
+	    <h2> Liste des sources de prélèvement</h2>
+		<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
+                    <tr class="entete-tableau"><th  style="padding-left:10px" > Source prélèvement </th><th> Nature </th><th> </th></tr>
+					<tr th:each ="sourcePolice : ${sourcePolices}">  						
+  						<td style="padding-left:10px" width="100" th:utext="${sourcePolice.source}" >....</td>
+  						<td  width="100" th:utext="${sourcePolice.genrePolice}" ></td>
+  						
+  						<td width="100" >
+  						   <input  class="btn btn-danger supprimer"  data-th-name="${sourcePolice.source}" onclick="supprimer(this);" type="button" value="Supprimer" >                
+  						   <button class="btn btn-primary"  data-th-name="${sourcePolice.source}" onclick="modifier(this);"> Modifier</button>
+  						</td>
+					</tr>					
+
+             
+			</table>
+	</div>
+</body>
+</html>

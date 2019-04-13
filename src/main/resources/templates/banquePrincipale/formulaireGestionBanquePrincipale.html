@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Formulaire gestion Banque Principale</title>
+</head>
+<body>
+
+		<form th:action="@{/resultatAjoutBanquePrincipale}" th:object="${BanquePrincipale}" class="col-md-8 col-xs-12 formulaireGestionBanquePrincipale" th:fragment="formulaireGestionBanquePrincipale" method="POST">
+             <div class="row labelAjout">
+                  <h2>Ajouter une Banque </h2>
+             </div>
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-6 erreur"  th:if="${formErreurBanquePrincipale}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>                        
+							   <li  th:if="${nomBanquePrincipaleErreur}" th:utext="${nomBanquePrincipaleErreur}"> </li>
+							   <li  th:if="${codeBanquePrincipaleErreur}" th:utext="${codeBanquePrincipaleErreur}"> </li>
+							 
+							                         	   
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-2"></div>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+              
+                
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Banque : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input required type="text" name="nomBanque" class="form-control" maxlength="50" />					
+             	 </div>  
+             	          
+             </div> 
+             
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Code Banque : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input required type="text" name="codeBanque" class="form-control" maxlength="10"/>					
+             	 </div>  
+             	          
+             </div>
+             
+             <input type="hidden" name="estSupprimer" />
+               
+                     
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>

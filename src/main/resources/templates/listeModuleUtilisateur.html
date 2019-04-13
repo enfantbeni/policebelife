@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title> Liste modules des utilisateurs </title>
+</head>
+<body>
+   
+   <div class="row " th:fragment="listeModuleUtilisateur">
+	 <div class="row chemin">  </div>
+	 
+	 
+	  
+	      <div class="col-lg-12"> Chemin</div>
+	      <div class="col-lg-12"> 
+	        <div class="row" >   
+	             <div class="col-lg-4 listeModule" > <a href="modulesUtilisateur" title=" Choisir modules des utilisateurs"> Choisir modules des utilisateurs </a> </div>
+	             <div class="col-lg-4 moduleUtilisateur" >        <h2> Liste des modules</h2> </div>
+	             <div class="col-lg-4" > </div>          
+	        </div>               
+	      </div>
+	      <div class="col-lg-12">
+		          <div class="row">
+	          
+	             <div class="col-lg-2"></div>
+	             <div class="col-lg-8" >
+	             
+	                <div class="row">
+	                  
+	                   <div class="col-lg-2">
+	                   
+	                        
+	                   
+	                   
+	                   </div >
+	                   <div class="col-lg-8">
+	                 
+	                    <div class="row idNomPrenom">
+	                    
+	                        <table width="100%" border="0" cellspacing="1" cellpadding="2">
+			                    <tr class="entete-tableau"><th>   Numero</th><th> Module </th></tr>
+								<tr th:each ="role : ${roles}">
+			  						<td width="50" > <a th:utext="${role.numeroModule}" ></a></td>
+			  						<td width="100" > <a class=" nomPrenom" th:utext="${role.titreModule}" > </a></td>		  						
+								</tr>				
+			  				</table>
+	                            
+	                    </div>
+	                 
+	                   
+	                   </div>
+	                   <div class="col-lg-2">
+	                   
+	                   
+	                   </div>
+	                 
+	                
+	                </div>
+	                
+					 	 
+					 	 
+					 	                          	                            
+	             </div>
+	             
+	             <div class="col-lg-2"></div>
+	             
+	          
+	         </div>
+	        </div>
+	         
+	      
+	      <div class="col-lg-12"></div>
+	 
+	  
+	                    	
+   
+   
+   
+   </div>
+   
+   
+
+</body>
+</html>

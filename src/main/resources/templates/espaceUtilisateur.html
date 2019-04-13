@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+
+    
+
+<html  xmlns:th="http://www.thymeleaf.org" lang="en" data-ng-app="app" class="no-js">
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Espace utilisateur</title>
+    <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	<script src="webjars/bootstrap/3.3.6/js/modal.js"></script>
+	<script src="webjars/bootstrap/3.3.6/js/dropdown.js"></script>
+	<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/styleCommun.css"/>
+	<link rel="stylesheet" type="text/css" href="css/espaceUtilisateurStyle.css"/>
+	<link rel="stylesheet" type="text/css" href="css/navigationOutils.css"/>
+	<link rel="stylesheet" type="text/css" href="css/popup.css"/>
+	<link rel="stylesheet" type="text/css" href="css/popupBanque.css"/>
+	<script src="/webjars/angularjs/1.4.9/angular.js"></script>
+	<script src="/webjars/angularjs/1.4.9/angular-resource.js"></script>
+	<script src="/webjars/angularjs/1.4.9/angular-route.js"></script>
+	<script src="js/app.js"></script>
+    <script src="js/controller.js"></script> 
+</head>
+<body>
+		
+			
+<div class="container">
+
+<!-- 	<!-- Boite de dialogue de confirmation    --> 
+	<div th:if="${dialog_background}">
+		<div id="dialog_background" > 
+				
+		</div>
+    </div>
+    <div th:if="${dialog_backgroundBanque}">
+		<div id="dialog_backgroundBanque" > 
+				
+		</div>
+    </div>
+    <div th:if="${dialog_backgroundAgence}">
+		<div id="dialog_backgroundAgence" > 
+				
+		</div>
+    </div>
+    <div th:if="${dialog_backgroundAgent}">
+		<div id="dialog_backgroundAgent" > 
+				
+		</div>
+    </div>
+    <div th:if="${dialog_backgroundSociete}">
+		<div id="dialog_backgroundSociete" > 
+				
+		</div>
+    </div>
+    <div th:if="${dialog_backgroundBanquePrincipale}">
+		<div id="dialog_backgroundBanquePrincipale" > 
+				
+		</div>
+    </div>
+			    
+    <div th:replace="header :: header"></div>		
+	        
+	<div class="row" id="contenuMain">	           		
+		  <section class="col-lg-12 sectionSidebar">	
+		 		  
+				     <div th:replace="sidebar :: sidebar"></div>
+				     
+				     <div th:replace="utilisateur/chemin :: chemin"></div> 
+				     <div th:replace="utilisateur/titre :: titre"></div>
+				     
+				     
+				     <div th:if="${gestionBanquePrincipale}">
+				       <div  th:replace="banquePrincipale/gestionBanquePrincipale :: gestionBanquePrincipale" ></div> 
+				     </div> 
+				     
+				     <div th:if="${listeBanquePrincipale}">
+				         <div  th:replace="banquePrincipale/listeBanquePrincipale ::listeBanquePrincipale" ></div> 
+				     </div>	 
+					      			    
+				     <div th:if="${modules}">
+				       <div  th:replace="utilisateur/modules :: modulesUtiilisateur" ></div> 
+				     </div>
+				     
+				     <div th:if="${listeModule}">
+				       <div  th:replace="listeModuleUtilisateur :: listeModuleUtilisateur" ></div> 
+				     </div>
+				     
+				     <div th:if="${listeUtilisateur}">
+				         <div  th:replace="listeUtilisateur :: listeUtilisateur" ></div> 
+				     </div>	
+				     
+				     <div th:if="${sourcePolice}">
+				         <div  th:replace="source/sourcePolice :: sourcePolice" ></div> 
+				     </div>
+				     
+				     <div th:if="${gestionBanque}">
+				         <div  th:replace="banque/gestionBanque :: gestionBanque" ></div> 
+				     </div>	
+				     
+				     <div th:if="${gestionAgence}">
+				         <div  th:replace="agence/gestionAgence :: gestionAgence" ></div> 
+				     </div>	
+				      <div th:if="${gestionAgent}">
+				         <div  th:replace="agent/gestionAgent :: gestionAgent" ></div> 
+				     </div>	
+				     <div th:if="${gestionSociete}">
+				         <div  th:replace="societe/gestionSociete :: gestionSociete" ></div> 
+				     </div>	
+				     	      
+		  </section> 		  		  
+	 </div>
+	
+	 <div th:replace="footer :: footer"></div>
+	
+</div>
+  
+  <SCRIPT type="JavaScript">
+		history.forward();
+  </SCRIPT>  
+
+  <script src="webjars/bootstrap/3.3.6/js/modal.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular-resource.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular-route.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/controller.js"></script> 
+  <script src="webjars/bootstrap/3.3.6/js/dropdown.js"></script>
+  
+</body>
+
+<head>
+	
+	<link rel="stylesheet" type="text/css" href="css/popup.css"/>
+	
+</head>
+</html>

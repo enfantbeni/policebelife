@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Formulaire recherche Agence </title>
+</head>
+<body>
+		<div class="row " th:fragment="formulaireNumeroRechercheAgence">
+           
+            <form th:action="@{/resultatRechercheAgence}" class="col-md-12 col-xs-12" method="POST">
+             <div class="row labelAjout">
+                  <h2>Rechercher une Agence par son code</h2>
+             </div>
+             
+            
+              <input type="hidden" name="idAgence" value=" " />
+              <input type="hidden" name="estSupprimer" />
+              <input type="hidden" name="nomDirect" value=" " />
+              <input type="hidden" name="codeAgence" value=" " />
+            
+            
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 np">
+                  	<label> Code Direct : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="text" name="codeDirect" value=" " maxlength="10" class="form-control"  autocomplete="off"/>
+             	 </div>           
+             </div>  
+             <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div> 
+             
+                              
+          </form>        
+           
+           
+     </div>
+
+</body>
+</html>

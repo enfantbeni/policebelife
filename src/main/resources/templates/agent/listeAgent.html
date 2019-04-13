@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+		<title>Liste Agents</title>
+		<link rel="stylesheet" type="text/css" href="css/popup.css"/>
+</head>
+<body>
+
+		<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeAgent">
+	    <h2> Liste des Agents </h2>
+		<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Agent </th><th> Nom Direct</th><th  > Nom Agent </th><th> </th></tr>
+					<tr th:each ="agentDto : ${agentDtos}">  									
+  						<td  width="100" th:utext="${agentDto.codeAgent}" style="padding-left:10px" ></td>
+  						<td  width="100" th:utext="${agentDto.nomAgence}" ></td>
+  						<td  width="100" th:utext="${agentDto.nomAgent}" ></td>
+  						<td width="100" >
+  						   <input  class="btn btn-danger supprimer"  data-th-name="${agentDto.codeAgent}" onclick="supprimer(this);" type="button" value="Supprimer" >                
+  						   <button class="btn btn-primary"  data-th-name="${agentDto.codeAgent}" onclick="modifier(this);"> Modifier</button>
+  						</td>
+					</tr>					            
+		 </table>
+		 	 
+				 <div th:if="${dialog_boxAgent}">
+					<div id="dialog_boxAgent" style=" ">
+					     
+							 <form th:action="@{/succesSuppressionAgent}" th:object="${Agent}" class="col-md-12 col-xs-12"  method="POST">
+							 
+		                           <h4> Voulez-vous supprimer le Guichet de matricule <b  th:utext="${codeAgent}"></b> </h4>
+		                         
+						           <div class="row envoiCancel">
+						           			 
+						           		<input type="hidden" name="id" value=" " />	  
+						           		 <input type="hidden" name="estSupprimer" value=" " />	  
+						           		<input type="hidden" name="codeAgent"   />	  
+						           			                
+						             	 <div class="col-md-6 col-xs-4 ">
+						                 	<input type="submit" value="Valider" class="btn btn-primary pullright envoi" />				                  	
+						             	 </div>			
+						             	              	 
+						             	 <div class="col-md-6 col-xs-8 cancel">
+						                  	<input class="btn btn-primary pullright cancel" type="button" value="Cancel" onclick="dialog_cancel();">
+						             	 </div>   
+						             	         
+				             	  </div>           
+				          	</form>	
+				          
+					</div>
+				 </div>
+				 
+				 
+				 <form id="envoiCacheAgent" th:action="@{/resultatModifDonneeAgent}"  th:object="${Agent}"  method="POST" >
+			 
+			  		<div class="row">
+			  		  <input type="hidden" name="idAgent" value=" " />
+			  		</div>  
+			  		<div class="row">
+			  		 
+			  		  <div class="col-lg-12 leftAlign"><input type="hidden"  name="nomAgent"  value=" " class="form-control" autocomplete="off"/></div>
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="nomAgent"   />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="nomDirect"   />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="codeAgent" id="identifiantSupprAgent" />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="estSupprimer"  />
+			  		</div>
+			  				  		
+			  </form>
+			  
+			  <form id="envoiCacheModifAgent" th:action="@{/envoiDonneeCacheeAgent}"  th:object="${Agent}"  method="POST" > 
+			  		<div class="row">
+			  		  <input type="hidden" name="idAgent" value=" " />
+			  		</div>  
+			  		<div class="row">	  		 
+			  		  <div class="col-lg-12 leftAlign"><input type="hidden" id="identifiantModifAgent" name="codeAgent" /></div>
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="nomAgent"   />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="nomDirect"   />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="estSupprimer"  />
+			  		</div>		  					  		
+			  </form>
+		 
+		 
+		 		 <script type="text/javascript">
+		 		 
+				 		function desactiveAfficheFormulaire(){
+							var afficheFormulaire=document.getElementById('dialog_boxAgent');
+							afficheFormulaire.style.display = 'none' ;	
+						}			
+						desactiveAfficheFormulaire();
+		 		 
+				 		function modifier(objet){
+			                var identifiant=objet.name;			                
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objetModif=document.getElementById("identifiantModifAgent");
+				        	objetModif.value=identifiant;
+				        	document.getElementById('envoiCacheModifAgent').submit();	        		        	
+				        }
+				        
+				        function supprimer(objet){
+		                    var identifiant=objet.name;				
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objetSupprimer=document.getElementById("identifiantSupprAgent");
+				        	 objetSupprimer.value=identifiant;				        	
+				        	document.getElementById('envoiCacheAgent').submit();	        		        	
+			       		 }				 		 
+		 		 		
+				 		function dialog_open(){					    	
+			 		    	//Affiche de la zone de fond translucide pour eviter la selection
+			 		    	  //d'objet sur la page d'origine			 		    	  
+			 		    	  var dialog_background = document.getElementById ('dialog_backgroundAgent'); 
+			 		    	  dialog_background.style.display ="block";
+			 		    	  
+			 		    	//affichage de la boite de dialogue
+			 		    	  var dialog_box = document.getElementById('dialog_boxAgent'); 
+			 		    	  dialog_box.style.display ="block";		    	  
+			 		    } 
+				        
+			 		    dialog_open();
+			 		    
+			 		   function dialog_close(){
+				 			  //masque la zone de fond de la boite de dialogue
+				 			  dialog_win = document.getElementById('dialog_backgroundAgent'); 
+				 			  dialog_win.style.display ="none";
+				 			  
+				 			  //masque la boite de dialogue
+				 			  var dialog_box = document.getElementById('dialog_boxAgent'); 
+				 			  dialog_box.style.display ="none";
+				 			 
+				 			  //remet les scrollbarre de la page 
+				 			  document.body.style.overflow='scroll'; 
+				 			}
+				 		   
+				 		  function dialog_cancel(){
+				 			  //fermeture de la boite de dialogue et retour à l'état initial
+				 			  dialog_close();
+				 			}
+		 		 
+		 		 
+		 		 </script>
+		 
+		 </div>
+
+
+
+</body>
+
+</html>

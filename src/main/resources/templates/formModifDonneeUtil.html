@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+    <div class="row " th:fragment="formModifDonneeUtil">
+           
+            <form th:action="@{/resultatModif}" th:object="${Utilisateur}" class="col-md-12 col-xs-12" th:fragment="modifDonneeUtilisateur" method="POST">
+             
+             <div class="row labelAjout">
+                  <h2>Modifier données utilisateur</h2>
+             </div>
+             
+             <div class="row">
+             <div class="col-lg-4"></div>
+             <div class="col-lg-4 erreur"  th:if="${formErreur}" > 
+			  	 <div class="alert alert-danger">
+
+                     <ul>                        					            
+                           <li  th:if="${nomEtPrenomErreur}" th:utext="${nomEtPrenomErreur}"> </li>
+                           <li  th:if="${identifiantErreur}" th:utext="${identifiantErreur}"> </li>       
+                           <li  th:if="${fonctionErreur}" th:utext="${fonctionErreur}"> </li>
+                     </ul>
+                     
+                  </div> 
+             </div>
+             <div class="col-lg-4"></div>
+             </div>
+             
+            
+              <input type="hidden" name="id" value=" " />
+              <input type="hidden" name="estSupprimer" />
+              <input type="hidden" name="password" />
+              
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 np">
+                  	<label> Nom et prenom : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="text" name="nomEtPrenom" data-th-value="${utilisateurRecherche.nomEtPrenom}"  class="form-control"  autocomplete="off"/>
+             	 </div>           
+             </div> 
+              
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4">
+                  	<label> Fonction : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<select id="select" class="form-control" name="fonction" data-th-value="${utilisateurRecherche.fonction}" > 
+						<option>Commercial</option>
+						<option>Technicien</option>
+						<option>Secretaire</option>
+						<option>Medecin</option>
+					</select>
+             	 </div>           
+             </div> 
+           
+            
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 np">
+                  	<label> Identifiant : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="text" name="identifiant" data-th-value="${utilisateurRecherche.identifiant}" class="form-control"  autocomplete="off"/>
+             	 </div>           
+             </div>  
+             
+             <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div> 
+             
+                              
+          </form>        
+           
+           
+     </div>
+
+</body>
+</html>

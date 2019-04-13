@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Formulaire de modification des données d'un guichet</title>
+</head>
+<body>
+
+		<form th:action="@{/resultatModifBanque}" th:object="${Banque}" class="col-md-12 col-xs-12 formulaireGestionBanque" th:fragment="formulaireGestionModifBanque" method="POST">
+             <div class="row labelAjout">
+                  <h2>Modifier les données d'un Guichet</h2>
+             </div>
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-4 erreur"  th:if="${formErreurBanque}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>                        
+							   <li  th:if="${nomGuichetErreur}" th:utext="${nomGuichetErreur}"> </li>
+							   <li  th:if="${codeGuichetErreur}" th:utext="${codeGuichetErreur}"> </li>
+							                         	   
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-4"></div>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+              
+                
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Code Guichet : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input type="text" name="codeGuichet" class="form-control" maxlength="50" data-th-value="${banqueRecherche.codeGuichet}" />					
+             	 </div>  
+             	          
+             </div> 
+             
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Guichet : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input type="text" name="nomGuichet" class="form-control" data-th-value="${banqueRecherche.nomGuichet}" maxlength="50"/>					
+             	 </div>  
+             	          
+             </div>
+             
+             <input type="hidden" name="estSupprimer" />
+               
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Banque : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	 <select name="nomBanque" id="nomBanquee" required class="form-control">                      
+                         <option  th:each="nomBanquePrincipale : ${nomBanquePrincipales}" th:value="${nomBanquePrincipale}" th:utext="${nomBanquePrincipale}"/>
+                  	</select>	
+             	 </div>           
+             </div>
+             
+            
+             
+                     
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>

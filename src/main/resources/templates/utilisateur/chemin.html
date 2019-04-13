@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Chemin page</title>
+</head>
+<body>
+	<div class="row chemin" th:fragment="chemin">
+	
+		<div class="col-lg-10">
+		
+		 <div class="contenuChemin"><img alt="acceuil" width=30 height=30 src="images/accueil.jpg"> </div>
+		 <div class="contenuChemin" th:if="${cheminAccueil}"> <div  th:utext="${cheminAccueil}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminGestionBanque}"> <div  th:utext="${cheminGestionBanque}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminAjouterBanque}"> <div  th:utext="${cheminAjouterBanque}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminModifierBanque}"> <div  th:utext="${cheminModifierBanque}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminRechercherBanque}"> <div  th:utext="${cheminRechercherBanque}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminSupprimerBanque}"> <div  th:utext="${cheminSupprimerBanque}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminBanqueNonExistante}"> <div  th:utext="${cheminBanqueNonExistante}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminGestionUtilisateur}"> <div  th:utext="${cheminGestionUtilisateur}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminAjouterUtilisateur}"> <div  th:utext="${cheminAjouterUtilisateur}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminModifierUtilisateur}"> <div  th:utext="${cheminModifierUtilisateur}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminRechercherUtilisateur}"> <div  th:utext="${cheminRechercherUtilisateur}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminSupprimerUtilisateur}"> <div  th:utext="${cheminSupprimerUtilisateur}" >chemin </div></div>
+		 
+		 <div class="contenuChemin" th:if="${cheminGestionGuichet}"> <div  th:utext="${cheminGestionGuichet}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminAjouterGuichet}"> <div  th:utext="${cheminAjouterGuichet}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminModifierGuichet}"> <div  th:utext="${cheminModifierGuichet}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminRechercherGuichet}"> <div  th:utext="${cheminRechercherGuichet}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminSupprimerGuichet}"> <div  th:utext="${cheminSupprimerGuichet}" >chemin </div></div>
+		 
+		  <div class="contenuChemin" th:if="${cheminGestionAgence}"> <div  th:utext="${cheminGestionAgence}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminAjouterAgence}"> <div  th:utext="${cheminAjouterAgence}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminModifierAgence}"> <div  th:utext="${cheminModifierAgence}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminRechercherAgence}"> <div  th:utext="${cheminRechercherAgence}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminSupprimerAgence}"> <div  th:utext="${cheminSupprimerAgence}" >chemin </div></div>
+		 
+		 <div class="contenuChemin" th:if="${cheminGestionAgent}"> <div  th:utext="${cheminGestionAgent}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminAjouterAgent}"> <div  th:utext="${cheminAjouterAgent}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminModifierAgent}"> <div  th:utext="${cheminModifierAgent}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminRechercherAgent}"> <div  th:utext="${cheminRechercherAgent}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminSupprimerAgent}"> <div  th:utext="${cheminSupprimerAgent}" >chemin </div></div>
+		 
+		 <div class="contenuChemin" th:if="${cheminGestionSociete}"> <div  th:utext="${cheminGestionSociete}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminAjouterSociete}"> <div  th:utext="${cheminAjouterSociete}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminModifierSociete}"> <div  th:utext="${cheminModifierSociete}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminRechercherSociete}"> <div  th:utext="${cheminRechercherSociete}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminSupprimerSociete}"> <div  th:utext="${cheminSupprimerSociete}" >chemin </div></div>
+		 
+		 <div class="contenuChemin" th:if="${listeAgentsDansAgence}"> <div  th:utext="${listeAgentsDansAgence}" >chemin </div></div>
+		 
+		 
+		 
+		 
+		 <div class="contenuChemin" > <div  th:utext="${cheminSoumission}" >chemin </div></div>
+		 <div class="contenuChemin" ><div th:utext="${cheminConsultationLB}" >chemin </div></div>
+		 
+		 
+		
+		</div>
+	    
+	    
+	    <div class="col-lg-2 jourDate"> 
+	    		
+	    		<script>
+	    		
+	    		function date(){
+	    			   var m = "AM";
+	    			   var gd = new Date();
+	    			   var secs = gd.getSeconds();
+	    			   var minutes = gd.getMinutes();
+	    			   var hours = gd.getHours();
+	    			   var day = gd.getDay();
+	    			   var month = gd.getMonth();
+	    			   var date = gd.getDate();
+	    			   var year = gd.getYear();
+
+	    			   if(year<1000){
+	    			     year += 1900;
+	    			   }
+	    			   if(hours==0){
+	    			     hours = 12;
+	    			   }
+	    			   if(hours>12){
+	    			     hours = hours - 12;
+	    			     m = "PM";
+	    			   }
+	    			   if(secs<10){
+	    			     secs = "0"+secs;
+	    			   }
+	    			   if(minutes<10){
+	    			     minutes = "0"+minutes;
+	    			   }
+
+	    			   var dayarray = new Array ("Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi");
+	    			   var montharray = new Array ("Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre");
+
+	    			   var fulldate = dayarray[day]+", "+date+" "+montharray[month]+" "+year;
+	    			   var thehour = hours+":"+minutes+":"+secs;
+	    			   $("#date").html(fulldate);
+	    			   $("#thehour").html(thehour);
+
+	    			   setTimeout("date()", 1000);
+	    			}
+	    			date();
+	    		
+	    		
+	    		</script>
+	    		
+	    		<div id="date">Mercredi, 3 Avril 2019</div>
+                <div id="thehour">2:58:59</div>
+
+
+
+		</div>   
+	            
+     </div>
+
+
+</body>
+</html>

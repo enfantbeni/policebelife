@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Resultat recherche Agence</title>
+</head>
+<body>
+
+		<div class="row " th:fragment="resultatRechercheAgence">
+           
+            <div class="col-lg-12 " >          
+	            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
+	                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Agence </th><th> Code Direct</th><th> Nom Direct</th></tr>
+						<tr th:each ="agenceRecherche : ${agenceRecherche}">  									
+	  						<td  width="100" th:utext="${agenceRecherche.codeAgence}" style="padding-left:10px" ></td>
+	  						<td  width="100" th:utext="${agenceRecherche.codeDirect}" ></td>  
+	  						<td  width="100" th:utext="${agenceRecherche.nomDirect}" ></td>  						
+						</tr>					            
+			 	</table>        
+      		</div>
+           
+           
+     	</div>
+
+</body>
+</html>

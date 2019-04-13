@@ -1,0 +1,200 @@
+
+#dialog_background{
+	position : absolute;
+	display:none;
+	left : 0px;
+	top : 0px;
+	width : 100%;
+	height : 100%;
+	background:#eeeeff;
+	border-style:solid;
+	border-width: 0px;
+	z-index:10;
+    opacity : 0.8;
+    filter : alpha(opacity=10);
+}
+
+#dialog_box{
+position : absolute;
+display:none;
+left:20%;
+top : 50px;
+width : 1000px;
+background:#eeeeee;
+border-style:solid;
+border-width: 1px;
+border-color:#888888;
+z-index:12;
+border-radius: 10px 10px 10px 10px;
+    opacity : 1;
+   
+}
+
+#dialog_box form{
+	margin-bottom:20px;
+} 
+ 
+ 
+/*  		Gestion Agence */
+
+ #dialog_backgroundAgence{
+position : absolute;
+display:none;
+left : 0px;
+top : 0px;
+width : 100%;
+height : 100%;
+background:#eeeeff;
+border-style:solid;
+border-width: 0px;
+z-index:10;
+
+    opacity : 0.8;
+    filter : alpha(opacity=10);
+}
+
+#dialog_boxAgence{
+position : absolute;
+display:none;
+/* left : 350px; */
+left:20%;
+top : 50px;
+/* width : 100px */
+/* width : 20%; */
+width : 1000px;
+background:#eeeeee;
+border-style:solid;
+border-width: 1px;
+border-color:#888888;
+z-index:12;
+border-radius: 10px 10px 10px 10px;
+    opacity : 1;
+   
+}
+
+#dialog_boxAgence form{
+	margin-bottom:20px;
+} 
+ 
+#dialog_backgroundAgent{
+	position : absolute;
+	display:none;
+	left : 0px;
+	top : 0px;
+	width : 100%;
+	height : 100%;
+	background:#eeeeff;
+	border-style:solid;
+	border-width: 0px;
+	z-index:10;
+    opacity : 0.8;
+    filter : alpha(opacity=10);
+}
+
+#dialog_boxAgent{
+	position : absolute;
+	display:none;
+	/* left : 350px; */
+	left:20%;
+	top : 50px;
+	/* width : 100px */
+	/* width : 20%; */
+	width : 1000px;
+	background:#eeeeee;
+	border-style:solid;
+	border-width: 1px;
+	border-color:#888888;
+	z-index:12;
+	border-radius: 10px 10px 10px 10px;
+    opacity : 1;
+   
+}
+
+#dialog_boxAgent form{
+	margin-bottom:20px;
+} 
+
+
+#dialog_backgroundSociete{
+	position : absolute;
+	display:none;
+	left : 0px;
+	top : 0px;
+	width : 100%;
+	height : 100%;
+	background:#eeeeff;
+	border-style:solid;
+	border-width: 0px;
+	z-index:10;
+    opacity : 0.8;
+    filter : alpha(opacity=10);
+}
+
+#dialog_boxSociete{
+	position : absolute;
+	display:none;
+	/* left : 350px; */
+	left:20%;
+	top : 50px;
+	/* width : 100px */
+	/* width : 20%; */
+	width : 1000px;
+	background:#eeeeee;
+	border-style:solid;
+	border-width: 1px;
+	border-color:#888888;
+	z-index:12;
+	border-radius: 10px 10px 10px 10px;
+    opacity : 1;
+   
+}
+
+#dialog_boxSociete form{
+	margin-bottom:20px;
+} 
+
+
+
+#dialog_backgroundBanquePrincipale{
+	position : absolute;
+	display:none;
+	left : 0px;
+	top : 0px;
+	width : 100%;
+	height : 120%;
+	background:#eeeeff;
+	border-style:solid;
+	border-width: 0px;
+	z-index:10;
+    opacity : 0.8;
+    filter : alpha(opacity=10);
+}
+
+#dialog_boxBanquePrincipale{
+	position : absolute;
+	display:none;
+	left:20%;
+	top : 50px;
+	width : 1000px;
+	background:#eeeeee;
+	border-style:solid;
+	border-width: 1px;
+	border-color:#888888;
+	z-index:12;
+	border-radius: 10px 10px 10px 10px;
+    opacity : 1;
+   
+}
+
+#dialog_boxBanquePrincipale form{
+	margin-bottom:20px;
+} 
+
+
+
+
+
+
+
+
+

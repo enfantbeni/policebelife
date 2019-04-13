@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Formulaire gestion Societe</title>
+</head>
+<body>
+
+		<form th:action="@{/resultatAjoutSociete}" th:object="${Societe}" class="col-md-12 col-xs-12 formulaireGestionSociete" th:fragment="formulaireGestionSociete" method="POST">
+             <div class="row labelAjout">
+                  <h2>Ajouter une Société </h2>
+             </div>
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-4 erreur"  th:if="${formErreurSociete}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>   
+	                     	  <li  th:if="${codeSocieteErreur}" th:utext="${codeSocieteErreur}"> </li> 	                 						   
+							  <li  th:if="${nomSocieteErreur}" th:utext="${nomSocieteErreur}"> </li>
+							   <li  th:if="${societeCodeRechercheErreur}" th:utext="${societeCodeRechercheErreur}"> </li>
+							   <li  th:if="${societeNomRechercheErreur}" th:utext="${societeNomRechercheErreur}"> </li>
+							                         	   
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-4"></div>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+              
+              
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Code Société : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input type="text" name="codeSociete" class="form-control" maxlength="5" />					
+             	 </div>  
+             	          
+             </div>
+             
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Société : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input type="text" name="nomSociete" class="form-control" maxlength="50"/>					
+             	 </div>  
+             	          
+             </div>
+                
+            
+             
+             <input type="hidden" name="estSupprimer" />
+               
+          
+            
+             
+                     
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>

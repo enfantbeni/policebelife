@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Resultat recherche Société</title>
+</head>
+<body>
+
+	<div class="row " th:fragment="resultatRechercheSociete">
+           
+            <div class="col-lg-12 " >          
+            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Société </th><th > Nom Société </th></tr>
+					<tr th:each ="societeRecherche : ${societeRecherche}">  									
+  						<td  width="100" th:utext="${societeRecherche.codeSociete}" style="padding-left:10px" ></td>
+  						<td  width="100" th:utext="${societeRecherche.nomSociete}" style="padding-left:10px" ></td> 						
+					</tr>					            
+			</table>        
+      		</div>
+           
+           
+     </div>
+
+</body>
+</html>

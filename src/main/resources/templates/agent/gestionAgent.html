@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Gestion Agent</title>
+</head>
+<body>
+
+		<div th:fragment="gestionAgent">
+         
+         
+          <div class="row" >
+          	  <div class="col-lg-6"></div>                 
+              <div  th:replace="agent/quatreBoutonAgent :: quatreBoutonAgent" ></div>      
+          </div>
+          			
+          <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${ajoutSuccesAgent}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;">Un Agent ajouté avec succès </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${resultatModifAgent}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Agent de code <b th:utext="${agentRecherche.codeAgent}" ></b> modifié avec succès </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${messageAgentNonExistant}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Agent de code <b th:utext="${codeAgent}" ></b> non existant dans le système </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${resultatSuppressionAgent}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Agent de code <b th:utext="${codeAgent}" ></b> supprimé avec succès. </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   	
+
+		<div th:if="${formulaireGestionAgent}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="agent/formulaireGestionAgent :: formulaireGestionAgent" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         <div th:if="${formulaireGestionModifAgent}" >
+          <div class="row">   
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="agent/formulaireGestionModifAgent :: formulaireGestionModifAgent" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+          <div th:if="${formulaireNumeroRechercheAgent}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="agent/formulaireNumeroRechercheAgent :: formulaireNumeroRechercheAgent" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${formulaireNumeroModifAgent}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="agent/formulaireNumeroModifAgent :: formulaireNumeroModifAgent" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${formulaireNumeroSupprimerAgent}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="agent/formulaireNumeroSupprimerAgent :: formulaireNumeroSupprimerAgent" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${resultatRechercheAgent}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="agent/resultatRechercheAgent :: resultatRechercheAgent" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+                 
+          <div th:if="${listeAgent}" >
+          		<div  th:replace="agent/listeAgent :: listeAgent" ></div> 
+          </div>
+
+     </div>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Liste Banque Principale </title>
+</head>
+<body>
+
+		<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeBanquePrincipale">
+	    <h2> Liste des Banques </h2>
+		<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Banque </th> <th  > Nom de la Banque </th><th> </th></tr>
+					<tr th:each ="banquePrincipale : ${banquePrincipales}">  
+						<td  width="100" th:utext="${banquePrincipale.codeBanque}" style="padding-left:10px" ></td>								
+  						<td  width="100" th:utext="${banquePrincipale.nomBanque}" ></td>
+  						<td width="100" >
+  						   <input  class="btn btn-danger supprimer"  data-th-name="${banquePrincipale.codeBanque}" onclick="supprimer(this);" type="button" value="Supprimer" >                
+  						   <button class="btn btn-primary"  data-th-name="${banquePrincipale.codeBanque}" onclick="modifier(this);"> Modifier</button>
+  						</td>
+					</tr>					            
+		 </table>
+		 	 
+				 <div th:if="${dialog_boxBanquePrincipale}">
+					<div id="dialog_boxBanquePrincipale"  >
+					     
+							 <form th:action="@{/succesSuppressionBanquePrincipale}" th:object="${BanquePrincipale}" class="col-md-12 col-xs-12"  method="POST">
+		                           <h4> Voulez-vous supprimer la Banque de code <b  th:utext="${codeBanque}"></b> </h4>
+		                         
+						           <div class="row envoiCancel">
+						           			 
+						           		<input type="hidden" name="id" value=" " />	  
+						           		 <input type="hidden" name="estSupprimer" value=" " />	  
+						           		<input type="hidden" name="codeBanque"   />	  
+						           			                
+						             	 <div class="col-md-6 col-xs-4 ">
+						                 	<input type="submit" value="Valider" class="btn btn-primary pullright envoi" />				                  	
+						             	 </div>			
+						             	              	 
+						             	 <div class="col-md-6 col-xs-8 cancel">
+						                  	<input class="btn btn-primary pullright cancel" type="button" value="Cancel" onclick="dialog_cancel();">
+						             	 </div>   
+						             	         
+				             	  </div>           
+				          </form>	
+				          
+					</div>
+				 </div>
+				 
+				 
+				 <form id="envoiCacheBanquePrincipale" th:action="@{/resultatModifDonneeBanquePrincipale}"  th:object="${BanquePrincipale}"  method="POST" >
+			 
+			  		<div class="row">
+			  		  <input type="hidden" name="id" value=" " />
+			  		</div>  
+			  		<div class="row">
+			  		 
+			  		  <div class="col-lg-12 leftAlign"><input type="hidden"  name="nomBanque" /></div>
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="codeBanque" id="identifiantSupprBanquePrincipale"  />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="estSupprimer"  />
+			  		</div>
+			  				  		
+			  </form>
+			  
+			  <form id="envoiCacheModifBanquePrincipale" th:action="@{/envoiDonneeCacheeBanquePrincipale}"  th:object="${BanquePrincipale}"  method="POST" > 
+			  		<div class="row">
+			  		  <input type="hidden" name="id" value=" " />
+			  		</div>  
+			  		<div class="row">	  		 
+			  		  <div class="col-lg-12 leftAlign"><input type="hidden" id="identifiantModifBanquePrincipale" name="codeBanque" /></div>
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="nomBanque"   />
+			  		</div>
+			  		<div class="row">
+			  		  <input type="hidden" name="estSupprimer"  />
+			  		</div>		  					  		
+			  </form>
+		 
+		 
+		 		 <script type="text/javascript">
+		 		 
+				 		function desactiveAfficheFormulaire(){
+							var afficheFormulaire=document.getElementById('dialog_boxBanquePrincipale');
+							afficheFormulaire.style.display = 'none' ;	
+						}			
+						desactiveAfficheFormulaire();
+		 		 
+				 		function modifier(objet){
+			                var identifiant=objet.name;			                
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objetModif=document.getElementById("identifiantModifBanquePrincipale");
+				        	objetModif.value=identifiant;
+				        	document.getElementById('envoiCacheModifBanquePrincipale').submit();	        		        	
+				        }
+				        
+				        function supprimer(objet){
+		                    var identifiant=objet.name;				
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objetSupprimer=document.getElementById("identifiantSupprBanquePrincipale");
+				        	 objetSupprimer.value=identifiant;	
+				        	document.getElementById('envoiCacheBanquePrincipale').submit();	        		        	
+			       		 }				 		 
+		 		 		
+				 		function dialog_open(){					    	
+			 		    	//Affiche de la zone de fond translucide pour eviter la selection
+			 		    	  //d'objet sur la page d'origine			 		    	  
+			 		    	  var dialog_background = document.getElementById ('dialog_backgroundBanquePrincipale'); 
+			 		    	  dialog_background.style.display ="block";
+			 		    	  
+			 		    	//affichage de la boite de dialogue
+			 		    	  var dialog_box = document.getElementById('dialog_boxBanquePrincipale'); 
+			 		    	  dialog_box.style.display ="block";		    	  
+			 		    } 
+				        
+			 		    dialog_open();
+			 		    
+			 		   function dialog_close(){
+				 			  //masque la zone de fond de la boite de dialogue
+				 			  dialog_win = document.getElementById('dialog_backgroundBanquePrincipale'); 
+				 			  dialog_win.style.display ="none";
+				 			  
+				 			  //masque la boite de dialogue
+				 			  var dialog_box = document.getElementById('dialog_boxBanquePrincipale'); 
+				 			  dialog_box.style.display ="none";
+				 			 
+				 			  //remet les scrollbarre de la page 
+				 			  document.body.style.overflow='scroll'; 
+				 			}
+				 		   
+				 		  function dialog_cancel(){
+				 			  //fermeture de la boite de dialogue et retour à l'état initial
+				 			  dialog_close();
+				 			}
+		 		 
+		 		 
+		 		 </script>
+		 
+		 </div>
+		 
+
+</body>
+  <head>
+  	<link rel="stylesheet" type="text/css" href="css/popup.css"/>
+  	<link rel="stylesheet" type="text/css" href="css/espaceUtilisateurStyle.css"/>
+  </head>
+
+
+</html>

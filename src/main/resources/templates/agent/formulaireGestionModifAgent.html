@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title>Modification Agent</title>
+</head>
+<body>
+		<form th:action="@{/resultatModifAgent}" th:object="${agentDto}" class="col-md-12 col-xs-12 formulaireGestionAgent" th:fragment="formulaireGestionModifAgent" method="POST">
+             <div class="row labelAjout">
+                  <h2>Modifier les données d'un Agent </h2>
+             </div>
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-4 erreur"  th:if="${formErreurAgent}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>                        
+							   
+							   <li  th:if="${codeAgentErreur}" th:utext="${codeAgentErreur}"> </li>
+							   <li  th:if="${nomAgenceErreur}" th:utext="${nomAgenceErreur}"> </li>
+							   <li  th:if="${nomAgentErreur}" th:utext="${nomAgentErreur}"> </li>
+							   <li  th:if="${codeAgentExistantErreur}" th:utext="${codeAgentExistantErreur}"> </li>                     	   
+							                         	   
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-4"></div>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+              
+                
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Code Agent : </label>
+             	 </div>          	 
+             	 <div class="col-md-8 col-xs-8">             	    
+             	    <input type="text" name="codeAgent" class="form-control" maxlength="50" data-th-value="${agentRecherche.codeAgent}" />					
+             	 </div>             	          
+             </div> 
+             
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Direct : </label>
+             	 </div> 
+             	 <div class="col-md-8 col-xs-8" style="text-align:left;">           	 
+             	     <select name="nomAgence">                      
+                         <option  th:each="nomDirect : ${nomDirects}" th:value="${nomDirect}" th:utext="${nomDirect}"/>
+                  	 </select>
+                 </div>           	          
+             </div>
+             
+             <input type="hidden" name="estSupprimer" />
+               
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Agent : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="text" name="nomAgent" class="form-control" data-th-value="${agentRecherche.nomAgent}" maxlength="5" autocomplete="off"/>	
+             	 </div>           
+             </div>
+             
+            
+             
+                     
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>
