@@ -41,9 +41,7 @@ public class AgenceController {
 	 
 	 String identifiantSession=null;
 	 
-	 String identifiantSessionMarcel=null;
-	 
-	 
+	  
 	 @Transactional
 	 @RequestMapping(value = {"/gestionAgence" }, method = RequestMethod.GET)
 	    public String gestionAgence(Model model, HttpSession session) { 
