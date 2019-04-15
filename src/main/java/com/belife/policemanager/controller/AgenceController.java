@@ -41,7 +41,6 @@ public class AgenceController {
 	 
 	 String identifiantSession=null;
 	 
-	 String identifiantSessionMarcel=null;
 	 
 	 
 	 @Transactional
