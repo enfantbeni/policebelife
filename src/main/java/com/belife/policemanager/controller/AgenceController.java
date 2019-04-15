@@ -126,8 +126,6 @@ public class AgenceController {
 					nomDirectSave=agenceRepository.findAgenceByNomDirect(nomDirect);
 //					nomAgenceVerification=agenceSave.getNomAgence();
 					if(agenceSave==null && nomDirectSave ==null) {
-						
-//						if( nomAgence !=nomAgenceVerification ) {
 							agence.setCodeAgence(codeAgence);
 							agence.setCodeDirect(codeDirect);
 							agence.setNomDirect(nomDirect);
@@ -140,7 +138,6 @@ public class AgenceController {
 							agences=agenceRepository.findAllAgences(estSupprimer);
 							model.addAttribute("agences", agences);					
 								return "espaceUtilisateur";
-//					     }	
 					}	
 					if( agenceSave!=null ) {
 						model.addAttribute("codeDirectErreur", " Code Direct déjà existant");
@@ -585,7 +582,6 @@ public class AgenceController {
 			session.removeAttribute("codeAgenceCache");
 			String codeDirect=agence.getCodeDirect();
 			Agence agenceRecherche=agenceRepository.findAgenceByCodeDirect(codeDirect);
-			System.out.println(" Code direct : " +agenceRecherche);
 			Boolean estSupprimer=false;
 			List<Agence> agences=new ArrayList<Agence>();
 			agences=agenceRepository.findAllAgences(estSupprimer);
