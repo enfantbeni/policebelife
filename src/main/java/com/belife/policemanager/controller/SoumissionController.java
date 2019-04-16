@@ -180,9 +180,10 @@ public class SoumissionController {
 		String codeGuichetSoumis=banqueRepository.findCodeGuichetByNomGuichet(nomGuichetSoumis);
 		String codeBanqueSoumis=banquePrincipaleRepository.findCodeBanquePrincipale(nomBanqueSoumis);
 		String police=codeGuichetSoumis.concat(codeBanqueSoumis);
+		model.addAttribute("codeGuichetSoumis",codeGuichetSoumis);
 		session.setAttribute("police", police);
 		model.addAttribute("police",police);
-		System.out.println("   Police   :  "+police);
+		
 				
 		
 		
@@ -730,12 +731,7 @@ public class SoumissionController {
 		Plan plan=planRepository.findPlanByPlanDuree(planDuree);
 		clientPlan.setIdPlan(plan);
 		System.out.println("   Id Client : "+plan.getIdPlan());
-		ClientPlan cp=clientPlanRepository.save(clientPlan);
-//		System.out.println("  Id Client Plan  : "+cp.getIdPlan().getIdPlan());
-//		System.out.println("  Id Client Plan  : "+cp.getIdClient().getIdClient());
-//		System.out.println("  Id Client Plan  : "+cp.getIdClienPlan());
-//		
-		
+		ClientPlan cp=clientPlanRepository.save(clientPlan);	
 		////	ClientBanque
 		clientBanque=clientBanqueRepository.findBanqueByIdClient(clientModif);
 		if(clientBanque!=null) {

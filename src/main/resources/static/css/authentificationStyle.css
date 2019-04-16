@@ -3,15 +3,14 @@ body {
 padding-top: 10px;
 }
 [class*="col-"] , footer {
-background-color: light;
-border: 1px solid none;
-line-height: 10px;
+	background-color: light;
+	border: 1px solid none;
+	line-height: 10px;
 }
 .img_logo{
  	display: inline-block; 
 	padding: 10px;
-
-border: 1px solid #0000ff;
+	border: 1px solid #0000ff;
 }	
 #logo{text-align: center; padding-top:10px 10px}
 
@@ -53,6 +52,7 @@ form div{text-align:center}
 	color: #fffffff;
 	margin:40px 0 0 0;
 }
+.pm span{color:white;}
 .envoi:hover{
 	width: 100px;
 	padding: 8px;

@@ -30,7 +30,15 @@
         	      	   		<form  th:action="@{/resultatAjoutProposition}"  th:object="${clientDto}"  method="POST" > 
 						  		<div class="row ajoutDonneeUtilisateur">
 						  			<div class="col-lg-6">
-						  			
+						  				
+						  			   <div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Numero Police * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">              	
+												      	<input required type="text" readonly name="numeroPolice" data-th-value="${police}" class="form-control"  autocomplete="off" />                	
+							             	 </div>     
+						  			   	</div>
 						  									
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
@@ -85,7 +93,14 @@
 							                  	<input type="text" required name="numero" data-th-value="${numero}" class="form-control"  autocomplete="off" />
 							             	 </div>     
 						  			   	</div>
-						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Code Guichet * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" required name="codeGuichet" readonly  class="form-control"  data-th-value="${codeGuichetSoumis}"  autocomplete="off" />
+							             	 </div>     
+						  			   	</div>
 						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
@@ -145,19 +160,26 @@
 						  			   	 		 </div>	
 						  			   	 </div >
 						  			   	
-										<div class="row">
-						  			  	 	<div class="col-md-4 col-xs-4 labelSoumissionPremier">
-							                  <label> Date de prélèvement * : </label>
-							             	 </div>
-							             	 <div class="col-md-8 col-xs-8 ">
-							                  	<input type="date" required name="datePrelevement" data-th-value="${datePrelevement}" class="form-control"   />
-							             	 </div>     
-						  			   	</div>
+<!-- 						  			   	<div class="row"> -->
+<!-- 						  					<div class="col-lg-4 validerSoumission"> <input type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /> </div> -->
+<!-- 						  		 			<div class="col-lg-8 "></div>			  		  -->
+						  				
+<!-- 						  				</div>	 -->
+										
 						  			   						  			   				  			
 						  			</div>	
 						  			
 						  								  		
 						  		    <div class="col-lg-6">
+						  		    
+						  		    	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Date de prélèvement * : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="date" required name="datePrelevement" data-th-value="${datePrelevement}" class="form-control"   />
+							             	 </div>     
+						  			   	</div>
 						  		    	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
@@ -252,16 +274,16 @@
 							                  	<input type="text" required name="nomComPreContrat" data-th-value="${nomComPreContrat}" class="form-control"  autocomplete="off" />
 							             	 </div>     
 						  			   	</div>			
-						  		    	
-						  		    	<div class="row">
-						  					<div class="col-lg-4 validerSoumission"> <input type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /> </div>
-						  		 			<div class="col-lg-8 "></div>			  		 
-						  				
-						  				</div>	
-						  		    	
-						  		   						  		    	
+						  		    		  		    	
 						  		    </div>
+						  		    
+						  		    
 						  		</div>  
+						  		<div class="row">
+						  					<div class="col-lg-6 validerSoumission"> </div>
+						  		 			<div class="col-lg-2 "><input type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /> </div>			  		 
+						  					<div class="col-lg-4 validerSoumission"> </div>
+						  				</div>	
 			 				 </form>
         	      	   
         	      	   </div>

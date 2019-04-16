@@ -220,6 +220,7 @@ td{
 	 height:20px; width: 30%; font-size:16px;
 }
 
+.pm span{color:white;}
 
 .ajoutDonneeModule{
 	margin: 10px auto;
@@ -248,8 +249,8 @@ td{
 .validerSource{ margin-top:40px;}
 .validerSource input{font-size:20px;  width: 15%}
 .sourceForm h3{ font-weight: bold; text-align:left; color:#b8840b; margin:0px auto; }
-.validerSoumission {text-align:left;}
-.validerSoumission input{font-size:20px; width: 40%; margin: 10px 0 20px}
+.validerSoumission {text-align:right;}
+.validerSoumission input{font-size:10px; margin: 10px 20px}
 
 .labelSoumission{
 	text-align:right;
@@ -312,7 +313,7 @@ td{
 .ajoutDonneeUtilisateur select:focus{
 	border: 1px solid blue;font: 20px Arial Bold; height:50px;  width: 70%; border-radius:5px;
 }
-.validerSoumission input{ width: 30%;margin: 80px 20px 20px 0px}
+.validerSoumission input{;margin: 20px 20px 20px 0px}
 .labelPreContrat{
 	text-align:left;
 	font-size:17px;
