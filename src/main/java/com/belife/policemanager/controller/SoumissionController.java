@@ -179,7 +179,7 @@ public class SoumissionController {
 		String nomBanqueSoumis=session.getAttribute("nomBanqueSoumis").toString().trim();
 		String codeGuichetSoumis=banqueRepository.findCodeGuichetByNomGuichet(nomGuichetSoumis);
 		String codeBanqueSoumis=banquePrincipaleRepository.findCodeBanquePrincipale(nomBanqueSoumis);
-		String police=codeGuichetSoumis.concat(codeBanqueSoumis);
+		String police=codeBanqueSoumis.concat(codeGuichetSoumis);
 		model.addAttribute("codeGuichetSoumis",codeGuichetSoumis);
 		session.setAttribute("police", police);
 		model.addAttribute("police",police);
