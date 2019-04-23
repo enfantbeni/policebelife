@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title>Gestio sequence Police</title>
+</head>
+<body>
+	<div th:fragment="gestionSequencePolice">
+         
+         
+          <div class="row" >
+          	  <div class="col-lg-6"></div>                 
+              <div  th:replace="sequencePolice/quatreBoutonSequencePolice :: quatreBoutonSequencePolice" ></div>      
+          </div>
+        
+          			
+          <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${ajoutSuccesSequencePolice}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;">Une Sequence de police ajoutée avec succès </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${resultatModifSequencePolice}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Sequence de Police a été modifiée avec succès </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${messageSequencePoliceNonExistante}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Sequence Police non existante dans le système </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${resultatSuppressionSequencePolice}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Sequence Police a été supprimée avec succès. </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>
+		   	
+
+		<div th:if="${formulaireGestionSequencePolice}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="sequencePolice/formulaireGestionSequencePolice :: formulaireGestionSequencePolice" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         <div th:if="${formulaireGestionModifSequencePolice}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="sequencePolice/formulaireGestionModifSequencePolice :: formulaireGestionModifSequencePolice" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+          <div th:if="${formulaireNumeroRechercheSequencePolice}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="sequencePolice/formulaireNumeroRechercheSequencePolice :: formulaireNumeroRechercheSequencePolice" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${formulaireNumeroModifSequencePolice}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="sequencePolice/formulaireNumeroModifSequencePolice :: formulaireNumeroModifSequencePolice" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${formulaireNumeroSupprimerSequencePolice}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="sequencePolice/formulaireNumeroSupprimerSequencePolice :: formulaireNumeroSupprimerSequencePolice" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         <div th:if="${resultatRechercheSequencePolice}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="sequencePolice/resultatRechercheNumeroPolice :: resultatRechercheNumeroPolice" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+             
+         
+          <div th:if="${listeSequencePolice}" >
+          		<div  th:replace="sequencePolice/listeSequencePolice :: listeSequencePolice" ></div> 
+          </div>
+
+     </div>
+
+</body>
+</html>

@@ -68,6 +68,8 @@ public class Client implements Serializable {
 	
 	@Column(name = "nomComPreContrat")
 	private String nomComPreContrat;
+	@Column(name = "dateRealisation")
+	private String dateRealisation;
 	@Column(name = "estSupprime", nullable=false)
 	private Boolean estSupprimer;
 	
@@ -288,6 +290,16 @@ public class Client implements Serializable {
 
 	public void setPlans(List<Plan> plans) {
 		this.plans = plans;
+	}
+	
+	
+
+	public String getDateRealisation() {
+		return dateRealisation;
+	}
+
+	public void setDateRealisation(String dateRealisation) {
+		this.dateRealisation = dateRealisation;
 	}
 
 	public Agent getIdAgent() {

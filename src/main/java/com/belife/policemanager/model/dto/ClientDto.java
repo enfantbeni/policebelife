@@ -13,6 +13,7 @@ public class ClientDto {
 	private String datePrelevement;
 	private String dateSoumission;
 	private String dateNaissance;
+	private String dateRealisation;
 	private String profession;
 	private String employeur;
 	private String ville;
@@ -156,6 +157,15 @@ public class ClientDto {
 	public void setNomComPreContrat(String nomComPreContrat) {
 		this.nomComPreContrat = nomComPreContrat;
 	}
+	
+	public String getDateRealisation() {
+		return dateRealisation;
+	}
+
+	public void setDateRealisation(String dateRealisation) {
+		this.dateRealisation = dateRealisation;
+	}
+
 	public Boolean getEstSupprimer() {
 		return estSupprimer;
 	}

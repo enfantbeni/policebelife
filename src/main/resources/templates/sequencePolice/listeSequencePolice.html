@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Liste Sequence Police</title>
+</head>
+<body>
+
+	<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeSequencePolice">
+	
+	    		<h2> Liste des numeros de police </h2>
+				<table width="100%" border="0" cellspacing="1" cellpadding="2">
+		                    <tr class="entete-tableau"><th style="padding-left:10px"> Numero </th> <th> Numero de Police </th> <th> </th></tr>
+							<tr th:each ="sequencePolice,c : ${sequencePolices}">  									
+		  						<td  width="100" th:utext="${(sequencePolices.size)*(sequencePolices.number)+(c.index+1)}" style="padding-left:10px" ></td>  
+		  						<td  width="100" th:utext="${sequencePolice.seqPolice}" style="padding-left:10px" ></td>   						
+		  						<td width="100" style="text-align:center" >
+<!-- 		  						   <input  class="btn btn-danger supprimer"  data-th-name="${sequencePolice.seqPolice}" onclick="supprimer(this);" type="button" value="Supprimer" >                 -->
+<!-- 		  						   <button class="btn btn-primary"  data-th-name="${sequencePolice.seqPolice}" onclick="modifier(this);"> Modifier</button> -->
+		  						</td>
+							</tr>					            
+				 </table>
+				 
+				 <nav class="page" aria-label="Pagination" th:if="${sequencePolices.totalPages gt 0}">
+				    <ul class="pagination justify-content-center font-weight-bold">
+				        <li class="page-item" th:classappend="${sequencePolices.number eq 0} ? 'disabled'">
+				            <a class="page-link"
+				               th:href="@{/sequencePolices?page={id}(id=${sequencePolices.number lt 2 ? 1 : sequencePolices.number})}"
+				               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+				                <span aria-hidden="true">&lt; Précédent </span>
+				            </a>
+				        </li>
+				        <li class="page-item" th:classappend="${i eq sequencePolices.number + 1} ? 'active'"
+				            th:each="i : ${#numbers.sequence( 1, sequencePolices.totalPages, 1)}">
+				            <a class="page-link" th:href="@{/sequencePolices?page={id}(id=${i})}" th:text="${i}"
+				               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+				        </li>
+				        <li class="page-item" th:classappend="${sequencePolices.number+1  eq sequencePolices.totalPages} ? 'disabled'">
+				            <a class="page-link"
+				               th:href="@{/sequencePolices?page={id}(id=${sequencePolices.number+1  eq sequencePolices.totalPages ?sequencePolices.number+1 :sequencePolices.number + 2})}"
+				               aria-label="Next" title="Next Page" data-toggle="tooltip">
+				                <span aria-hidden="true"> Suivant &gt;</span>
+				            </a>
+				        </li>
+				    </ul>
+				</nav>
+		 	 
+				 <div th:if="${dialog_boxSequencePolice}">
+					<div id="dialog_boxSequencePolice"  >
+					     
+							 <form th:action="@{/succesSuppressionSequencePolice}" th:object="${SequencePolice}" class="col-md-12 col-xs-12"  method="POST">
+		                           <h4> Voulez-vous supprimer cette sequence de police <b  th:utext="${seqPolice}"></b> </h4>
+		                         
+						           <div class="row envoiCancel">
+						           			 
+						           		 <input type="hidden" name="seqPolice" value=" " />	  
+						           		 <input type="hidden" name="estSupprimer" value=" " />	  
+						           								           			                
+						             	 <div class="col-md-6 col-xs-4 ">
+						                 	<input type="submit" value="Valider" class="btn btn-primary pullright envoi" />				                  	
+						             	 </div>									             	              	 
+						             	 <div class="col-md-6 col-xs-8 cancel">
+						                  	<input class="btn btn-primary pullright cancel" type="button" value="Cancel" onclick="dialog_cancel();">
+						             	 </div>   						             	         
+				             	   </div>           
+				          	</form>	
+				          
+					</div>
+				 </div>
+				 
+				 
+<!-- 				 <form id="envoiCacheSequencePolice" th:action="@{/resultatModifDonneeSequencePolice}"  th:object="${SequencePolice}"  method="POST" >			  		 -->
+			  		   			
+<!-- 			  		  <input type="hidden" name="seqPolice"  id="identifiantSupprSequencePolice" />  		 		 -->
+<!-- 			  		  <input type="hidden" name="estSupprimer"  />		  				  		 -->
+<!-- 			     </form> -->
+			  
+				  <form id="envoiCacheModifSequencePolice" th:action="@{/envoiDonneeCacheeSequencePolice}"  th:object="${SequencePolice}"  method="POST" > 			  				  			  		  		 
+				  		  <input type="hidden" id="identifiantModifSequencePolice" name="seqPolice" />	  				  					  		
+				  		  <input type="hidden" name="estSupprimer"  />			  			  					  		
+				  </form>
+		 
+		 
+		 		 <script type="text/javascript">
+		 		 
+				 		function desactiveAfficheFormulaire(){
+							var afficheFormulaire=document.getElementById('dialog_boxSequencePolice');
+							afficheFormulaire.style.display = 'none' ;	
+						}			
+						desactiveAfficheFormulaire();
+		 		 
+				 		function modifier(objet){
+			                var identifiant=objet.name;			                
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objetModif=document.getElementById("identifiantModifSequencePolice");
+				        	objetModif.value=identifiant;
+				        	document.getElementById('envoiCacheModifSequencePolice').submit();	        	
+				        }
+				        
+// 				        function supprimer(objet){
+// 		                    var identifiant=objet.name;				
+// 				        	var identifiantIndex=document.getElementById(identifiant);
+// 				        	var objetSupprimer=document.getElementById("identifiantSupprSequencePolice");
+// 				        	 objetSupprimer.value=identifiant;				        	
+// 				        	document.getElementById('envoiCacheSequencePolice').submit();	
+// 			       		 }				 		 
+		 		 		
+				 		function dialog_open(){					    	
+			 		    	//Affiche de la zone de fond translucide pour eviter la selection
+			 		    	  //d'objet sur la page d'origine			 		    	  
+			 		    	  var dialog_background = document.getElementById ('dialog_backgroundSequencePolice'); 
+			 		    	  dialog_background.style.display ="block";
+			 		    	  
+			 		    	//affichage de la boite de dialogue
+			 		    	  var dialog_box = document.getElementById('dialog_boxSequencePolice'); 
+			 		    	  dialog_box.style.display ="block";		    	  
+			 		    } 
+				        
+			 		    dialog_open();
+			 		    
+			 		   function dialog_close(){
+				 			  //masque la zone de fond de la boite de dialogue
+				 			  dialog_win = document.getElementById('dialog_backgroundSequencePolice'); 
+				 			  dialog_win.style.display ="none";
+				 			  
+				 			  //masque la boite de dialogue
+				 			  var dialog_box = document.getElementById('dialog_boxSequencePolice'); 
+				 			  dialog_box.style.display ="none";
+				 			 
+				 			  //remet les scrollbarre de la page 
+				 			  document.body.style.overflow='scroll'; 
+				 			}
+				 		   
+				 		  function dialog_cancel(){
+				 			  //fermeture de la boite de dialogue et retour à l'état initial
+				 			  dialog_close();
+				 			}
+		 		 
+		 		 
+		 		 </script>
+		 
+		 </div>
+
+</body>
+</html>

@@ -667,14 +667,6 @@ public class AgentController {
 			model.addAttribute("gestionAgent", "gestionAgent");
 			model.addAttribute("menuNavigation", "menuNavigation");			
 	        return "espaceUtilisateur";	
-	    }
-	
-	
-	
-	
-	
-	
-	
-	
+	    }	
 
 }

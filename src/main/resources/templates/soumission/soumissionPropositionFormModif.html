@@ -18,12 +18,7 @@
         	      	   		 <div class="row">
         	      	   		 	 <div class="col-lg-2"></div>
         	      	   		     <div class="col-lg-10 "> <h3>Modifier les données d'une proposition </h3>  </div>   	      	  		      
-        	      	   		 </div>
-        	      	   		 
-<!--         	      	   		 <div class="row"> -->
-<!--         	      	   		 	 <div class="col-lg-2"></div> -->
-<!--         	      	   		     <div class="col-lg-10 "> <h2> Police : <b th:utext="${police}" > </b> </h2>  </div>   	      	  		       -->
-<!--         	      	   		 </div> -->
+        	      	   		 </div>       	      	   		 
         	      	   		 
         	      	    </div>
         	      	   <div class="col-lg-12 sourceForm"> 
@@ -271,7 +266,7 @@
 						  			   	</div>
 						  			   	
 						  			   	<div class="row">
-						  			  	 	<div class="col-md-4 col-xs-4 labelPreContrat">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
 							                  <label> Nom commercial en pré-contrat *</label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
@@ -279,12 +274,15 @@
 							             	 </div>     
 						  			   	</div>			
 						  		    	
-<!-- 						  		    	<div class="row"> -->
-<!-- 						  					<div class="col-lg-4 validerSoumission"> <input type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /> </div> -->
-<!-- 						  		 			<div class="col-lg-8 "></div>			  		  -->
-						  				
-<!-- 						  				</div>	 -->
-						  		    	
+						  		    	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Date de réalisation du contrat par l'agent * </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="date" required name="dateRealisation" data-th-value="${client.dateRealisation}"  class="form-control"  />
+							             	 </div>     
+						  			   	</div>
+										   	
 						  		   						  		    	
 						  		    </div>
 						  		</div>  

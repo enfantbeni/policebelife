@@ -515,6 +515,7 @@ public class SoumissionController {
 		String datePrelevement=clientDto.getDatePrelevement();
 		String dateSoumission=clientDto.getDateSoumission();	
 		String dateNaissance=clientDto.getDateNaissance();
+		String dateRealisation=clientDto.getDateRealisation();
 		String matriculeClient=clientDto.getMatriculeClient();
 		String banque=clientDto.getBanque().trim();
 		String profession=clientDto.getProfession().trim();
@@ -553,6 +554,7 @@ public class SoumissionController {
 		session.setAttribute("telephone1", telephone1);
 		session.setAttribute("telephone2", telephone2);
 		session.setAttribute("nomComPreContrat", nomComPreContrat);
+		session.setAttribute("dateRealisation", dateRealisation);
 		
 		
 		String nomSource=session.getAttribute("nomSourceCache").toString().trim();
@@ -583,6 +585,7 @@ public class SoumissionController {
 		client.setNomComPreContrat(nomComPreContrat);
 		client.setEstSupprimer(estSupprimer);
 		client.setDateCreation(new Date());
+		client.setDateRealisation(dateRealisation);
 		
 		Agent agent=agentRepository.findAgentByCodeAgent(codeAgent);
 		client.setIdAgent(agent); session.setAttribute("nomSourceCache",nomSource);
@@ -815,15 +818,7 @@ public class SoumissionController {
 	        Boolean estSupprimer=false;
 	        PageRequest pageable = PageRequest.of(page-1, 4);
 	        Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
-//	        int totalPages = clientPage.getTotalPages();
-//	        if(totalPages > 0) {
-//	            List<Integer> pageNumbers = IntStream.rangeClosed(1,totalPages).boxed().collect(Collectors.toList());
-//	            modelAndView.addObject("pageNumbers", pageNumbers);
-//	        }
-//	        modelAndView.addObject("activeArticleList", true);
-//	        modelAndView.addObject("articleList", articlePage.getContent());
-	        
-	     
+ 
 			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 		            page = Integer.parseInt(request.getParameter("page")) - 1;
 		        }

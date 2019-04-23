@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Formulaire numero modif sequence police</title>
+</head>
+<body>
+		<div class="row " th:fragment="formulaireNumeroModifSequencePolice">
+           
+            <form th:action="@{/formulaireNumeroModifSequencePolice}" class="col-md-12 col-xs-12" method="POST">
+             <div class="row labelAjout">
+                  <h2>Modifier une sequence </h2>
+             </div>
+             
+            
+              <input type="hidden" name="idSequencePolice" value=" " />
+              <input type="hidden" name="estSupprimer" />
+            
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 np">
+                  	<label> Sequence : </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+<!--                   	<input type="text" pattern="[0-9]+" name="seqPolice" value=" " maxlength="10" class="form-control"  autocomplete="off" /> -->
+                  	<input type="text" name="seq" value=" " maxlength="10" class="form-control"  autocomplete="on" />
+             	 </div>           
+             </div>  
+             
+             <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div> 
+             
+                              
+          </form>        
+           
+           
+     </div>
+
+</body>
+</html>
