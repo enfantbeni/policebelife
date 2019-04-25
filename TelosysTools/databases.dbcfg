@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <databases defaultId="1" maxId="10">
-<db dialect="org.hibernate.dialect.MySQLDialect" driver="com.mysql.jdbc.Driver" id="0" isolationLevel="" name="MYSQL" poolSize="1" typeName="MYSQL" url="jdbc:mysql://192.168.3.8/pmanager_db?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=UTC">
+<db dialect="org.hibernate.dialect.MySQLDialect" driver="com.mysql.cj.jdbc.Driver" id="0" isolationLevel="" name="MYSQL" poolSize="1" typeName="MYSQL" url="jdbc:mysql://192.168.3.8/policemanager?zeroDateTimeBehavior=CONVERT_TO_NULL&amp;serverTimezone=UTC">
 <property name="user" value="admin"/>
-<property name="password" value="root@2020"/>
+<property name="password" value="admin@2020"/>
 <metadata catalog="" schema="TO_BE_DEFINED" table-name-exclude="" table-name-include="" table-name-pattern="%" table-types="TABLE"/>
 </db>
 </databases>
