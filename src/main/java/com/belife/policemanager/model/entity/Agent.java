@@ -1,6 +1,7 @@
 package com.belife.policemanager.model.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -31,6 +32,8 @@ public class Agent implements Serializable {
 	private String nomAgent;
 	@Column(name = "codeAgent")
 	private String codeAgent;
+	@Column(name = "dateCreation")
+	private Date dateCreation;
 	@Column(name = "estSupprime", nullable=false)
 	private Boolean estSupprimer;
 	
@@ -64,6 +67,13 @@ public class Agent implements Serializable {
 	}
 	public Boolean getEstSupprimer() {
 		return estSupprimer;
+	}
+	
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
 	}
 	public void setEstSupprimer(Boolean estSupprimer) {
 		this.estSupprimer = estSupprimer;

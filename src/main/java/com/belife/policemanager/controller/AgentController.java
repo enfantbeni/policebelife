@@ -58,6 +58,15 @@ public class AgentController {
 			resultat = "pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 		model.addAttribute("titre", "Gestion des Agents");
@@ -86,6 +95,15 @@ public class AgentController {
 			resultat = "pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 		model.addAttribute("cheminAjouterAgent", "Ajouter un Agent >");
@@ -121,6 +139,15 @@ public class AgentController {
 			resultat = "pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 		model.addAttribute("cheminAjouterAgent", "Ajouter un Agent >");
@@ -228,6 +255,15 @@ public class AgentController {
 			resultat="pageErreur";
 			return resultat;
 		}		
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 		model.addAttribute("cheminModifierAgent", "Modifier un Agent >");
@@ -268,6 +304,15 @@ public class AgentController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		String codeAgent=agent.getCodeAgent().trim();
 		Agent agentRecherche=agentRepository.findAgentByCodeAgent(codeAgent);				
 		
@@ -312,6 +357,15 @@ public class AgentController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 		model.addAttribute("cheminModifierAgent", "Modifier un Agent >");
@@ -414,7 +468,16 @@ public class AgentController {
 			catch(Exception e) {
 				resultat="pageErreur";
 				return resultat;
-			}	
+			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 			model.addAttribute("cheminRechercherAgent", "Rechercher un Agent >");
@@ -445,6 +508,15 @@ public class AgentController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 			model.addAttribute("cheminRechercherAgent", "Rechercher un Agent >");
@@ -482,6 +554,15 @@ public class AgentController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 			model.addAttribute("cheminRechercherAgent", " Agent non existant >");
@@ -516,6 +597,15 @@ public class AgentController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 			model.addAttribute("cheminSupprimerAgent", "Supprimer un Agent >");
@@ -541,6 +631,15 @@ public class AgentController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 			model.addAttribute("cheminSupprimerAgent", "Supprimer un Agent >");
@@ -574,6 +673,15 @@ public class AgentController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 			model.addAttribute("cheminSupprimerAgent", "Supprimer un Agent >");
@@ -606,6 +714,15 @@ public class AgentController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			Boolean estSupprimer=false;
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", "Gestion Agent >");
@@ -641,6 +758,15 @@ public class AgentController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", "Gestion Agent >");
 			model.addAttribute("cheminModifierAgent", "Modifier un Agent >");

@@ -58,6 +58,7 @@ public class UtilisateurController {
 	 private String fonctionMedecin="Medecin";
 	 private String fonctionSecretaire="Secretaire";
 	 private String fonctionCommercial="Commercial";
+	 private String fonctionUniteTechnique="Technicien";
 	 private String fonctionChefAgence="Chef agence";
 	 private String fonctionChefSousAgence="Chef sous agence";
 	 private String fonctionEmploye="Employé";
@@ -109,6 +110,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		Utilisateur utilisateurRenvoi=new Utilisateur();
 		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
@@ -184,6 +194,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		Boolean estSupprimer=false;
 		List<SourcePolice> sourcePolices=new ArrayList<SourcePolice>();
 		sourcePolices=sourcePoliceRepository.findAllSourcePrelevement(estSupprimer);
@@ -207,6 +226,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim();
 		Utilisateur utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
 		Agence agence=utilisateur.getIdAgence();
@@ -231,11 +259,22 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+
+		
 		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim();
 		Utilisateur utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
 		Agence agence=utilisateur.getIdAgence();
 		String nomAgence=agence.getNomDirect();
 		model.addAttribute("nomAgence", nomAgence);
+		session.setAttribute("nomAgenceActif", nomAgence);
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("contenuAccueilUtilisateur", "contenuAccueilUtilisateur");
 		model.addAttribute("accueilUtilisateurMessage", "accueilUtilisateurMessage");
@@ -310,7 +349,9 @@ public class UtilisateurController {
 		String identifiantSession=null;
 		String password=utilisateur.getPassword().trim();
 		Utilisateur utilisateurParIdentifiant=null;
-		String utilisateurPassword=null;	
+		String utilisateurPassword=null;
+		
+
 		if( identifiant != null && identifiant.length() > 0  && password != null && password.length() > 0 ) {
 			utilisateurParIdentifiant=utilisateurRepository.findByIdentifiant(identifiant);			
 			if(utilisateurParIdentifiant != null  ) {					
@@ -323,10 +364,28 @@ public class UtilisateurController {
 					 String fonction=utilisateurRepository.fonctionUtilisateur(identifiantSession);
 					 if(fonction.equals(fonctionAdministrateur)) {
 						 model.addAttribute("cheminAccueil", "Accueil >");
-					
-						 
+						 model.addAttribute("accueilAdmin", "accueilAdmin");
+//							gestion Menu 
+							model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+							model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+							model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+							model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+							model.addAttribute("gestionMenuAgent", "gestionMenuAgent"); 
+							model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+							model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
+							model.addAttribute("accueilDeux", "accueilDeux");
 						 
 						 return "espaceUtilisateur";
+					 }
+					 else if(fonction.equals(fonctionUniteTechnique)) {
+						 model.addAttribute("cheminAccueil", "Accueil >");
+//							gestion Menu 			
+							model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+							model.addAttribute("accueilUniteTechnique", "accueilUniteTechnique");	
+							model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");	
+							model.addAttribute("accueilUniteTechniqueMessage", "accueilUniteTechniqueMessage");	
+						 return "espaceUtilisateur";
+						 
 					 }
 					 else {
 						 return "redirect:/accueilUtilisateurLien";
@@ -336,6 +395,8 @@ public class UtilisateurController {
 			}
 		}		 
 		 model.addAttribute("hasError", " Identifiant ou mot de passe incorrect");
+		 model.addAttribute("password", password);
+		 model.addAttribute("identifiant", identifiant);
         return "authentification";
     }
 	
@@ -350,6 +411,16 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
 		model.addAttribute("accueilAdmin", "accueilAdmin");
 		model.addAttribute("cheminAccueil", "Accueil >");
 		
@@ -375,7 +446,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("cheminAccueil", "Accueil >");
+		model.addAttribute("accueilDeux", "accueilDeux");
 		model.addAttribute("titre", "Gestion des utilisateurs");
 		model.addAttribute("cheminGestionUtilisateur", "Gestion des utilisateurs >");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
@@ -406,6 +485,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		Boolean estSupprimer=false;
 		List<String> agences=new ArrayList<String>();
 		agences=agenceRepository.findAllNomDirects(estSupprimer);
@@ -429,10 +517,7 @@ public class UtilisateurController {
 			model.addAttribute("identifiantSession", identifiantSession);
 			return "espaceUtilisateur";
 		}
-	
-			return "pageErreur";
-	
-        	
+			return "pageErreur";	
     }
 	
 	@Transactional
@@ -446,6 +531,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		Utilisateur utilisateurSave=null;
 		String identifiant=utilisateurDto.getIdentifiant().trim();
@@ -458,7 +552,6 @@ public class UtilisateurController {
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");	
 		
 		if( identifiant != null && identifiant.length() > 0 && identifiant.length()<=10 && password != null && password.length() > 0 && password.length()>4 && nomEtPrenom != null && nomEtPrenom.length() > 0 && fonction != null && fonction.length() > 0 ) {
-			System.out.println(" Identifiant utilisateur test : "+nomEtPrenom);
 			utilisateurSave=utilisateurRepository.findByIdentifiant(identifiant);
 				if(utilisateurSave == null) {
 					
@@ -528,6 +621,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("formNumeroModifUtil", "formNumeroModifUtil");
@@ -562,6 +664,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		String identifiant=utilisateur.getIdentifiant().trim();
 		sessionUtilisateur.setAttribute("identifiantCache", utilisateur.getIdentifiant());
 		
@@ -613,6 +724,14 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
 	
 		String identifiant=session.getAttribute("identifiantCache").toString().trim();
 		sessionUtilisateur.setAttribute("identifiant", utilisateur.getIdentifiant());
@@ -668,6 +787,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("messageUtilisateurNonExistant", "messageUtilisateurNonExistant");
@@ -699,6 +827,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("rechercheUtilisateur", "rechercheUtilisateur");
@@ -732,6 +869,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantAffiche);
 		String identifiant=utilisateur.getIdentifiant().trim();
@@ -771,6 +917,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantAffiche);
 		model.addAttribute("ajout", "ajout");
@@ -801,6 +956,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("titre", "Gestion des utilisateurs");
@@ -835,6 +999,14 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
 		
 		String identifiant=utilisateur.getIdentifiant().trim();
 		Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiant);
@@ -885,6 +1057,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		model.addAttribute("identifiantSession", identifiantSession);
 		String identifiant=utilisateur.getIdentifiant().trim();
@@ -988,6 +1169,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 
 		if(identifiantSession.length()>0) {
@@ -1009,6 +1199,15 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+//		gestion Menu 
+		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+		model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+		model.addAttribute("accueilDeux", "accueilDeux");
+		
 		List<Agent> agents=new ArrayList<Agent>();		
 		
 		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim(); 
@@ -1016,7 +1215,6 @@ public class UtilisateurController {
 		utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
 		Agence agence=utilisateur.getIdAgence();
 		agents=agentRepository.findAgentsByIdAgence(agence);
-		System.out.println("  Agents : "+agents);
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("listeAgentsDansAgence", "Liste des Agents > ");
 		model.addAttribute("agents", agents);

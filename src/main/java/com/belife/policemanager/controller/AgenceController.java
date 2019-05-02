@@ -61,6 +61,18 @@ public class AgenceController {
 			Boolean estSupprimer=false;
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgence", "listeAgence");
+			model.addAttribute("gestionMenuSequencePolice", "gestionMenuSequencePolice");
+			model.addAttribute("listeAgence", "listeAgence");
+			
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("gestionAgence", "gestionAgence");
 			model.addAttribute("menuNavigation", "menuNavigation");
 			List<Agence> agences=new ArrayList<Agence>();		
@@ -68,6 +80,7 @@ public class AgenceController {
 			model.addAttribute("agences", agences);
 	        return "espaceUtilisateur";			
 	    }
+	 
 	 @Transactional
 	 @RequestMapping(value = {"/ajoutAgence" }, method = RequestMethod.GET)
 	    public String ajoutAgence(Model model, HttpSession session) { 
@@ -80,6 +93,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminAjouterAgence", "Ajouter une Agence >");
@@ -107,7 +129,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
-		    
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			String codeAgence=agence.getCodeAgence().trim();
 			String codeDirect=agence.getCodeDirect().trim();
 			String nomDirect=agence.getNomDirect().trim();
@@ -180,6 +210,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminModifierAgence", "Modifier une Agence >");
@@ -208,6 +247,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminModifierAgence", "Modifier une Agence >");
@@ -247,6 +295,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			String codeAgence=agence.getCodeAgence().trim();
 			String codeDirect=agence.getCodeDirect().trim();
 			String nomDirect=agence.getNomDirect().trim();
@@ -323,9 +380,7 @@ public class AgenceController {
 					return "espaceUtilisateur";	
 				}
 			}
-			
-			
-			
+					
 			 agenceRecherche.setNomDirect(nomDirect);
 			 agenceRecherche.setCodeAgence(codeAgence);
 			 agenceRecherche.setCodeDirect(codeDirect);
@@ -355,7 +410,16 @@ public class AgenceController {
 			catch(Exception e) {
 				resultat="pageErreur";
 				return resultat;
-			}	
+			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminRechercherAgence", "Rechercher une Agence >");
@@ -384,6 +448,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			String codeDirect=agence.getCodeDirect().trim();
 			
 			session.setAttribute("codeAgenceCache", codeDirect);
@@ -419,6 +492,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminRechercherAgence", " Agence non existante >");
@@ -450,6 +532,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
@@ -477,6 +568,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
@@ -514,6 +614,15 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
@@ -545,7 +654,16 @@ public class AgenceController {
 			catch(Exception e) {
 				resultat="pageErreur";
 				return resultat;
-			}		
+			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
@@ -577,7 +695,16 @@ public class AgenceController {
 			catch(Exception e) {
 				resultat="pageErreur";
 				return resultat;
-			}		
+			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminModifierAgence", "Modifier Agence >");

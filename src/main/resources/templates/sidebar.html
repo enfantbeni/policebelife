@@ -14,22 +14,51 @@
                   Outils   <span class="caret"></span>
               </button>
               <ul class="dropdown-menu menu">
-					<li><a href="listeUtilisateur">Gestion des Utilisateurs</a></li>
-					<li><a href="gestionBanquePrincipale">Gestion des Banques</a></li>
-					<li><a href="gestionBanque">Gestion des Guichets</a></li>
-					<li><a href="gestionAgence">Gestion des Agences</a></li>
-					<li><a href="gestionAgent">Gestion des Agents</a></li>	
+              	 
+					<li th:if="${gestionMenuUtilisateur}">
+						<a href="listeUtilisateur">Gestion des Utilisateurs</a>
+					</li>
+				 
+					<li th:if="${gestionMenuBanque}">
+						<a href="gestionBanquePrincipale">Gestion des Banques</a>
+					</li>
 					
-					<li><a href="gestionSociete">Gestion des Sociétés</a></li>	
-					<li><a href="gestionSequencePolice">Gestion de Sequence Police</a></li>	
-					<li><a href="modulesUtilisateur">Gestion des Accès</a></li>
-					<li><a href="sourcePolice"> Source de prélèvement </a></li>					
+					<li th:if="${gestionMenuGuichet}">
+						<a href="gestionBanque">Gestion des Guichets</a>
+					</li>
+					
+					<li th:if="${gestionMenuAgence}">
+						<a href="gestionAgence">Gestion des Agences</a>
+					</li>
+					
+					<li th:if="${gestionMenuAgent}">
+						<a href="gestionAgent">Gestion des Agents</a>
+					</li>	
+					
+					<li th:if="${gestionMenuSociete}">
+						<a href="gestionSociete">Gestion des Sociétés</a>
+					</li>	
+					
+					<li th:if="${gestionMenuSequencePolice}">
+						<a href="gestionSequencePolice">Gestion de Sequence Police</a>
+					</li>	
+					
+					<li th:if="${gestionMenuUniteTechnique}">
+						<a href="ajoutSequencePolice">Gestion Sequence Police</a>
+					</li>	
+					
+<!-- 					<li><a href="modulesUtilisateur">Gestion des Accès</a></li> -->
+<!-- 					<li><a href="sourcePolice"> Source de prélèvement </a></li>					 -->
+
 			  </ul>
            </div>      
 		</nav>
    
-   		<div class="col-lg-2 bt_accueil" >    		
+   		<div class="col-lg-2 bt_accueil" th:if="${accueilDeux}">    		
    		    <a href="accueilDeux" class="btn btn-success accueil" role="button" aria-pressed="true"> Accueil</a>
+   		</div>
+   		<div class="col-lg-2 bt_accueil" th:if="${accueilDeuxUniteTechnique}">    		
+   		    <a href="accueilDeuxUniteTechnique" class="btn btn-success accueil" role="button" aria-pressed="true"> Accueil</a>
    		</div>
    		
   		<div class="col-lg-4 bord" > </div>

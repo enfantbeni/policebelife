@@ -58,6 +58,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("titre", "Gestion des Sociétés");
@@ -85,6 +94,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminAjouterSociete", "Ajouter une Société >");
@@ -113,6 +131,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminAjouterSociete", "Ajouter une Société >");
@@ -179,6 +206,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminModifierSociete", "Modifier une Société >");
@@ -208,6 +244,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminModifierSociete", "Modifier une Société >");
@@ -246,6 +291,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminModifierSociete", "Modifier une Société >");
@@ -349,6 +403,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminRechercherSociete", "Rechercher une Société >");
@@ -378,6 +441,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminRechercherSociete", "Rechercher une Société >");
@@ -409,6 +481,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminRechercherSociete", "Société Non Existante >");
@@ -441,6 +522,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminSupprimerSociete", "Supprimer une Société >");
@@ -470,6 +560,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminSupprimerSociete", "Supprimer une Société >");
@@ -509,6 +608,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminSupprimerSociete", "Supprimer une Société >");
@@ -543,6 +651,15 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminSupprimerSociete", "Supprimer une Société >");
@@ -575,7 +692,16 @@ public class SocieteController {
 			catch(Exception e) {
 				resultat="pageErreur";
 				return resultat;
-			}		
+			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminModifierSociete", "Modifier une Société >");

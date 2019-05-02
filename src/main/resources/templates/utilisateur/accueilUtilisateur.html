@@ -64,6 +64,10 @@
 				        <div th:replace="soumission/resultatAjoutPropositionErreur :: resultatAjoutPropositionErreur"></div>  
 				      </div>
 				      
+				      <div th:if="${voirDonneeSoumission}" >				      
+				        <div th:replace="soumission/voirDonneeSoumission :: voirDonneeSoumission"></div>  
+				      </div>
+				      
 				      <div th:if="${listeSoumission}" >				      
 				        <div th:replace="soumission/listeSoumission :: listeSoumission"></div>  
 				      </div>
@@ -71,6 +75,15 @@
 				      <div th:if="${listeAgentsDansAgence}" >				      
 				        <div th:replace="utilisateur/listeAgentsDansAgence :: listeAgentsDansAgence"></div>  
 				      </div>
+				      
+				      <div th:if="${MessageSequenceNonPositionne}" >				      
+				        <div th:replace="soumission/messageSequenceNonPositionne :: messageSequenceNonPositionne"></div>  
+				      </div>
+				      
+				      <div th:if="${MessageSequenceEpuise}" >				      
+				        <div th:replace="soumission/messageSequenceEpuise ::messageSequenceEpuise"></div>  
+				      </div>
+				      
 				      <div th:if="${gestionEditionCompte}" >				      
 				        <div th:replace="editionCompte/gestionEditionCompte :: gestionEditionCompte"></div>  
 				      </div>

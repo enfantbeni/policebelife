@@ -35,8 +35,15 @@ public class Agence implements Serializable {
 	
 	@OneToMany(targetEntity=com.belife.policemanager.model.entity.Agent.class, mappedBy = "idAgent")
 	List<Agent> agents;
+	
+	@OneToMany(targetEntity=com.belife.policemanager.model.entity.Sequence.class, mappedBy = "idSequence")
+	List<Sequence> sequences;
+	
 	@OneToMany(targetEntity=com.belife.policemanager.model.entity.Utilisateur.class, mappedBy = "idUtilisateur")
 	List<Utilisateur> utilisateurs;
+	
+	@OneToMany(targetEntity=com.belife.policemanager.model.entity.Client.class, mappedBy = "idClient")
+	List<Client> clients;
 	
 	public Agence() {
 		super();

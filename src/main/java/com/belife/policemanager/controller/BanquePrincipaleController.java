@@ -52,6 +52,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			Boolean estSupprimer=false;
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("cheminAccueil", "Accueil >");
@@ -78,6 +87,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			Boolean estSupprimer=false;
 			List<BanquePrincipale> banquePrincipales=new ArrayList<BanquePrincipale>();
 			banquePrincipales=banquePrincipaleRepository.findAllBanquePrincipales(estSupprimer);
@@ -105,6 +123,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			String nomBanque=banquePrincipale.getNomBanque().trim();
 			String codeBanque=banquePrincipale.getCodeBanque().trim();
 			List<BanquePrincipale> banquePrincipales=new ArrayList<BanquePrincipale>();
@@ -172,7 +199,16 @@ public class BanquePrincipaleController {
 			catch(Exception e) {
 				resultat="pageErreur";
 				return resultat;
-			}		
+			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			Boolean estSupprimer=false;
 			List<BanquePrincipale> banquePrincipales=new ArrayList<BanquePrincipale>();
 			banquePrincipales=banquePrincipaleRepository.findAllBanquePrincipales(estSupprimer);
@@ -201,12 +237,22 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			String codeBanque=banquePrincipale.getCodeBanque().trim();
 			BanquePrincipale banqueRecherche=banquePrincipaleRepository.findBanquePrincipaleByCode(codeBanque);			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminModifierBanque", "Modifier une Banque >");
 			model.addAttribute("titre", "Gestion des Banques");
+			session.setAttribute("codeBanquePrincipaleCache", codeBanque);	
 			if( banqueRecherche == null) {
 				 return "redirect:/messageBanquePrincipaleNonExistante";  
 			}							
@@ -238,6 +284,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			String nomBanque=banquePrincipale.getNomBanque().trim();
 			String codeBanque=banquePrincipale.getCodeBanque().trim();		
 			List<BanquePrincipale> banquePrincipales=new ArrayList<BanquePrincipale>();
@@ -383,6 +438,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminRechercherBanque", "Rechercher une Banque >");
@@ -411,6 +475,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminRechercherBanque", "Rechercher une Banque >");
@@ -442,6 +515,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}  
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminAccueil", "Accueil >");
@@ -475,6 +557,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminSupprimerBanque", "Supprimer une Banque >");
@@ -503,6 +594,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminSupprimerBanque", "Supprimer une Banque >");
@@ -541,6 +641,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminSupprimerBanque", "Supprimer une Banque >");
@@ -574,7 +683,16 @@ public class BanquePrincipaleController {
 			catch(Exception e) {
 				resultat="pageErreur";
 				return resultat;
-			}		
+			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminSupprimerBanque", "Supprimer une Banque >");
@@ -607,6 +725,15 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
 			model.addAttribute("cheminModifierBanque", "Modifier une Banque >");

@@ -29,6 +29,8 @@ public class Client implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idClient;
 	
+	@Column(name = "numeroPolice")
+	private String numeroPolice;
 	@Column(name = "genreAssure")
 	private String genreAssure;
 	@Column(name = "nomAssure")
@@ -90,11 +92,27 @@ public class Client implements Serializable {
 	@ManyToOne
     @JoinColumn(name = "idAgent")
     Agent idAgent;
+	
+	@ManyToOne
+    @JoinColumn(name = "idAgence")
+    Agence idAgence;
+	
+	@ManyToOne
+    @JoinColumn(name = "idSequence")
+    Sequence idSequence;
 
 	public Client() {
 		super();
 	}
 	
+	public String getNumeroPolice() {
+		return numeroPolice;
+	}
+
+	public void setNumeroPolice(String numeroPolice) {
+		this.numeroPolice = numeroPolice;
+	}
+
 	public Date getDateCreation() {
 		return dateCreation;
 	}
@@ -309,5 +327,23 @@ public class Client implements Serializable {
 	public void setIdAgent(Agent idAgent) {
 		this.idAgent = idAgent;
 	}
+
+	public Agence getIdAgence() {
+		return idAgence;
+	}
+
+	public void setIdAgence(Agence idAgence) {
+		this.idAgence = idAgence;
+	}
+
+	public Sequence getIdSequence() {
+		return idSequence;
+	}
+
+	public void setIdSequence(Sequence idSequence) {
+		this.idSequence = idSequence;
+	}
+
+	
 	
 }

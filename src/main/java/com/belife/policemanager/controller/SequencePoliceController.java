@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.belife.policemanager.model.dto.AgentDto;
+import com.belife.policemanager.model.dto.ClientDto;
+import com.belife.policemanager.model.dto.SequenceDto;
 import com.belife.policemanager.model.dto.SequencePoliceDto;
 import com.belife.policemanager.model.entity.Agence;
 import com.belife.policemanager.model.entity.Agent;
@@ -29,6 +32,7 @@ import com.belife.policemanager.model.entity.SequencePolice;
 import com.belife.policemanager.model.entity.Societe;
 import com.belife.policemanager.model.repository.AgenceRepository;
 import com.belife.policemanager.model.repository.BanqueRepository;
+import com.belife.policemanager.model.repository.ClientRepository;
 import com.belife.policemanager.model.repository.RolesRepository;
 import com.belife.policemanager.model.repository.SequencePoliceRepository;
 import com.belife.policemanager.model.repository.SequenceRepository;
@@ -58,6 +62,9 @@ public class SequencePoliceController {
 	 
 	 @Autowired
 	 SequencePoliceRepository sequencePoliceRepository;
+	 
+	 @Autowired
+	 ClientRepository clientRepository;
 	 
 	 String identifiantSession=null;
 	 
@@ -125,13 +132,15 @@ public class SequencePoliceController {
 		        }
 			 Boolean estSupprimer=false;
 		     PageRequest pageable = PageRequest.of(page, size);
-			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-//			 clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
-			 model.addAttribute("sequencePolices", seqPolicePage);	
-			List<Sequence> sequences=new ArrayList<Sequence>();
+		     List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
+			 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
+			 model.addAttribute("sequencesAffiche", sequencesAffiche);
+			List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+			model.addAttribute("nomAgences", nomAgences);
 			model.addAttribute("cheminAccueil", "Accueil >");
-			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-			model.addAttribute("cheminAjouterSequencePolice", "Ajouter une Sequence Police >");
+			model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+			model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");
+			model.addAttribute("cheminAjouterSequencePolice", "Positionner une Sequence >");
 			model.addAttribute("titre", " Gestion de Sequence ");										
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("formulaireGestionSequencePolice", "formulaireGestionSequencePolice");
@@ -192,6 +201,21 @@ public class SequencePoliceController {
 		 return sequencePoliceOrdreObjet;
 	 	}
 	 
+	 	@Transactional
+		public List<SequenceDto> transformerSequenceToSequenceDto(List<SequenceDto> sequenceDtosAffiche) {
+			Boolean estSupprimer=false;
+			List<Sequence> sequences = sequenceRepository.findAllSequencesGouper(estSupprimer);
+			for (Sequence sq : sequences) {
+				SequenceDto objetSequenceDto = new SequenceDto();
+				objetSequenceDto.setSeq(sq.getSeq());
+				objetSequenceDto.setNomAgence(sq.getIdAgence().getNomDirect());
+				objetSequenceDto.setDateCreation(sq.getDateCreation());
+				sequenceDtosAffiche.add(objetSequenceDto);
+			}
+			return sequenceDtosAffiche;
+			
+		}
+	 
 	 
 //	 	@Transactional
 //		public Page<SequencePoliceDto> transformerSequencePoliceToSequencePoliceDto(Page<SequencePoliceDto> sequencePoliceDtosAffiche, HttpServletRequest request) {
@@ -222,7 +246,7 @@ public class SequencePoliceController {
 	 
 		 @Transactional
 		 @RequestMapping(value = {"/resultatAjoutSequencePolice" }, method = RequestMethod.POST)
-		 public String resultatAjoutSequencePolice(Model model, @ModelAttribute("sequence") Sequence sequence , @ModelAttribute("sequenceDto") SequencePoliceDto sequenceDto,  HttpServletRequest request, @ModelAttribute("sequencePolice") SequencePolice sequencePolice , HttpSession session) { 		 
+		 public String resultatAjoutSequencePolice(Model model, @ModelAttribute("sequence") Sequence sequence, @ModelAttribute("sequenceDto") SequenceDto sequenceDto, @ModelAttribute("sequencePoliceDto") SequencePoliceDto sequencePoliceDto,  HttpServletRequest request, @ModelAttribute("sequencePolice") SequencePolice sequencePolice , HttpSession session) { 		 
 		 String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -242,61 +266,96 @@ public class SequencePoliceController {
 		        }
 			 Boolean estSupprimer=false;
 		     PageRequest pageable = PageRequest.of(page, size);
-			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-			 model.addAttribute("sequencePolices", seqPolicePage);
-		    
-			String seq=sequence.getSeq().trim();			
+//			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
+//			 model.addAttribute("sequencePolices", seqPolicePage);
+//		    
+			String seq=sequenceDto.getSeq().trim();	
+			String nomAgence=sequenceDto.getNomAgence().trim();
+			
 			model.addAttribute("cheminAccueil", "Accueil >");
-			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-			model.addAttribute("cheminAjouterSequencePolice", "Ajouter une Sequence Police >");
+			model.addAttribute("cheminAjouterSequencePolice", "Positionner une Sequence >");
 			model.addAttribute("titre", " Gestion de Sequence ");
 			
 			List<SequencePolice> sequencePolices=new ArrayList<SequencePolice>();
 			List<Sequence> sequences=new ArrayList<Sequence>();
 			Sequence sequenceSave=null;
-		
+			model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
 			model.addAttribute("menuNavigation", "menuNavigation");
+			List<Sequence> sequencesGrouper =sequenceRepository.findAllSequencesGouper(estSupprimer);
+			
+			
 			if( seq != null && seq.length()>0 ) {
 							Sequence seqExistant=null;
 							sequenceSave=sequenceRepository.findSequenceBySeq(seq);
 							
-							String seqOrdreChaine=renvoyerDerniereSequence(seq);
+//							String seqOrdreChaine=renvoyerDerniereSequence(seq);
 							
-							sequence.setSeq(seq);
-							sequence.setDateCreation(new Date());
-							sequence.setEstSupprimer(estSupprimer);
-							if(sequenceSave==null) {				
-							sequenceRepository.save(sequence);
-							seqExistant=sequenceRepository.findSequenceBySeq(seq);
+							session.setAttribute("seq", seq);
+							session.setAttribute("nomAgence", nomAgence);
+							model.addAttribute("seq", session.getAttribute("seq"));	
+							model.addAttribute("nomAgence", session.getAttribute("nomAgence"));	
+							
+							
+							if(sequenceSave==null) {	
+								sequence.setSeq(seq);
+								sequence.setDateCreation(new Date());
+								Agence idAgence=agenceRepository.findAgenceByNomDirect(nomAgence);
+								sequence.setIdAgence(idAgence);
+								sequence.setEstSupprimer(estSupprimer);
+								sequenceRepository.save(sequence);
+								model.addAttribute("ajoutSuccesSequencePolice", "Une sequence de Police ajoutée avec succès");
+								model.addAttribute("listeSequencePolice", "listeSequencePolice");
+								List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
+								 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
+								 model.addAttribute("sequencesAffiche", sequencesAffiche);
+								return "espaceUtilisateur";		
 							}
-							if(sequenceSave!=null) {
-							  seqExistant=sequenceRepository.findSequenceBySeq(seq);
-							}
 							
-							String seqPoliceOrdreChaine=null;
 							
-							seqPoliceOrdreChaine=seq.concat(seqOrdreChaine);
-							sequencePolice.setDateCreation(new Date());
-							sequencePolice.setEstSupprimer(estSupprimer);
-							sequencePolice.setIdSequence(seqExistant);
-							sequencePolice.setSeqPolice(seqPoliceOrdreChaine);
-							sequencePoliceRepository.save(sequencePolice);
 							
-							model.addAttribute("listeSequencePolice", "listeSequencePolice");
-							model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-						
-							model.addAttribute("ajoutSuccesSequencePolice", "Une sequence de Police ajoutée avec succès");							
-							seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-							model.addAttribute("sequencePolices", seqPolicePage);											
-							return "espaceUtilisateur";		
+							
+//							seqExistant=sequenceRepository.findSequenceBySeq(seq);
+//							}
+//							if(sequenceSave!=null) {
+//							  seqExistant=sequenceRepository.findSequenceBySeq(seq);
+//							}
+//							
+//							String seqPoliceOrdreChaine=null;
+//							
+//							seqPoliceOrdreChaine=seq.concat(seqOrdreChaine);
+//							sequencePolice.setDateCreation(new Date());
+//							sequencePolice.setEstSupprimer(estSupprimer);
+//							sequencePolice.setIdSequence(seqExistant);
+//							sequencePolice.setSeqPolice(seqPoliceOrdreChaine);
+//							sequencePoliceRepository.save(sequencePolice);
+//							
+							
+//							model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
+//						
+												
+//							seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
+//							model.addAttribute("sequencePolices", seqPolicePage);		
+							
+							
 			}
-			
-			sequencePolices=sequencePoliceRepository.findAllSequencePolices(estSupprimer);
-			model.addAttribute("sequencePolices", sequencePolices);
+			List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
+			 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
+			 model.addAttribute("sequencesAffiche", sequencesAffiche);
+			 model.addAttribute("listeSequencePolice", "listeSequencePolice");
+			model.addAttribute("erreurSequence", " Sequence déjà attribuée");	
+			model.addAttribute("formErreurSequencePolice", "formErreurSequencePolice");	
+//			sequencePolices=sequencePoliceRepository.findAllSequencePolices(estSupprimer);
+//			model.addAttribute("sequencePolices", sequencePolices);
+			List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+			model.addAttribute("nomAgences", nomAgences);
+			model.addAttribute("cheminAccueil", "Accueil >");
+			model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+			model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");
+			model.addAttribute("cheminAjouterSequencePolice", "Positionner une Sequence >");
+			model.addAttribute("titre", " Gestion de Sequence de Police");										
 			model.addAttribute("identifiantSession", identifiantSession);
-			model.addAttribute("resultatAjoutSequencePolice", "resultatAjoutSequencePolice");
 			model.addAttribute("formulaireGestionSequencePolice", "formulaireGestionSequencePolice");
 			model.addAttribute("listeSequencePolice", "listeSequencePolice");
 			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
@@ -304,123 +363,123 @@ public class SequencePoliceController {
 	        return "espaceUtilisateur";			
 	 }
 	 
-	 @Transactional
-	 @RequestMapping(value = {"/modifierSequencePolice" }, method = RequestMethod.GET)
-	    public String modifierSequencePolice(Model model, HttpSession session, HttpServletRequest request ) { 
-			String resultat=null;
-			try {
-				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-			}
-			catch(Exception e) {
-				resultat="pageErreur";
-				return resultat;
-			}	
-			int page = 0;
-			 int size = 20;
-			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-		            page = Integer.parseInt(request.getParameter("page")) - 1;
-		        }
-			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-		            size = Integer.parseInt(request.getParameter("size"));
-		        }
-			 Boolean estSupprimer=false;
-		     PageRequest pageable = PageRequest.of(page, size);
-			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-//			 clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
-			 model.addAttribute("sequencePolices", seqPolicePage);
-			 
-			List<SequencePolice> sequencePolices=new ArrayList<SequencePolice>();
-			model.addAttribute("cheminAccueil", "Accueil >");
-			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-			model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence Police >");
-			model.addAttribute("titre", "Gestion de Sequence");
-			model.addAttribute("formulaireNumeroModifSequencePolice", "formulaireNumeroModifSequencePolice");
-			model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
-			model.addAttribute("identifiantSession", identifiantSession);
-			model.addAttribute("listeSequencePolice", "listeSequencePolice");
-			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-			model.addAttribute("menuNavigation", "menuNavigation");
-	        return "espaceUtilisateur";	
-	    }
-	 
-	 
-		 @Transactional
-		 @RequestMapping(value = {"/formulaireNumeroModifSequencePolice" }, method = RequestMethod.POST)
-	    public String formulaireNumeroModifSequencePolice(Model model, @ModelAttribute("sequence") Sequence sequence ,HttpServletRequest request  , @ModelAttribute("sequencePolice") SequencePolice sequencePolice, @ModelAttribute("sequenceDto") SequencePoliceDto sequenceDto, HttpSession sessionUtilisateur, HttpSession session) {
-			String resultat=null;
-			try {
-				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-			}
-			catch(Exception e) {
-				resultat="pageErreur";
-				return resultat;
-			}
-			 int page = 0;
-			 int size = 20;
-			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-		            page = Integer.parseInt(request.getParameter("page")) - 1;
-		        }
-			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-		            size = Integer.parseInt(request.getParameter("size"));
-		        }
-			 Boolean estSupprimer=false;
-		     PageRequest pageable = PageRequest.of(page, size);
-			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-//			 clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
-			 model.addAttribute("sequencePolices", seqPolicePage);
-			model.addAttribute("cheminAccueil", "Accueil >");
-			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-			model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence Police >");
-			model.addAttribute("titre", "Gestion de Sequence");
-			String seq=sequence.getSeq().trim();
-			Sequence sequenceRecherche=sequenceRepository.findSequenceBySeq(seq);
-			session.setAttribute("seqCache", seq);
-			if( sequenceRecherche == null) {
-				 return "redirect:/messageSequencePoliceNonExistante";  
-			}
-			
-			model.addAttribute("titre", " Gestion d'Agence");
-			session.setAttribute("seqCache", seq);	
-			model.addAttribute("formulaireGestionModifSequencePolice", "formulaireGestionModifSequencePolice");
-			model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
-			model.addAttribute("sequencePoliceRecherche", sequenceRecherche);
-			model.addAttribute("identifiantSession", identifiantSession);
-			model.addAttribute("listeSequencePolice", "listeSequencePolice");
-			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-			model.addAttribute("menuNavigation", "menuNavigation");			
-	        return "espaceUtilisateur";	
-	    }
-		 
-		 @Transactional
-			@RequestMapping(value = "/sequencePolices")
-		    public ModelAndView listArticlesPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="20") int size,  @ModelAttribute("sequencePolice") SequencePolice sequencePolice, Model model, HttpSession session, HttpServletRequest request) {
-		        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
-		        Boolean estSupprimer=false;
-		         size=20;
-		        PageRequest pageable = PageRequest.of(page-1, size);
-		        Page<SequencePolice> sequencePolices = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-	 
-				 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-			            page = Integer.parseInt(request.getParameter("page")) - 1;
-			        }
-				 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-			            size = Integer.parseInt(request.getParameter("size"));
-			        }
-				model.addAttribute("sequencePolices",  sequencePolices);
-						
-				model.addAttribute("cheminAccueil", "Accueil >");
-				model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-				model.addAttribute("identifiantSession", identifiantSession);
-				model.addAttribute("titre", "Liste de numeros de Police");
-				model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
-				model.addAttribute("identifiantSession", identifiantSession);
-				model.addAttribute("listeSequencePolice", "listeSequencePolice");
-				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-				model.addAttribute("listeSequencePolice", "listeSequencePolice");
-				model.addAttribute("menuNavigation", "menuNavigation");
-		        return modelAndView;
-		    }
-	 
+//	 @Transactional
+//	 @RequestMapping(value = {"/modifierSequencePolice" }, method = RequestMethod.GET)
+//	    public String modifierSequencePolice(Model model, HttpSession session, HttpServletRequest request ) { 
+//			String resultat=null;
+//			try {
+//				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+//			}
+//			catch(Exception e) {
+//				resultat="pageErreur";
+//				return resultat;
+//			}	
+//			int page = 0;
+//			 int size = 20;
+//			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+//		            page = Integer.parseInt(request.getParameter("page")) - 1;
+//		        }
+//			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+//		            size = Integer.parseInt(request.getParameter("size"));
+//		        }
+//			 Boolean estSupprimer=false;
+//		     PageRequest pageable = PageRequest.of(page, size);
+//			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
+////			 clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
+//			 model.addAttribute("sequencePolices", seqPolicePage);
+//			 
+//			List<SequencePolice> sequencePolices=new ArrayList<SequencePolice>();
+//			model.addAttribute("cheminAccueil", "Accueil >");
+//			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
+//			model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence Police >");
+//			model.addAttribute("titre", "Gestion de Sequence");
+//			model.addAttribute("formulaireNumeroModifSequencePolice", "formulaireNumeroModifSequencePolice");
+//			model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
+//			model.addAttribute("identifiantSession", identifiantSession);
+//			model.addAttribute("listeSequencePolice", "listeSequencePolice");
+//			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
+//			model.addAttribute("menuNavigation", "menuNavigation");
+//	        return "espaceUtilisateur";	
+//	    }
+//	 
+//	 
+//		 @Transactional
+//		 @RequestMapping(value = {"/formulaireNumeroModifSequencePolice" }, method = RequestMethod.POST)
+//	    public String formulaireNumeroModifSequencePolice(Model model, @ModelAttribute("sequence") Sequence sequence ,HttpServletRequest request  , @ModelAttribute("sequencePolice") SequencePolice sequencePolice, @ModelAttribute("sequenceDto") SequencePoliceDto sequenceDto, HttpSession sessionUtilisateur, HttpSession session) {
+//			String resultat=null;
+//			try {
+//				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+//			}
+//			catch(Exception e) {
+//				resultat="pageErreur";
+//				return resultat;
+//			}
+//			 int page = 0;
+//			 int size = 20;
+//			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+//		            page = Integer.parseInt(request.getParameter("page")) - 1;
+//		        }
+//			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+//		            size = Integer.parseInt(request.getParameter("size"));
+//		        }
+//			 Boolean estSupprimer=false;
+//		     PageRequest pageable = PageRequest.of(page, size);
+//			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
+////			 clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
+//			 model.addAttribute("sequencePolices", seqPolicePage);
+//			model.addAttribute("cheminAccueil", "Accueil >");
+//			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
+//			model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence Police >");
+//			model.addAttribute("titre", "Gestion de Sequence");
+//			String seq=sequence.getSeq().trim();
+//			Sequence sequenceRecherche=sequenceRepository.findSequenceBySeq(seq);
+//			session.setAttribute("seqCache", seq);
+//			if( sequenceRecherche == null) {
+//				 return "redirect:/messageSequencePoliceNonExistante";  
+//			}
+//			
+//			model.addAttribute("titre", " Gestion d'Agence");
+//			session.setAttribute("seqCache", seq);	
+//			model.addAttribute("formulaireGestionModifSequencePolice", "formulaireGestionModifSequencePolice");
+//			model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
+//			model.addAttribute("sequencePoliceRecherche", sequenceRecherche);
+//			model.addAttribute("identifiantSession", identifiantSession);
+//			model.addAttribute("listeSequencePolice", "listeSequencePolice");
+//			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
+//			model.addAttribute("menuNavigation", "menuNavigation");			
+//	        return "espaceUtilisateur";	
+//	    }
+//		 
+//		 @Transactional
+//			@RequestMapping(value = "/sequencePolices")
+//		    public ModelAndView listArticlesPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="20") int size,  @ModelAttribute("sequencePolice") SequencePolice sequencePolice, Model model, HttpSession session, HttpServletRequest request) {
+//		        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
+//		        Boolean estSupprimer=false;
+//		         size=20;
+//		        PageRequest pageable = PageRequest.of(page-1, size);
+//		        Page<SequencePolice> sequencePolices = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
+//	 
+//				 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+//			            page = Integer.parseInt(request.getParameter("page")) - 1;
+//			        }
+//				 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+//			            size = Integer.parseInt(request.getParameter("size"));
+//			        }
+//				model.addAttribute("sequencePolices",  sequencePolices);
+//						
+//				model.addAttribute("cheminAccueil", "Accueil >");
+//				model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
+//				model.addAttribute("identifiantSession", identifiantSession);
+//				model.addAttribute("titre", "Liste de numeros de Police");
+//				model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
+//				model.addAttribute("identifiantSession", identifiantSession);
+//				model.addAttribute("listeSequencePolice", "listeSequencePolice");
+//				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
+//				model.addAttribute("listeSequencePolice", "listeSequencePolice");
+//				model.addAttribute("menuNavigation", "menuNavigation");
+//		        return modelAndView;
+//		    }
+//	 
 		 
 		 @Transactional
 		 @RequestMapping(value = {"/rechercheSequencePolice" }, method = RequestMethod.GET)
@@ -462,8 +521,8 @@ public class SequencePoliceController {
 	 
 		 
 		 @Transactional
-		 @RequestMapping(value = {"/resultatRechercheSequencePolice" }, method = RequestMethod.POST)
-		 public String resultatRechercheSequencePolice(Model model,  HttpServletRequest request, @ModelAttribute("sequence") Sequence sequence , @ModelAttribute("sequencePolice") SequencePolice sequencePolice , HttpSession session) { 		 
+		 @RequestMapping(value = {"/resultatModifSequencePolice" }, method = RequestMethod.POST)
+		 public String resultatModifSequencePolice(Model model,  HttpServletRequest request, @ModelAttribute("sequence") Sequence sequence , @ModelAttribute("sequenceDto") SequenceDto sequenceDto , @ModelAttribute("sequencePolice") SequencePolice sequencePolice , HttpSession session) { 		 
 		 String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -472,112 +531,243 @@ public class SequencePoliceController {
 				resultat="pageErreur";
 				return resultat;
 			}
-			
-			int page = 0;
-			 int size = 20;
-			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-		            page = Integer.parseInt(request.getParameter("page")) - 1;
-		        }
-			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-		            size = Integer.parseInt(request.getParameter("size"));
-		        }
-			 Boolean estSupprimer=false;
-		     PageRequest pageable = PageRequest.of(page, size);
-			 Page<SequencePolice> seqPolicePage = null;
 	
-			String seq=sequence.getSeq().trim();	
+			String seq=sequenceDto.getSeq().trim();
+			String nomAgence=sequenceDto.getNomAgence().trim();
 			session.setAttribute("seq", seq);
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
 			model.addAttribute("cheminAjouterSequencePolice", "Ajouter une Sequence Police >");
 			model.addAttribute("titre", " Gestion de Sequence ");
-			
+			boolean estSupprimer=false;
 			List<SequencePolice> sequencePolices=new ArrayList<SequencePolice>();
 			List<Sequence> sequences=new ArrayList<Sequence>();
 		
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
 			model.addAttribute("menuNavigation", "menuNavigation");
-							
+			String seqModif=session.getAttribute("seqARecuperer").toString().trim();
+				if( seq != null && seq.length()>0 ) {
+					
+					Sequence sequenceAModifier=sequenceRepository.findSequenceModifBySeq(seq, seqModif, estSupprimer);
+					Agence idAgence=agenceRepository.findAgenceByNomDirect(nomAgence);
+								
+					session.setAttribute("seq", seq);
+					session.setAttribute("nomAgence", nomAgence);
+					model.addAttribute("seq", session.getAttribute("seq"));	
+					model.addAttribute("nomAgence", session.getAttribute("nomAgence"));	
+					
+					if(sequenceAModifier == null) {
+						Sequence seqSave=sequenceRepository.findSequenceBySeq(seqModif);
 						
+						seqSave.setSeq(seq);
+						seqSave.setDateCreation(new Date());
+						seqSave.setIdAgence(idAgence);
+						seqSave.setEstSupprimer(estSupprimer);
+						sequenceRepository.save(seqSave);
+						List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+						model.addAttribute("nomAgences", nomAgences);
+						model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
+						model.addAttribute("cheminAccueil", "Accueil >");
+						model.addAttribute("modifSequencePolice", "Sequence de Police modifiée avec succès");
+						model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
+						model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence >");
+						model.addAttribute("titre", "Gestion de sequence de police");
+						model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");
+						model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+						model.addAttribute("identifiantSession", identifiantSession);	
+						model.addAttribute("actionQuatreBouton", "actionQuatreBouton");	
+						model.addAttribute("menuNavigation", "menuNavigation");	
+						model.addAttribute("listeSequencePolice", "listeSequencePolice");
+						List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
+						List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
+						model.addAttribute("sequencesAffiche", sequencesAffiche);
+						
+						
+						return "espaceUtilisateur";	
+						
+					}
+					
+				}
+							model.addAttribute("erreurSequence", " Sequence déjà attribuée");	
+							model.addAttribute("formErreurSequencePolice", "formErreurSequencePolice");	
+							List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+							model.addAttribute("nomAgences", nomAgences);
 							model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-							model.addAttribute("resultatRechercheSequencePolice", "resultatRechercheSequencePolice");
-							sequence=sequenceRepository.findSequenceBySeq(seq);
-							seqPolicePage=sequencePoliceRepository.findAllSequencePolicesBySeq(sequence, estSupprimer, pageable );
-							model.addAttribute("sequencePolices", seqPolicePage);											
+							model.addAttribute("cheminAccueil", "Accueil >");
+							model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
+							model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence >");
+							model.addAttribute("titre", "Gestion de sequence de police");
+							model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");
+							model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+							model.addAttribute("identifiantSession", identifiantSession);	
+							model.addAttribute("formulaireGestionModifSequencePolice", "formulaireGestionModifSequencePolice");
+							model.addAttribute("actionQuatreBouton", "actionQuatreBouton");	
+							model.addAttribute("menuNavigation", "menuNavigation");	
+							model.addAttribute("listeSequencePolice", "listeSequencePolice");
+							List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
+							List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
+							model.addAttribute("sequencesAffiche", sequencesAffiche);
+																
 							return "espaceUtilisateur";		
 		
 	    		
 	 }
 		 
+//		 @Transactional
+//			@RequestMapping(value = "/numeroPolices")
+//		    public ModelAndView numeroPolicesBySeq(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="20") int size, @ModelAttribute("sequence") Sequence sequence, @ModelAttribute("sequencePolice") SequencePolice sequencePolice, Model model, HttpSession session, HttpServletRequest request) {
+//		        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
+//		        Boolean estSupprimer=false;
+//		         size=20;
+//		        PageRequest pageable = PageRequest.of(page-1, size);
+//		        Page<SequencePolice> sequencePolices = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
+//	 
+//				 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+//			            page = Integer.parseInt(request.getParameter("page")) - 1;
+//			        }
+//				 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+//			            size = Integer.parseInt(request.getParameter("size"));
+//			        }
+//				 String seq=session.getAttribute("seq").toString().trim();
+//				 sequence=sequenceRepository.findSequenceBySeq(seq);
+//				 Page<SequencePolice> seqPolicePage=sequencePoliceRepository.findAllSequencePolicesBySeq(sequence, estSupprimer, pageable );
+//				 model.addAttribute("sequencePolices", seqPolicePage);	
+//						
+//				model.addAttribute("cheminAccueil", "Accueil >");
+//				model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
+//				model.addAttribute("identifiantSession", identifiantSession);
+//				model.addAttribute("titre", "Liste de numeros de Police");
+//				model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
+//				model.addAttribute("identifiantSession", identifiantSession);
+//				model.addAttribute("resultatRechercheSequencePolice", "resultatRechercheSequencePolice");
+//				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
+//				model.addAttribute("menuNavigation", "menuNavigation");
+//		        return modelAndView;
+//		    }
+		 
 		 @Transactional
-			@RequestMapping(value = "/numeroPolices")
-		    public ModelAndView numeroPolicesBySeq(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="20") int size, @ModelAttribute("sequence") Sequence sequence, @ModelAttribute("sequencePolice") SequencePolice sequencePolice, Model model, HttpSession session, HttpServletRequest request) {
-		        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
-		        Boolean estSupprimer=false;
-		         size=20;
-		        PageRequest pageable = PageRequest.of(page-1, size);
-		        Page<SequencePolice> sequencePolices = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
+		 @RequestMapping(value = {"/envoiDonneeCacheeSequencePolice" }, method = RequestMethod.POST)
+		    public String envoiDonneeCacheeSociete(Model model,  @ModelAttribute("sequence") Sequence sequence,  @ModelAttribute("sequenceDto") SequenceDto sequenceDto , @ModelAttribute("sequencePolice") SequencePolice sequencePolice, HttpSession session) {
+				String resultat=null;
+				try {
+					identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+				}
+				catch(Exception e) {
+					resultat="pageErreur";
+					return resultat;
+				}	
+				Boolean estSupprimer=false;
+				String seq=sequence.getSeq().trim();
+				session.setAttribute("seq", seq);
+				session.setAttribute("seqARecuperer", seq);
+				
+				model.addAttribute("seq", session.getAttribute("seq"));
+				List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+				model.addAttribute("nomAgences", nomAgences);
+				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
+				model.addAttribute("cheminAccueil", "Accueil >");
+				model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
+				model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence >");
+				model.addAttribute("titre", "Gestion de sequence de police");
+				model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");
+				model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+				model.addAttribute("identifiantSession", identifiantSession);	
+				model.addAttribute("formulaireGestionModifSequencePolice", "formulaireGestionModifSequencePolice");
+				model.addAttribute("actionQuatreBouton", "actionQuatreBouton");	
+				model.addAttribute("menuNavigation", "menuNavigation");	
+				model.addAttribute("listeSequencePolice", "listeSequencePolice");
+				List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
+				List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
+				model.addAttribute("sequencesAffiche", sequencesAffiche);
+				
+		        return "espaceUtilisateur";	
+		    }
 	 
+		 @Transactional
+		 @RequestMapping(value = {"/informationAgence" }, method = RequestMethod.GET)
+		    public String informationAgence(Model model, HttpSession session, @ModelAttribute("clientDto") ClientDto clientDto,@ModelAttribute("agence") Agence agence,HttpServletRequest request ) { 
+			 
+			 String resultat=null;
+				try {
+					identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+				}
+				catch(Exception e) {
+					resultat="pageErreur";
+					return resultat;
+				}
+				
+				String nomAgence=agence.getNomDirect();
+				
+				
+				 Boolean estSupprimer=false;
+			     List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
+				 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
+				 model.addAttribute("sequencesAffiche", sequencesAffiche);
+				List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+				model.addAttribute("nomAgences", nomAgences);
+				model.addAttribute("cheminAccueil", "Accueil >");
+				model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+				model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");
+				model.addAttribute("cheminAjouterSequencePolice", "S'informer sur une Agence >");
+				model.addAttribute("titre", " Gestion de Sequence ");										
+				model.addAttribute("identifiantSession", identifiantSession);
+				model.addAttribute("formulaireInformationAgence", "formulaireInformationAgence");
+				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
+				model.addAttribute("menuNavigation", "menuNavigation");
+		        return "espaceUtilisateur";			
+		    }
+		 
+		 @Transactional
+		 @RequestMapping(value = {"/sequenceEtDate" }, method = RequestMethod.POST)
+		    public String sequenceEtDate(Model model, HttpSession session, @ModelAttribute("clientDto") ClientDto clientDto,@ModelAttribute("agence") Agence agence,HttpServletRequest request ) { 
+			 
+			 String resultat=null;
+				try {
+					identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+				}
+				catch(Exception e) {
+					resultat="pageErreur";
+					return resultat;
+				}
+				
+				int page = 0;
+				 int size = 20;
 				 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 			            page = Integer.parseInt(request.getParameter("page")) - 1;
 			        }
 				 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
 			            size = Integer.parseInt(request.getParameter("size"));
 			        }
-				 String seq=session.getAttribute("seq").toString().trim();
-				 sequence=sequenceRepository.findSequenceBySeq(seq);
-				 Page<SequencePolice> seqPolicePage=sequencePoliceRepository.findAllSequencePolicesBySeq(sequence, estSupprimer, pageable );
-				 model.addAttribute("sequencePolices", seqPolicePage);	
-						
+				 Boolean estSupprimer=false;
+			     PageRequest pageable = PageRequest.of(page, size);
+				
+				
+				String nomAgence=agence.getNomDirect();
+				agence=agenceRepository.findAgenceByNomDirect(nomAgence);
+				
+				Page<Client> clientSoumis=clientRepository.findAllClientsPage(estSupprimer,agence, pageable);
+				model.addAttribute("clientSoumis", clientSoumis);
+				
+			     List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
+				 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
+				 model.addAttribute("sequencesAffiche", sequencesAffiche);
+				List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+				model.addAttribute("nomAgences", nomAgences);
+				model.addAttribute("nomAgence", nomAgence);
 				model.addAttribute("cheminAccueil", "Accueil >");
-				model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
+				model.addAttribute("listeNumeroPoliceParAgence", "listeNumeroPoliceParAgence");
+				model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+				model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");
+				model.addAttribute("cheminAjouterSequencePolice", "S'informer sur une Agence >");
+				model.addAttribute("titre", " Gestion de Sequence ");										
 				model.addAttribute("identifiantSession", identifiantSession);
-				model.addAttribute("titre", "Liste de numeros de Police");
-				model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
-				model.addAttribute("identifiantSession", identifiantSession);
-				model.addAttribute("resultatRechercheSequencePolice", "resultatRechercheSequencePolice");
+				model.addAttribute("formulaireInformationAgence", "formulaireInformationAgence");
 				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
 				model.addAttribute("menuNavigation", "menuNavigation");
-		        return modelAndView;
+		        return "espaceUtilisateur";			
 		    }
-//		 @Transactional
-//		 @RequestMapping(value = {"/envoiCacheModifSequencePolice" }, method = RequestMethod.POST)
-//		    public String envoiDonneeCacheeSociete(Model model,  @ModelAttribute("sequence") Sequence sequence , @ModelAttribute("sequencePolice") SequencePolice sequencePolice, HttpSession session) {
-//				String resultat=null;
-//				try {
-//					identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-//				}
-//				catch(Exception e) {
-//					resultat="pageErreur";
-//					return resultat;
-//				}		
-//				model.addAttribute("cheminAccueil", "Accueil >");
-//				model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-//				model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence Police >");
-//				model.addAttribute("titre", "Gestion des numeros de police");
-//
-//				String codeSociete=societe.getCodeSociete().trim();
-//				Societe societeRecherche=societeRepository.findSocieteByCode(codeSociete);
-//				Boolean estSupprimer=false;
-//				List<Societe> societes=new ArrayList<Societe>();
-//				model.addAttribute("titre", " Gestion de Société");
-//				societes=societeRepository.findAllSocietes(estSupprimer);
-//				model.addAttribute("societes", societes);
-//				session.setAttribute("codeSocieteCache", codeSociete);	
-//				model.addAttribute("formulaireGestionModifSociete", "formulaireGestionModifSociete");
-//				model.addAttribute("actionQuatreBouton", "actionQuatreBouton");	
-//				model.addAttribute("societeRecherche", societeRecherche);
-//				model.addAttribute("identifiantSession", identifiantSession);
-//				model.addAttribute("listeSociete", "listeSociete");
-//				model.addAttribute("gestionSociete", "gestionSociete");
-//				model.addAttribute("menuNavigation", "menuNavigation");			
-//		        return "espaceUtilisateur";	
-//		    }
-	 
-	 
-	 
-	 
+		 
 	 
 	 
 	 

@@ -39,8 +39,8 @@
                  <div class="col-md-4 col-xs-4 np">
                   	<label> Nom et prenom : </label>
              	 </div>
-             	 <div class="col-md-8 col-xs-8">
-                  	<input type="text" name="nomEtPrenom" data-th-value="${utilisateurRecherche.nomEtPrenom}"  class="form-control"  autocomplete="off"/>
+             	 <div class="col-md-4 col-xs-4">
+                  	<input type="text" name="nomEtPrenom" required data-th-value="${utilisateurRecherche.nomEtPrenom}"  class="form-control"  autocomplete="off"/>
              	 </div>           
              </div> 
               
@@ -48,7 +48,7 @@
                  <div class="col-md-4 col-xs-4">
                   	<label> Fonction : </label>
              	 </div>
-             	 <div class="col-md-8 col-xs-8">
+             	 <div class="col-md-4 col-xs-4">
                   	<select id="select" class="form-control" name="fonction" data-th-value="${utilisateurRecherche.fonction}" > 
 						<option>Commercial</option>
 						<option>Technicien</option>
@@ -63,8 +63,8 @@
                  <div class="col-md-4 col-xs-4 np">
                   	<label> Identifiant : </label>
              	 </div>
-             	 <div class="col-md-8 col-xs-8">
-                  	<input type="text" name="identifiant" data-th-value="${utilisateurRecherche.identifiant}" class="form-control"  autocomplete="off"/>
+             	 <div class="col-md-4 col-xs-4">
+                  	<input type="text" required name="identifiant" data-th-value="${utilisateurRecherche.identifiant}" class="form-control"  autocomplete="off"/>
              	 </div>           
              </div>  
              

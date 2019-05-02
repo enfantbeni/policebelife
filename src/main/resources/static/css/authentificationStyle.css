@@ -38,7 +38,7 @@ div.leftAlign input:focus{
 input[type="text"],input[type="password"]:focus{
 	background-color:#ffffff;
 }
-.contenuBlanc{Background-color:#ffffff; min-height:580px;}
+.contenuBlanc{Background-color:#ffffff; height:650px;}
 section{Background-color:#ffffff}
 form{margin:0px}
 form div{text-align:center}
@@ -60,11 +60,12 @@ form div{text-align:center}
 	color: #ffa500;
 	background-color:#008000;
 	border:1px solid #008000;
-	
 }
 .mot {text-align:right; font-size: 20px;font-style:italic;padding:20px 20% 20px 0px}
 .contenu{background-color: #ffffff}
 
-
+.passwordOublie{
+	margin-bottom:120px;
+}
 
 

@@ -51,15 +51,18 @@
 		 
 		 <div class="contenuChemin" th:if="${listeAgentsDansAgence}"> <div  th:utext="${listeAgentsDansAgence}" >chemin </div></div>
 		 
-		 <div class="contenuChemin" th:if="${cheminGestionSequencePolice}"> <div  th:utext="${cheminGestionSequencePolice}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminAjouterSequencePolice}"> <div  th:utext="${cheminAjouterSequencePolice}" >chemin </div></div>
 		 
 		 <div class="contenuChemin" th:if="${ cheminModifierSequencePolice}"> <div  th:utext="${ cheminModifierSequencePolice}" >chemin </div></div>
-		 
 		  
 		 <div class="contenuChemin" > <div  th:utext="${cheminSoumission}" >chemin </div></div>
+		  <div class="contenuChemin" th:if="${ cheminVerificationSoumission}"> <div  th:utext="${ cheminVerificationSoumission}" >chemin </div></div>
+		<div class="contenuChemin" th:if="${cheminModificationSoumission}"> <div  th:utext="${cheminModificationSoumission}" >chemin </div></div>
+		 <div class="contenuChemin" th:if="${cheminVoirSoumission}"> <div  th:utext="${cheminVoirSoumission}" >chemin </div></div>
+		
 		 <div class="contenuChemin" ><div th:utext="${cheminConsultationLB}" >chemin </div></div>
 		 
-		 
+		
 		
 		</div>
 	    

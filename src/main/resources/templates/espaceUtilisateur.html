@@ -109,8 +109,19 @@
 				     <div th:if="${gestionSequencePolice}">
 				         <div  th:replace="sequencePolice/gestionSequencePolice :: gestionSequencePolice" ></div> 
 				     </div>	
-				    
-				     	      
+				     
+				     <div th:if="${accueilUniteTechnique}">
+				         <div  th:replace="uniteTechnique/accueilUniteTechnique :: accueilUniteTechnique" ></div> 
+				     </div>
+				     											
+				     <div th:if="${messageAccueilEspaceAdmin}">
+				         <div  th:replace="messageAccueilEspaceAdmin :: messageAccueilEspaceAdmin" ></div> 
+				     </div>
+				     
+				     <div th:if="${listeNumeroPoliceParAgence}">
+				         <div  th:replace="sequencePolice/listeSequencePoliceParAgence :: listeNumeroPoliceParAgence" ></div> 
+				     </div>
+				     			     	      
 		  </section> 		  		  
 	 </div>
 	

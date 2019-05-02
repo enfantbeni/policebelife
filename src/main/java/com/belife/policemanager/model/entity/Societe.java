@@ -34,7 +34,7 @@ public class Societe implements Serializable {
 	private String nomSociete;
 	@Column(name = "dateCreation")
 	private Date dateCreation;
-	@Column(name = "estSupprime", nullable=false)
+	@Column(name = "estSupprime")
 	private Boolean estSupprimer;
 	
 //	@ManyToOne

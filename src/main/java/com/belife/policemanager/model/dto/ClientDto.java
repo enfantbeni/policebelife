@@ -1,10 +1,14 @@
 package com.belife.policemanager.model.dto;
 
 public class ClientDto {
+	private String testEnvoye;
+	private String propositionSoumise;
+	private String numeroPolice;
 	private String planDuree;
 	private String genreAssure;
 	private String nomAssure;
 	private String nomClient;
+	private String nomSource;
 	private String numero;
 	private String banque;
 	private String periodicite;
@@ -28,6 +32,38 @@ public class ClientDto {
 		super();
 	}
 	
+	public String getTestEnvoye() {
+		return testEnvoye;
+	}
+
+	public void setTestEnvoye(String testEnvoye) {
+		this.testEnvoye = testEnvoye;
+	}
+
+	public String getPropositionSoumise() {
+		return propositionSoumise;
+	}
+
+	public void setPropositionSoumise(String propositionSoumise) {
+		this.propositionSoumise = propositionSoumise;
+	}
+	
+	public String getNomSource() {
+		return nomSource;
+	}
+
+	public void setNomSource(String nomSource) {
+		this.nomSource = nomSource;
+	}
+
+	public String getNumeroPolice() {
+		return numeroPolice;
+	}
+
+	public void setNumeroPolice(String numeroPolice) {
+		this.numeroPolice = numeroPolice;
+	}
+
 	public String getDateNaissance() {
 		return dateNaissance;
 	}

@@ -35,8 +35,8 @@
                   	<label> Code Guichet : </label>
              	 </div>
              	 
-             	 <div class="col-md-8 col-xs-8">             	    
-             	    <input type="text" name="codeGuichet" class="form-control" maxlength="50" data-th-value="${banqueRecherche.codeGuichet}" />					
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input type="text" required name="codeGuichet" class="form-control" maxlength="50" data-th-value="${banqueRecherche.codeGuichet}" />					
              	 </div>  
              	          
              </div> 
@@ -46,8 +46,8 @@
                   	<label> Nom Guichet : </label>
              	 </div>
              	 
-             	 <div class="col-md-8 col-xs-8">             	    
-             	    <input type="text" name="nomGuichet" class="form-control" data-th-value="${banqueRecherche.nomGuichet}" maxlength="50"/>					
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input type="text" required name="nomGuichet" class="form-control" data-th-value="${banqueRecherche.nomGuichet}" maxlength="50"/>					
              	 </div>  
              	          
              </div>
@@ -58,7 +58,7 @@
                  <div class="col-md-4 col-xs-4 ft">
                   	<label> Nom Banque : </label>
              	 </div>
-             	 <div class="col-md-8 col-xs-8">
+             	 <div class="col-md-4 col-xs-4">
                   	 <select name="nomBanque" id="nomBanquee" required class="form-control">                      
                          <option  th:each="nomBanquePrincipale : ${nomBanquePrincipales}" th:value="${nomBanquePrincipale}" th:utext="${nomBanquePrincipale}"/>
                   	</select>	

@@ -5,7 +5,7 @@
 <title> Formulaire gestion modification Sequence Police</title>
 </head>
 <body>
-		<form th:action="@{/resultatModifSequencePolice}" th:object="${SequencePolice}" class="col-md-12 col-xs-12 formulaireGestionSequencePolice" th:fragment="formulaireGestionModifSequencePolice" method="POST">
+		<form th:action="@{/resultatModifSequencePolice}" th:object="${SequenceDto}" class="col-md-12 col-xs-12 formulaireGestionSequencePolice" th:fragment="formulaireGestionModifSequencePolice" method="POST">
              <div class="row labelAjout">
                   <h2>Modifier une sequence de Police</h2>
              </div>
@@ -16,7 +16,7 @@
 				  	 <div class="alert alert-danger">
 	
 	                     <ul>                        
-							   <li  th:if="${seqPoliceErreur}" th:utext="${seqPoliceErreur}"> </li>
+							   <li  th:if="${erreurSequence}" th:utext="${erreurSequence}"> </li>
 							                         	   
 	                     </ul>
 	                     
@@ -27,14 +27,26 @@
              
              <input type="hidden" name="id" value=" " />
               
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Agence : </label>
+             	 </div>
+             	 
+             	 	<div class="col-md-4 col-xs-4 ">
+		             	 <select name="nomAgence" class="form-control" data-th-value="${nomAgence}" required   >                      
+					         <option  th:each="nomAgence : ${nomAgences}" th:value="${nomAgence}" th:utext="${nomAgence}" />
+					     </select>
+			      	</div> 
+             	          
+             </div>
+              
               <div class="row ajoutDonnee">
                  <div class="col-md-4 col-xs-4 ft">
                   	<label> Sequence : </label>
              	 </div>
              	 
-             	 <div class="col-md-8 col-xs-8">             	    
-             	    <input type="text" name="seq" class="form-control" maxlength="50"  data-th-value="${sequencePoliceRecherche.seq}" required />
-<!--              	    <input type="text" name="seqPolice" class="form-control" maxlength="50" required  />					 -->
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input pattern="[0-9]+" type="text" name="seq" class="form-control" maxlength="50" data-th-value="${seq}" required  />					
              	 </div>  
              	          
              </div> 

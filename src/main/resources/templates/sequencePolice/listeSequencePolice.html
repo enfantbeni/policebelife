@@ -8,42 +8,43 @@
 
 	<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeSequencePolice">
 	
-	    		<h2> Liste des numeros de police </h2>
+	    		<h2> Liste des sequences de police </h2>
 				<table width="100%" border="0" cellspacing="1" cellpadding="2">
-		                    <tr class="entete-tableau"><th style="padding-left:10px"> Numero </th> <th> Numero de Police </th> <th> </th></tr>
-							<tr th:each ="sequencePolice,c : ${sequencePolices}">  									
-		  						<td  width="100" th:utext="${(sequencePolices.size)*(sequencePolices.number)+(c.index+1)}" style="padding-left:10px" ></td>  
-		  						<td  width="100" th:utext="${sequencePolice.seqPolice}" style="padding-left:10px" ></td>   						
+		                    <tr class="entete-tableau"><th style="padding-left:10px"> Seqence </th> <th> Nom Agence </th> <th> Date création </th> <th> </th></tr>
+							<tr th:each ="sequence : ${sequencesAffiche}">  									
+		  						<td  width="100" th:utext="${sequence.seq}" style="padding-left:10px" ></td>  
+		  						<td  width="100" th:utext="${sequence.nomAgence}"  ></td>
+		  						<td  width="100" th:utext="${sequence.dateCreation}" ></td>   						
 		  						<td width="100" style="text-align:center" >
-<!-- 		  						   <input  class="btn btn-danger supprimer"  data-th-name="${sequencePolice.seqPolice}" onclick="supprimer(this);" type="button" value="Supprimer" >                 -->
-<!-- 		  						   <button class="btn btn-primary"  data-th-name="${sequencePolice.seqPolice}" onclick="modifier(this);"> Modifier</button> -->
+<!-- 		  						   <input  class="btn btn-danger supprimer"  data-th-name="${sequence.seq}" onclick="supprimer(this);" type="button" value="Supprimer" >              -->
+		  						   <button class="btn btn-primary"  data-th-name="${sequence.seq}" onclick="modifier(this);"> Modifier</button>
 		  						</td>
 							</tr>					            
 				 </table>
 				 
-				 <nav class="page" aria-label="Pagination" th:if="${sequencePolices.totalPages gt 0}">
-				    <ul class="pagination justify-content-center font-weight-bold">
-				        <li class="page-item" th:classappend="${sequencePolices.number eq 0} ? 'disabled'">
-				            <a class="page-link"
-				               th:href="@{/sequencePolices?page={id}(id=${sequencePolices.number lt 2 ? 1 : sequencePolices.number})}"
-				               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
-				                <span aria-hidden="true">&lt; Précédent </span>
-				            </a>
-				        </li>
-				        <li class="page-item" th:classappend="${i eq sequencePolices.number + 1} ? 'active'"
-				            th:each="i : ${#numbers.sequence( 1, sequencePolices.totalPages, 1)}">
-				            <a class="page-link" th:href="@{/sequencePolices?page={id}(id=${i})}" th:text="${i}"
-				               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
-				        </li>
-				        <li class="page-item" th:classappend="${sequencePolices.number+1  eq sequencePolices.totalPages} ? 'disabled'">
-				            <a class="page-link"
-				               th:href="@{/sequencePolices?page={id}(id=${sequencePolices.number+1  eq sequencePolices.totalPages ?sequencePolices.number+1 :sequencePolices.number + 2})}"
-				               aria-label="Next" title="Next Page" data-toggle="tooltip">
-				                <span aria-hidden="true"> Suivant &gt;</span>
-				            </a>
-				        </li>
-				    </ul>
-				</nav>
+<!-- 				 <nav class="page" aria-label="Pagination" th:if="${sequencePolices.totalPages gt 0}"> -->
+<!-- 				    <ul class="pagination justify-content-center font-weight-bold"> -->
+<!-- 				        <li class="page-item" th:classappend="${sequencePolices.number eq 0} ? 'disabled'"> -->
+<!-- 				            <a class="page-link" -->
+<!-- 				               th:href="@{/sequencePolices?page={id}(id=${sequencePolices.number lt 2 ? 1 : sequencePolices.number})}" -->
+<!-- 				               aria-label="Previous" title="Previous Page" data-toggle="tooltip"> -->
+<!-- 				                <span aria-hidden="true">&lt; Précédent </span> -->
+<!-- 				            </a> -->
+<!-- 				        </li> -->
+<!-- 				        <li class="page-item" th:classappend="${i eq sequencePolices.number + 1} ? 'active'" -->
+<!-- 				            th:each="i : ${#numbers.sequence( 1, sequencePolices.totalPages, 1)}"> -->
+<!-- 				            <a class="page-link" th:href="@{/sequencePolices?page={id}(id=${i})}" th:text="${i}" -->
+<!-- 				               th:title="${'Page '+ i}" data-toggle="tooltip"></a> -->
+<!-- 				        </li> -->
+<!-- 				        <li class="page-item" th:classappend="${sequencePolices.number+1  eq sequencePolices.totalPages} ? 'disabled'"> -->
+<!-- 				            <a class="page-link" -->
+<!-- 				               th:href="@{/sequencePolices?page={id}(id=${sequencePolices.number+1  eq sequencePolices.totalPages ?sequencePolices.number+1 :sequencePolices.number + 2})}" -->
+<!-- 				               aria-label="Next" title="Next Page" data-toggle="tooltip"> -->
+<!-- 				                <span aria-hidden="true"> Suivant &gt;</span> -->
+<!-- 				            </a> -->
+<!-- 				        </li> -->
+<!-- 				    </ul> -->
+<!-- 				</nav> -->
 		 	 
 				 <div th:if="${dialog_boxSequencePolice}">
 					<div id="dialog_boxSequencePolice"  >
@@ -75,8 +76,8 @@
 <!-- 			  		  <input type="hidden" name="estSupprimer"  />		  				  		 -->
 <!-- 			     </form> -->
 			  
-				  <form id="envoiCacheModifSequencePolice" th:action="@{/envoiDonneeCacheeSequencePolice}"  th:object="${SequencePolice}"  method="POST" > 			  				  			  		  		 
-				  		  <input type="hidden" id="identifiantModifSequencePolice" name="seqPolice" />	  				  					  		
+				  <form id="envoiCacheModifSequencePolice" th:action="@{/envoiDonneeCacheeSequencePolice}"  th:object="${Sequence}"  method="POST" > 			  				  			  		  		 
+				  		  <input type="hidden" id="identifiantModifSequencePolice" name="seq" />	  				  					  		
 				  		  <input type="hidden" name="estSupprimer"  />			  			  					  		
 				  </form>
 		 

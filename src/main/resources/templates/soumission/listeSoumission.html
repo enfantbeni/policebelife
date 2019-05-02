@@ -13,28 +13,27 @@
 		
 	    <h2> Liste des Soumissions de propositions </h2>
 		<table width="100%" border="0" cellspacing="1" cellpadding="2" class="table-bordered">
-                    <tr class="entete-tableau"><th style="padding-left:10px"> Numero </th><th> Nom Assuré </th><th> Nom Client </th><th>Numero </th><th> Periodicité </th><th> Couverture </th> <th> Prime </th> <th> Date de Prélèvement </th> <th> Date de Soumission </th> <th> Date de Naissanace </th> <th> Profession </th> <th> Employeur </th> <th> Ville </th><th> Adresse postale </th> <th> Telephone 1 </th> <th> Nom Com pré-contrat </th> <th> Matricule Client</th> <th> </th></tr>
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Numero </th><th> Nom Assuré </th><th> Nom Client </th> <th> Numero de Police </th> <th>Numero </th><th> Periodicité </th><th> Couverture </th> <th> Prime </th>  <th> Profession </th> <th> Employeur </th> <th> Ville </th><th> Adresse postale </th> <th> Telephone 1 </th> <th> Matricule Client</th> <th> </th> <th> </th></tr>
 					<tr th:each ="soumission, c : ${clientsPage}" >  															
   						<td  width="100" th:utext="${clientsPage.size*(clientsPage.number)+c.index+1}" style="padding-left:10px" ></td>
   						<td  width="100" th:utext="${soumission.nomAssure}" ></td>
   						<td  width="100" th:utext="${soumission.nomClient}" ></td>
+  						<td  width="100" th:utext="${soumission.numeroPolice}" ></td>
   						<td  width="100" th:utext="${soumission.numero}" ></td>
   						<td  width="100" th:utext="${soumission.periodicite}" ></td>
   						<td  width="100" th:utext="${soumission.couverture}" ></td>
   						<td  width="100" th:utext="${soumission.prime}" ></td>
-  						<td  width="100" th:utext="${soumission.datePrelevement}" ></td>
-  						<td  width="100" th:utext="${soumission.dateSoumission}" ></td>
-  						<td  width="100" th:utext="${soumission.dateNaissance}" ></td>
+  						
   						<td  width="100" th:utext="${soumission.profession}" ></td>
   						<td  width="100" th:utext="${soumission.employeur}" ></td>
   						<td  width="100" th:utext="${soumission.ville}" ></td>
   						<td  width="100" th:utext="${soumission.adressePostale}" ></td>
   						
   						<td  width="100" th:utext="${soumission.tellephone1}" ></td>
-<!--   					<td  width="100" th:utext="${soumission.tellephone2}" ></td> -->
-  					
-  						<td  width="100" th:utext="${soumission.nomComPreContrat}" ></td>
-  						<td  width="100" th:utext="${soumission.matriculeClient}" ></td>
+						<td  width="100" th:utext="${soumission.matriculeClient}" ></td>
+  						<td width="100" style="text-align:center" >
+  						    <button class="btn btn-primary"  data-th-name="${soumission.idClient}" onclick="voir(this);"> Voir</button>   
+  						</td>
   						<td width="100" >
   						   <input  class="btn btn-primary supprimer"  data-th-name="${soumission.idClient}" onclick="modifier(this);" type="button" value="Modifier" >                
   						   
@@ -92,27 +91,11 @@
 					</div>
 				 </div>
 				 
-				 
-<!-- 				 <form id="envoiCacheBanque" th:action="@{/resultatModifDonneeBanque}"  th:object="${Banque}"  method="POST" > -->
-			 
-<!-- 			  		<div class="row"> -->
-<!-- 			  		  <input type="hidden" name="id" value=" " /> -->
-<!-- 			  		</div>   -->
-<!-- 			  		<div class="row"> -->
-			  		 
-<!-- 			  		  <div class="col-lg-12 leftAlign"><input type="hidden"  name="nomBanque"  value=" " class="form-control" autocomplete="off"/></div> -->
-<!-- 			  		</div> -->
-<!-- 			  		<div class="row"> -->
-<!-- 			  		  <input type="hidden" name="codeBanque"   /> -->
-<!-- 			  		</div> -->
-<!-- 			  		<div class="row"> -->
-<!-- 			  		  <input type="hidden" name="codeGuichet" id="identifiantSupprBanque" /> -->
-<!-- 			  		</div> -->
-<!-- 			  		<div class="row"> -->
-<!-- 			  		  <input type="hidden" name="estSupprimer"  /> -->
-<!-- 			  		</div> -->
-			  				  		
-<!-- 			  </form> -->
+				<form id="envoiCacheVoirSoumission" th:action="@{/voirSoumission}"  th:object="${Client}"  method="POST" > 
+			  			  		 
+			  		  <div class="col-lg-12 leftAlign"><input type="hidden" id="identifiantVoirSoumission" name="idClient" /></div>
+			  		  					  		
+			  </form>
 			  
 			  <form id="envoiCacheModifSoumission" th:action="@{/modificationSoumission}"  th:object="${Banque}"  method="POST" > 
 			  		<div class="row">
@@ -144,6 +127,14 @@
 				        	var objetModif=document.getElementById("identifiantModifSoumission");
 				        	objetModif.value=identifiant;
 				        	document.getElementById('envoiCacheModifSoumission').submit();	        		        	
+				        }
+				 		
+				 		function voir(objet){
+			                var identifiant=objet.name;			                
+				        	var identifiantIndex=document.getElementById(identifiant);
+				        	var objetModif=document.getElementById("identifiantVoirSoumission");
+				        	objetModif.value=identifiant;
+				        	document.getElementById('envoiCacheVoirSoumission').submit();	        		        	
 				        }
 				        
 				       			 		 

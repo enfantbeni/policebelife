@@ -36,8 +36,10 @@ import com.belife.policemanager.model.entity.ClientBanque;
 import com.belife.policemanager.model.entity.ClientPlan;
 import com.belife.policemanager.model.entity.ClientSociete;
 import com.belife.policemanager.model.entity.Plan;
+import com.belife.policemanager.model.entity.Sequence;
 import com.belife.policemanager.model.entity.Societe;
 import com.belife.policemanager.model.entity.Utilisateur;
+import com.belife.policemanager.model.repository.AgenceRepository;
 import com.belife.policemanager.model.repository.AgentRepository;
 import com.belife.policemanager.model.repository.BanquePrincipaleRepository;
 import com.belife.policemanager.model.repository.BanqueRepository;
@@ -47,6 +49,8 @@ import com.belife.policemanager.model.repository.ClientRepository;
 import com.belife.policemanager.model.repository.ClientSocieteRepository;
 import com.belife.policemanager.model.repository.PlanRepository;
 import com.belife.policemanager.model.repository.RolesRepository;
+import com.belife.policemanager.model.repository.SequencePoliceRepository;
+import com.belife.policemanager.model.repository.SequenceRepository;
 import com.belife.policemanager.model.repository.SocieteRepository;
 import com.belife.policemanager.model.repository.SourcePoliceRepository;
 import com.belife.policemanager.model.repository.UtilisateurRepository;
@@ -86,6 +90,9 @@ public class SoumissionController {
      AgentRepository agentRepository;
 	 
 	 @Autowired
+     AgenceRepository agenceRepository;
+	 
+	 @Autowired
      ClientPlanRepository clientPlanRepository;
 	 
 	 @Autowired
@@ -93,6 +100,12 @@ public class SoumissionController {
 	 
 	 @Autowired
      ClientSocieteRepository clientSocieteRepository;
+	 
+	 @Autowired
+     SequenceRepository sequenceRepository;
+	 
+	 @Autowired
+     SequencePoliceRepository sequencePoliceRepository;
 	 
 	 
 	 
@@ -132,8 +145,8 @@ public class SoumissionController {
 	
 //	@@ designe par
 	@Transactional
-	@RequestMapping(value = {"/soumissionProposition@@Individuel" }, method = RequestMethod.POST)
-    public String soumissionPropositionDeux(Model model, @ModelAttribute("banqueDto") BanqueDto banqueDto, HttpSession session, @PageableDefault(size = 4) Pageable pageable, HttpServletRequest request) { 		
+	@RequestMapping(value = {"/soumissionProposition@@Individuel" }, method = RequestMethod.GET)
+    public String soumissionPropositionDeux(Model model, @ModelAttribute("banqueDto") BanqueDto banqueDto, HttpSession session, @PageableDefault(size = 20) Pageable pageable, HttpServletRequest request) { 		
 		String resultat=null;
 		String genreConvention=null;
 		String nomSource=null;
@@ -146,9 +159,11 @@ public class SoumissionController {
 		}
 		String indiceSource="banque";
 		session.setAttribute("indiceSource", indiceSource);
-		 
+		String nomAgenceActif=session.getAttribute("nomAgenceActif").toString().trim();
+		Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActif);
+				
 		int page = 0;
-		int size = 4;
+		int size = 20;
 		 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 	            page = Integer.parseInt(request.getParameter("page")) - 1;
 	        }
@@ -158,18 +173,89 @@ public class SoumissionController {
 		 
 		 Boolean estSupprimer=false;
 		 pageable = PageRequest.of(page, size);
-	     Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
+	     Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer,agenceActive , pageable);
 		 model.addAttribute("clientsPage", clientPage);
 		 
-		 
+		 session.removeAttribute("testGroupe");
 		
 		List<String> nomSources=societeRepository.findAllNomSociete(estSupprimer);
 		model.addAttribute("nomSources",  nomSources);
-		String nomGuichet=banqueDto.getNomGuichet().trim();
+		String nomGuichet=session.getAttribute("nomGuichet").toString().trim();
 		nomSource=session.getAttribute("nomSourceCache").toString().trim();
-		model.addAttribute("nomSource",  nomSource);
-		
+		model.addAttribute("nomSource",  nomSource);		
 		model.addAttribute("testIndividuel", "testIndividuel");
+		session.setAttribute("testIndividuel", "testIndividuel");
+		
+		
+		String planDuree=null;
+		String nomAssure=null;
+		String genreAssure=null;
+		String nomClient=null;
+		String numero=null;
+		String periodicite=null;
+		String couverture=null;
+		String prime=null;
+		String datePrelevement=null;
+		String dateSoumission=null;
+		String dateNaissance=null;
+		String matriculeClient=null;
+		String banque=null;
+		String profession=null;
+		String employeur=null;
+		String ville=null;
+		String adressPostal=null;
+		String codeAgent=null;
+		String telephone1=null;
+		String telephone2=null;
+		String nomComPreContrat=null;
+		String dateRealisation=null;
+		
+		
+		 planDuree=session.getAttribute("planDuree").toString().trim();
+		 nomAssure=session.getAttribute("nomAssure").toString().trim();
+		 genreAssure=session.getAttribute("genreAssure").toString().trim();
+		 nomClient=session.getAttribute("nomClient").toString().trim();
+		 numero=session.getAttribute("numero").toString().trim();
+		 periodicite=session.getAttribute("periodicite").toString().trim();
+		 couverture=session.getAttribute("couverture").toString().trim();
+		 prime=session.getAttribute("prime").toString().trim();
+		 datePrelevement=session.getAttribute("datePrelevement").toString().trim();
+		 dateSoumission=session.getAttribute("dateSoumission").toString().trim();
+		 dateNaissance=session.getAttribute("dateNaissance").toString().trim();
+		 matriculeClient=session.getAttribute("matriculeClient").toString().trim();
+		 banque=session.getAttribute("banque").toString().trim();
+		 profession=session.getAttribute("profession").toString().trim();
+	     employeur=session.getAttribute("employeur").toString().trim();
+		 ville=session.getAttribute("ville").toString().trim();
+		 adressPostal=session.getAttribute("adressPostal").toString().trim();
+		 codeAgent=session.getAttribute("codeAgent").toString().trim();
+		 telephone1=session.getAttribute("telephone1").toString().trim();
+		 telephone2=session.getAttribute("telephone2").toString().trim();
+		 nomComPreContrat=session.getAttribute("nomComPreContrat").toString().trim();
+		 dateRealisation=session.getAttribute("dateRealisation").toString().trim();
+			
+			model.addAttribute("planDuree", planDuree);
+			model.addAttribute("nomAssure", nomAssure);
+			model.addAttribute("genreAssure", genreAssure);
+			model.addAttribute("nomClient", nomClient);
+			model.addAttribute("numero", numero);
+			model.addAttribute("periodicite", periodicite);
+			model.addAttribute("couverture", couverture);
+			model.addAttribute("prime", prime);
+			model.addAttribute("datePrelevement", datePrelevement);
+			model.addAttribute("dateSoumission", dateSoumission);
+			model.addAttribute("dateNaissance", dateNaissance);
+			model.addAttribute("matriculeClient", matriculeClient);
+			model.addAttribute("banque",banque);
+			model.addAttribute("profession", profession);
+			model.addAttribute("employeur", employeur);
+			model.addAttribute("ville", ville);
+			model.addAttribute("adressPostal", adressPostal);
+			model.addAttribute("codeAgent", codeAgent);
+			model.addAttribute("telephone1",telephone1);
+			model.addAttribute("telephone2", telephone2);
+			model.addAttribute("nomComPreContrat", nomComPreContrat);
+			model.addAttribute("dateRealisation", dateRealisation);
 		
 		
 		///////////////////////// 	//////////////////// Données à soumettre
@@ -180,14 +266,16 @@ public class SoumissionController {
 		String codeGuichetSoumis=banqueRepository.findCodeGuichetByNomGuichet(nomGuichetSoumis);
 		String codeBanqueSoumis=banquePrincipaleRepository.findCodeBanquePrincipale(nomBanqueSoumis);
 		String police=codeBanqueSoumis.concat(codeGuichetSoumis);
+		
 		model.addAttribute("codeGuichetSoumis",codeGuichetSoumis);
+		session.setAttribute("codeGuichet", codeGuichetSoumis);
+		
+		model.addAttribute("banque",nomGuichetSoumis);
+		
 		session.setAttribute("police", police);
 		model.addAttribute("police",police);
 		
 				
-		
-		
-	
 //		Code Banque et code Guichet
 		String codeBanquePrincipale=banquePrincipaleRepository.findCodeBanquePrincipale(nomSource);
 		String codeGuichet=banqueRepository.findCodeGuichetByNomGuichet(nomGuichet);
@@ -219,7 +307,7 @@ public class SoumissionController {
 	
 	@Transactional
 	@RequestMapping(value = {"/soumissionProposition" }, method = RequestMethod.POST)
-    public String soumissionProposition(Model model, @ModelAttribute("sourceDto") SourcePrelevementDto sourceDto, HttpSession session, @PageableDefault(size = 10) Pageable pageable, HttpServletRequest request) { 		
+    public String soumissionProposition(Model model, @ModelAttribute("sourceDto") SourcePrelevementDto sourceDto, HttpSession session, @PageableDefault(size = 20) Pageable pageable, HttpServletRequest request) { 		
 		String resultat=null;
 		String genreConvention=null;
 		String nomSource=null;
@@ -233,6 +321,7 @@ public class SoumissionController {
 		 try {
 			  genreConvention=session.getAttribute("genreConvention").toString().trim(); 
 			  nomSource=sourceDto.getNomSource().trim();
+			  
 			  session.setAttribute("nomsourceModif", nomSource);
 		 }catch(Exception e) {
 			 	List<String> planDurees=planRepository.findPlanDurees();
@@ -248,9 +337,12 @@ public class SoumissionController {
 				model.addAttribute("menuNavigation", "menuNavigation");
 		        return "utilisateur/accueilUtilisateur";			 
 		 }
-		 
+		 String nomAgenceActif=session.getAttribute("nomAgenceActif").toString().trim();
+		 Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActif);
+				
+	 
 		 int page = 0;
-		 int size = 10;
+		 int size = 20;
 		 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 	            page = Integer.parseInt(request.getParameter("page")) - 1;
 	        }
@@ -259,8 +351,8 @@ public class SoumissionController {
 	        }
 		 
 		 Boolean estSupprimer=false;
-		 pageable = PageRequest.of(0, 4);
-	     Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
+		 pageable = PageRequest.of(0, size);
+	     Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer,agenceActive , pageable);
 		 model.addAttribute("clientsPage", clientPage);
 		 
 		session.setAttribute("codeSocieteSoumis", nomSource);	
@@ -281,11 +373,13 @@ public class SoumissionController {
 		}
 			
 		if(genreConvention.equals(genreGroupe)) {
-			model.addAttribute("genreSource", " Matricule Client * : ");
-			session.setAttribute("genreSource", " Matricule Client * : ");
+			model.addAttribute("genreSource", " Numero Société * : ");
+			session.setAttribute("genreSource", " Numero Société * : ");
 			model.addAttribute("testGroupe", "testGroupe");
-			session.setAttribute("police", codeSocieteSoumis);
+		    session.setAttribute("police", codeSocieteSoumis);
 		}	
+		session.setAttribute("testGroupe", "testGroupe");
+		session.removeAttribute("testIndividuel");
 		String identifiant=session.getAttribute("identifiantSession").toString().trim();
 		Utilisateur utilisateurRep=utilisateurRepository.findByIdentifiant(identifiant);
 		Agence agence=utilisateurRep.getIdAgence();
@@ -298,8 +392,10 @@ public class SoumissionController {
 		session.setAttribute("nomSourceCache",nomSource);
 //		/////////////////// Code Société Soumis
 		String codeSociete=societeRepository.findCodeSocieteByNomSociete(nomSource);
-		session.setAttribute("codeSocieteSoumis",codeSociete);
-			
+		session.setAttribute("codeSociete",codeSociete);
+		model.addAttribute("codeSociete", codeSociete);
+		
+	
 		String indiceSource="societe";
 		session.setAttribute("indiceSource", indiceSource);
 		
@@ -307,7 +403,7 @@ public class SoumissionController {
 		model.addAttribute("cheminAccueil",  "Accueil >");
 		model.addAttribute("cheminSoumission",  "Soumission >");
 		model.addAttribute("planDurees", planDurees);
-		model.addAttribute("nomSource",  nomSource);
+		model.addAttribute("banque",  nomSource);
 		model.addAttribute("genreConvention",  genreConvention);
 		model.addAttribute("titre", " Soumission de Proposition");
 		model.addAttribute("identifiantSession", identifiantSession);
@@ -315,6 +411,7 @@ public class SoumissionController {
 		model.addAttribute("menuNavigation", "menuNavigation");
         return "utilisateur/accueilUtilisateur";
     }
+	
 	
 	@Transactional
 	@RequestMapping(value = {"/redirectionChoixGuichet" }, method = RequestMethod.GET)
@@ -331,7 +428,8 @@ public class SoumissionController {
 		BanquePrincipale banquePrincipale=banquePrincipaleRepository.findBanquePrincipaleByNom(nomBanque);
 		List<String> nomGuichets=banqueRepository.findNomGuichets(banquePrincipale);
 		
-		model.addAttribute("nomGuichets", nomGuichets);
+		
+		model.addAttribute("nomGuichets",  nomGuichets);
 		model.addAttribute("cheminAccueil",  "Accueil >");
 		model.addAttribute("cheminSoumission",  "Soumission >");
 		model.addAttribute("cheminAccueil",  "Accueil >");
@@ -340,8 +438,66 @@ public class SoumissionController {
 		model.addAttribute("choisirGuichetBanque", "choisirGuichetBanque");
 		model.addAttribute("titre", " Soumission de Proposition");
 		model.addAttribute("menuNavigation", "menuNavigation");
-        return "utilisateur/accueilUtilisateur";
+		return "utilisateur/accueilUtilisateur";
     }
+	
+	
+	@Transactional
+	@RequestMapping(value = {"/redirectionSuppressionSessionChoixGuichet" }, method = RequestMethod.POST )
+    public String redirectionSuppressionSessionChoixGuichet(Model model,  @ModelAttribute("banqueDto") BanqueDto banqueDto ,HttpSession session) { 		
+		String resultat=null;
+		try {
+			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+		}
+		catch(Exception e) {
+			resultat="pageErreur";
+			return resultat;
+		}
+		
+		String nomBanque=session.getAttribute("nomSourceCache").toString().trim();		
+		BanquePrincipale banquePrincipale=banquePrincipaleRepository.findBanquePrincipaleByNom(nomBanque);
+		List<String> nomGuichets=banqueRepository.findNomGuichets(banquePrincipale);
+		session.setAttribute("nomGuichets", nomGuichets);
+		String nomGuichet=banqueDto.getNomGuichet().trim();
+		
+		session.setAttribute("nomGuichet",nomGuichet);	
+		session.setAttribute("planDuree"," ");
+		session.setAttribute("nomAssure"," ");
+		session.setAttribute("genreAssure"," ");
+		session.setAttribute("nomClient"," ");
+		session.setAttribute("numero"," ");
+		session.setAttribute("periodicite"," ");
+		session.setAttribute("couverture"," ");
+		session.setAttribute("prime"," ");
+		session.setAttribute("datePrelevement"," ");
+		session.setAttribute("dateSoumission"," ");
+		session.setAttribute("dateNaissance"," ");
+		session.setAttribute("matriculeClient"," ");
+		session.setAttribute("banque"," ");
+		session.setAttribute("profession"," ");
+		session.setAttribute("employeur"," ");
+		session.setAttribute("ville"," ");
+		session.setAttribute("adressPostal"," ");
+		session.setAttribute("codeAgent"," ");
+		session.setAttribute("telephone1"," ");
+		session.setAttribute("telephone2"," ");
+		session.setAttribute("nomComPreContrat"," ");
+		session.setAttribute("dateRealisation"," ");
+		
+		model.addAttribute("cheminAccueil",  "Accueil >");
+		model.addAttribute("cheminSoumission",  "Soumission >");
+		model.addAttribute("cheminAccueil",  "Accueil >");
+		model.addAttribute("cheminSoumission",  "Soumission >");
+		model.addAttribute("identifiantSession", identifiantSession);
+		model.addAttribute("choisirGuichetBanque", "choisirGuichetBanque");
+		model.addAttribute("titre", " Soumission de Proposition");
+		model.addAttribute("menuNavigation", "menuNavigation");	
+		
+		return "redirect:/soumissionProposition@@Individuel";
+    }
+	
+	
+	
 	
 	@Transactional
 	@RequestMapping(value = {"/envoiCacheGenre" }, method = RequestMethod.POST)
@@ -415,26 +571,28 @@ public class SoumissionController {
 		////////////////////:  Retrouver Banque
 		Banque findBanque=clientBanqueRepository.findIdBanqueByIdClient(clientModif);
 		Societe findSociete=clientSocieteRepository.findSocieteByIdClient(clientModif);
-		
+		String nomAgenceActif=session.getAttribute("nomAgenceActif").toString().trim();
+		 Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActif);
+			
 				
 		String nomSourceFind=null;
 		Boolean estSupprimer=false;
 		if(findBanque!=null) {
 			model.addAttribute("testIndividuel", "testIndividuel");
 			String nomGuichet=findBanque.getNomGuichet();
-			System.out.println("   Nom guichet  : "+nomGuichet);
 			BanquePrincipale idBanquePrincipale=banqueRepository.findBanquePrincipaleByNomGuichet(nomGuichet);
 			nomSourceFind=findBanque.getNomGuichet();		
 			List<String> nomSources=banqueRepository.findNomGuichets(idBanquePrincipale);
 			model.addAttribute("nomSources",  nomSources);
 			model.addAttribute("genreSource"," Numero Compte");
 		}
+		
 		if(findSociete!=null) {
 			model.addAttribute("testGroupe", "testGroupe");
 			nomSourceFind=findSociete.getNomSociete();
 			List<String> nomSources=societeRepository.findAllNomSociete(estSupprimer);
 			model.addAttribute("nomSources",  nomSources);
-			model.addAttribute("genreSource"," Matricule Client : ");
+			model.addAttribute("genreSource"," Code Société : ");
 		}
 		
 		String identifiant=session.getAttribute("identifiantSession").toString().trim();
@@ -464,12 +622,10 @@ public class SoumissionController {
 		model.addAttribute("menuNavigation", "menuNavigation");
 		model.addAttribute("cheminAccueil",  "Accueil >");
 		model.addAttribute("cheminSoumission",  "Soumission >");
-		model.addAttribute("cheminAccueil",  "Accueil >");
-		model.addAttribute("cheminSoumission",  "Soumission >");	
-		
+		model.addAttribute("cheminModificationSoumission",  "Modification informations >");
 		
 		 int page = 0;
-		 int size = 4;
+		 int size = 20;
 		 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 	            page = Integer.parseInt(request.getParameter("page")) - 1;
 	        }
@@ -477,7 +633,7 @@ public class SoumissionController {
 	            size = Integer.parseInt(request.getParameter("size"));
 	        }
 		 PageRequest pageable = PageRequest.of(page, size);
-		 Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
+		 Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer,agenceActive, pageable);
 		 model.addAttribute("clientsPage", clientPage);
 		 
 		 
@@ -491,9 +647,114 @@ public class SoumissionController {
         return "utilisateur/accueilUtilisateur";
     }
 	
+	 @Transactional
+	 private String renvoyerDernierNumeroPoliceSequence(String nomAgenceActif) {
+		 
+		 Sequence objetSequence=renvoyerDerniereSequence( nomAgenceActif );
+		 String sequence=objetSequence.getSeq();
+		 
+		 List<String> numeroPoliceListSoumis=clientRepository.findAllNumeroPolicesByIdSequence(objetSequence);
+		 	  
+		 String sequencePoliceOrdreObjet=null;
+		 if(numeroPoliceListSoumis.isEmpty()) {
+			 String ordre="0000";
+			 sequencePoliceOrdreObjet=ordre;			 
+		 }
+		 
+		 if(!numeroPoliceListSoumis.isEmpty()) {
+			
+			 String dernierNumeroPolice=numeroPoliceListSoumis.get(0);	
+			 	 
+			 
+			 Integer beginIndex=3;
+			 String ordre=dernierNumeroPolice.substring(beginIndex);
+			 Integer ordreEntier=Integer.valueOf(ordre);
+			 ordreEntier++;	 
+			
+			 if(ordreEntier>0 && ordreEntier<10) {
+				 String ordreZero="000";		 
+				 ordre=Integer.toString(ordreEntier);
+				 ordre=ordreZero.concat(ordre);	
+				 sequencePoliceOrdreObjet=ordre;			
+			 }
+			 if(ordreEntier>=10 && ordreEntier<100) {
+				 String ordreZero="00";
+				 ordre=Integer.toString(ordreEntier);
+				 ordre=ordreZero.concat(ordre);	
+				 sequencePoliceOrdreObjet=ordre;			 
+			 }
+			 if(ordreEntier>=100 && ordreEntier<999) {
+				 String ordreZero="0";
+				 ordre=Integer.toString(ordreEntier);
+				 ordre=ordreZero.concat(ordre);	
+				 sequencePoliceOrdreObjet=ordre;		 
+			 }
+			 if(ordreEntier>1000 && ordreEntier<9999) {
+				 ordreEntier++;
+				 ordre=Integer.toString(ordreEntier);	
+				 sequencePoliceOrdreObjet=ordre;			 
+			 }
+			 
+		 }	
+		 sequencePoliceOrdreObjet=sequence.concat(sequencePoliceOrdreObjet);
+		 return sequencePoliceOrdreObjet;
+	 	}
+	 
+	 @Transactional
+	 private String positionnerDernierNumeroPolice(String nomAgenceActif, String dernierNumeroPolice) {
+		 
+		 Sequence objetSequence=renvoyerDerniereSequence( nomAgenceActif );
+		 String sequence=objetSequence.getSeq();
+		 	 	  
+		 String sequencePoliceOrdreObjet=null;	 
+			 
+			 Integer beginIndex=3;
+			 String ordre=dernierNumeroPolice.substring(beginIndex);
+			 Integer ordreEntier=Integer.valueOf(ordre);
+			 ordreEntier++;	 
+			
+			 if(ordreEntier>0 && ordreEntier<10) {
+				 String ordreZero="000";		 
+				 ordre=Integer.toString(ordreEntier);
+				 ordre=ordreZero.concat(ordre);	
+				 sequencePoliceOrdreObjet=ordre;			
+			 }
+			 if(ordreEntier>=10 && ordreEntier<100) {
+				 String ordreZero="00";
+				 ordre=Integer.toString(ordreEntier);
+				 ordre=ordreZero.concat(ordre);	
+				 sequencePoliceOrdreObjet=ordre;			 
+			 }
+			 if(ordreEntier>=100 && ordreEntier<999) {
+				 String ordreZero="0";
+				 ordre=Integer.toString(ordreEntier);
+				 ordre=ordreZero.concat(ordre);	
+				 sequencePoliceOrdreObjet=ordre;		 
+			 }
+			 if(ordreEntier>1000 && ordreEntier<9999) {
+				 ordreEntier++;
+				 ordre=Integer.toString(ordreEntier);	
+				 sequencePoliceOrdreObjet=ordre;			 
+			 }
+			 
+		 sequencePoliceOrdreObjet=sequence.concat(sequencePoliceOrdreObjet);
+		 return sequencePoliceOrdreObjet;
+	 	}
+	
+	
+//	Renvoyer la derniere sesquence
 	@Transactional
-	@RequestMapping(value = {"/resultatAjoutProposition" } , method = RequestMethod.POST)
-    public String resultaAjoutProposition(Model model, @ModelAttribute("client") Client client, @ModelAttribute("clientDto") ClientDto clientDto , @ModelAttribute("clientPlan") ClientPlan clientPlan , @ModelAttribute("clientBanque") ClientBanque clientBanque , @ModelAttribute("clientSociete") ClientSociete clientSociete  ,HttpSession session, HttpServletRequest request) { 
+	 private Sequence renvoyerDerniereSequence(String nomAgenceActif ) {
+		Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActif);
+		List<Sequence> sequencesAgence=sequenceRepository.findSequenceListeByIdSequence(agenceActive);
+		Sequence sequenceAgence=sequencesAgence.get(0);	
+		return sequenceAgence;
+	}
+	
+	
+	@Transactional
+	@RequestMapping(value = {"/voirSoumission" } , method = RequestMethod.POST)
+    public String voirSoumission(Model model, @ModelAttribute("client") Client client, @ModelAttribute("clientDto") ClientDto clientDto , @ModelAttribute("clientPlan") ClientPlan clientPlan , @ModelAttribute("clientBanque") ClientBanque clientBanque , @ModelAttribute("clientSociete") ClientSociete clientSociete  ,HttpSession session, HttpServletRequest request) { 
 	 
 		String resultat=null;
 		try {
@@ -503,7 +764,83 @@ public class SoumissionController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		Integer idClient=client.getIdClient();
+		Client clientAfficher=clientRepository.findClientById(idClient);
+		session.setAttribute("idClientModif", idClient );
+		////////////////////:  Retrouver Banque
+		Banque findBanque=clientBanqueRepository.findIdBanqueByIdClient(clientAfficher);
+		Societe findSociete=clientSocieteRepository.findSocieteByIdClient(clientAfficher);
+		String codeAgent=clientAfficher.getIdAgent().getCodeAgent();
+		String nomAgence=clientAfficher.getIdAgence().getNomDirect();
+		model.addAttribute("codeAgent", codeAgent);
+		model.addAttribute("nomAgence", nomAgence);
+		
+		String nomBanque=null;
+		String nomSociete=null;
+		String codeGuichet=null;
+		String codeSociete=null;
+		if(findBanque!=null) {
+			model.addAttribute("testIndividuel",  "testIndividuel");
+			nomBanque=findBanque.getNomGuichet();
+			codeGuichet=findBanque.getCodeGuichet();
+			model.addAttribute("codeGuichet",  codeGuichet);
+			model.addAttribute("nomGuichet",  nomBanque);
+		}
+		if(findSociete!=null) {
+			model.addAttribute("testGroupe",  "testGroupe");
+			nomSociete=findSociete.getNomSociete();
+			codeSociete=findSociete.getCodeSociete();
+			model.addAttribute("nomSociete", nomSociete);
+		}
+		 boolean estSupprimer=false;
+		 int page = 0;
+		 int size = 20;
+		 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
+	            page = Integer.parseInt(request.getParameter("page")) - 1;
+	        }
+		 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
+	            size = Integer.parseInt(request.getParameter("size"));
+	        }
+		 String nomAgenceActif=session.getAttribute("nomAgenceActif").toString().trim();
+		 Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActif);
+		
+		 PageRequest pageable = PageRequest.of(page, size);
+		 Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer,agenceActive, pageable);
+		 model.addAttribute("clientsPage", clientPage);
+		
+		ClientPlan cp=clientPlanRepository.findClientPlanByIdClient(clientAfficher);
+		String produit=cp.getIdPlan().getPlanDuree();
+		model.addAttribute("clientAfficher", clientAfficher);
+		model.addAttribute("nomBanque", nomBanque);
+		model.addAttribute("nomSociete", nomSociete);
+		model.addAttribute("produit",produit);
 				
+		model.addAttribute("cheminAccueil",  "Accueil >");
+		model.addAttribute("cheminSoumission",  "Soumission >");
+		model.addAttribute("cheminVoirSoumission",  "Voir Soumission >");
+		model.addAttribute("listeSoumission", "listeSoumission");
+		model.addAttribute("identifiantSession", identifiantSession);
+		model.addAttribute("titre", " Soumission de Proposition");
+		model.addAttribute("identifiantSession", identifiantSession);
+		model.addAttribute("menuNavigation", "menuNavigation");
+
+		model.addAttribute("voirDonneeSoumission", "voirDonneeSoumission");
+        return "utilisateur/accueilUtilisateur";
+    }	
+	
+	@Transactional
+	@RequestMapping(value = {"/confirmationAjoutProposition" } , method = RequestMethod.POST)
+    public String confirmationAjoutProposition(Model model, @ModelAttribute("client") Client client, @ModelAttribute("clientDto") ClientDto clientDto , @ModelAttribute("clientPlan") ClientPlan clientPlan , @ModelAttribute("clientBanque") ClientBanque clientBanque , @ModelAttribute("clientSociete") ClientSociete clientSociete  ,HttpSession session, HttpServletRequest request) { 
+	 
+		String resultat=null;
+		try {
+			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+		}
+		catch(Exception e) {
+			resultat="pageErreur";
+			return resultat;
+		}
+		String propositionSoumise=clientDto.getPropositionSoumise().trim();		
 		String planDuree=clientDto.getPlanDuree().trim();
 		String nomAssure=clientDto.getNomAssure().trim();
 		String nomClient=clientDto.getNomClient().trim();
@@ -518,6 +855,7 @@ public class SoumissionController {
 		String dateRealisation=clientDto.getDateRealisation();
 		String matriculeClient=clientDto.getMatriculeClient();
 		String banque=clientDto.getBanque().trim();
+		System.out.println("    Banque Premiere "+banque);
 		String profession=clientDto.getProfession().trim();
 		String employeur=clientDto.getEmployeur().trim();
 		String ville=clientDto.getVille().trim();
@@ -527,35 +865,179 @@ public class SoumissionController {
 		String telephone2=clientDto.getTelephone2().trim();	
 		String nomComPreContrat=clientDto.getNomComPreContrat().trim();
 		
-		//////////////////////////:Police
-		String police=session.getAttribute("police").toString().trim();
-		police=police.concat(numero);
-		model.addAttribute("police", police);
-		session.setAttribute("police", police);
-			
-		session.setAttribute("planDuree", planDuree);
-		session.setAttribute("nomAssure", nomAssure);
-		session.setAttribute("genreAssure", genreAssure);
-		session.setAttribute("nomClient", nomClient);
-		session.setAttribute("numero", numero);
-		session.setAttribute("periodicite", periodicite);
-		session.setAttribute("couverture", couverture);
-		session.setAttribute("prime", prime);
-		session.setAttribute("datePrelevement", datePrelevement);
-		session.setAttribute("dateSoumission", dateSoumission);
-		session.setAttribute("dateNaissance", dateNaissance);
-		session.setAttribute("matriculeClient", matriculeClient);
-		session.setAttribute("banque", banque);
-		session.setAttribute("profession", profession);
-		session.setAttribute("employeur", employeur);
-		session.setAttribute("ville", ville);
-		session.setAttribute("adressPostal", adressePostal);
-		session.setAttribute("codeAgent", codeAgent);
-		session.setAttribute("telephone1", telephone1);
-		session.setAttribute("telephone2", telephone2);
-		session.setAttribute("nomComPreContrat", nomComPreContrat);
-		session.setAttribute("dateRealisation", dateRealisation);
+//		String codeGuichet=session.getAttribute("codeGuichet").toString().trim();
 		
+		
+		
+		//////////////////////////:Police
+		
+		String nomAgenceActif=session.getAttribute("nomAgenceActif").toString().trim();
+//		Sequence sequenceAgence=renvoyerDerniereSequence(nomAgenceActif)
+		Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActif);
+		List<Sequence> sequencesAgence=sequenceRepository.findSequenceListeByIdSequence(agenceActive);
+	
+		if(sequencesAgence.isEmpty()) {
+			model.addAttribute("MessageSequenceNonPositionne", "MessageSequenceNonPositionne");
+			session.setAttribute("MessageSequenceNonPositionne", "MessageSequenceNonPositionne");
+			
+			String nomSource=session.getAttribute("nomSourceCache").toString().trim();		
+			
+			model.addAttribute("cheminAccueil",  "Accueil >");
+			model.addAttribute("cheminSoumission",  "Soumission >");
+			
+			Agent agent=agentRepository.findAgentByCodeAgent(codeAgent);
+			client.setIdAgent(agent); session.setAttribute("nomSourceCache",nomSource);
+			
+			model.addAttribute("identifiantSession", identifiantSession);
+			model.addAttribute("titre", " Soumission de Proposition");
+			model.addAttribute("identifiantSession", identifiantSession);
+			model.addAttribute("menuNavigation", "menuNavigation");
+
+			return "utilisateur/accueilUtilisateur";
+		}
+		model.addAttribute("cheminVerificationSoumission",  "Vérification des informations >");
+		String numeroPolice=renvoyerDernierNumeroPoliceSequence( nomAgenceActif);
+		
+		 Integer beginIndex=3;
+		 String ordre=numeroPolice.substring(beginIndex);
+		 String ordreFinal="10000";
+		 Integer ordreEntier=Integer.valueOf(ordre);
+		 String sequence=numeroPolice.substring(0,beginIndex);
+		if(ordre.equals(ordreFinal)) {
+			model.addAttribute("MessageSequenceEpuise", "MessageSequenceEpuise");
+			session.setAttribute("MessageSequenceEpuise", "MessageSequenceEpuise");
+			model.addAttribute("sequence", sequence);
+			String nomSource=session.getAttribute("nomSourceCache").toString().trim();		
+			
+			model.addAttribute("cheminAccueil",  "Accueil >");
+			model.addAttribute("cheminSoumission",  "Soumission >");
+			
+			Agent agent=agentRepository.findAgentByCodeAgent(codeAgent);
+			client.setIdAgent(agent); session.setAttribute("nomSourceCache",nomSource);
+			
+			model.addAttribute("identifiantSession", identifiantSession);
+			model.addAttribute("titre", " Soumission de Proposition");
+			model.addAttribute("identifiantSession", identifiantSession);
+			model.addAttribute("menuNavigation", "menuNavigation");
+
+			return "utilisateur/accueilUtilisateur";
+		}
+		
+		model.addAttribute("numeroPolice", numeroPolice);	
+		
+		if(propositionSoumise.equals("non")) {
+//		model.addAttribute("codeGuichet", codeGuichet);
+		String nomGuichetSoumis=session.getAttribute("nomGuichetSoumis").toString().trim();
+		String codeGuichetSoumis=banqueRepository.findCodeGuichetByNomGuichet(nomGuichetSoumis);
+		model.addAttribute("codeGuichet", codeGuichetSoumis);
+		model.addAttribute("planDuree", planDuree);
+		model.addAttribute("nomAssure", nomAssure);
+		model.addAttribute("genreAssure", genreAssure);
+		model.addAttribute("nomClient", nomClient);
+		model.addAttribute("numero", numero);
+		model.addAttribute("periodicite", periodicite);
+		model.addAttribute("couverture", couverture);
+		model.addAttribute("prime", prime);
+		model.addAttribute("datePrelevement", datePrelevement);
+		model.addAttribute("dateSoumission", dateSoumission);
+		model.addAttribute("dateNaissance", dateNaissance);
+		model.addAttribute("matriculeClient", matriculeClient);
+		model.addAttribute("banque", banque);
+		session.setAttribute("banque", banque);
+		model.addAttribute("profession", profession);
+		model.addAttribute("employeur",employeur);
+		model.addAttribute("ville", ville);
+		model.addAttribute("adressPostal", adressePostal);
+		model.addAttribute("codeAgent", codeAgent);
+		model.addAttribute("telephone1", telephone1);
+		model.addAttribute("telephone2", telephone2);
+		model.addAttribute("nomComPreContrat", nomComPreContrat);
+		model.addAttribute("dateRealisation", dateRealisation);
+		}
+				
+		Boolean choixIndividuelNon=true;
+		Boolean choixGroupeNon=true;	
+		try {
+			String testGroupe=session.getAttribute("testGroupe").toString().trim();
+			
+		}catch(Exception e) {
+			choixGroupeNon=false;
+			e.printStackTrace();
+		}
+		try {
+			String testIndividuel=session.getAttribute("testIndividuel").toString().trim();
+		}catch(Exception e) {
+			choixIndividuelNon=false;
+			e.printStackTrace();
+		}
+		if(choixGroupeNon) {
+			String testGroupe=session.getAttribute("testGroupe").toString().trim();
+			model.addAttribute("testGroupe", testGroupe);
+			model.addAttribute("testEnvoye", testGroupe);
+		}
+		if(choixIndividuelNon) {
+			String testIndividuel=session.getAttribute("testIndividuel").toString().trim();
+			model.addAttribute("testIndividuel", testIndividuel);
+			model.addAttribute("testEnvoye", testIndividuel);
+		}		
+		
+//		String nomSource=session.getAttribute("nomSourceCache").toString().trim();		
+		
+		model.addAttribute("cheminAccueil",  "Accueil >");
+		model.addAttribute("cheminSoumission",  "Soumission >");
+		
+		Agent agent=agentRepository.findAgentByCodeAgent(codeAgent);
+		client.setIdAgent(agent); 
+//		session.setAttribute("nomSourceCache",nomSource);
+		
+		model.addAttribute("identifiantSession", identifiantSession);
+		model.addAttribute("titre", " Soumission de Proposition");
+		model.addAttribute("identifiantSession", identifiantSession);
+		model.addAttribute("menuNavigation", "menuNavigation");
+
+		model.addAttribute("confirmationDonneeSoumission", "confirmationDonneeSoumission");
+        return "utilisateur/accueilUtilisateur";
+    }	
+	
+
+	@Transactional
+	@RequestMapping(value = {"/resultatAjoutProposition" } , method = RequestMethod.POST)
+    public String resultaAjoutProposition(Model model, @ModelAttribute("client") Client client, @ModelAttribute("clientDto") ClientDto clientDto , @ModelAttribute("clientPlan") ClientPlan clientPlan , @ModelAttribute("clientBanque") ClientBanque clientBanque , @ModelAttribute("clientSociete") ClientSociete clientSociete  ,HttpSession session, HttpServletRequest request) { 
+	 
+		String resultat=null;
+		try {
+			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+		}
+		catch(Exception e) {
+			resultat="pageErreur";
+			return resultat;
+		}
+		String testEnvoye=clientDto.getTestEnvoye().trim();
+		String numeroPolice=clientDto.getNumeroPolice().trim();
+		String planDuree=clientDto.getPlanDuree().trim();
+		String nomAssure=clientDto.getNomAssure().trim();
+		String nomClient=clientDto.getNomClient().trim();
+		String numero=clientDto.getNumero().trim();
+		String periodicite=clientDto.getPeriodicite().trim();
+		Long couverture=clientDto.getCouverture();
+		String genreAssure=clientDto.getGenreAssure().trim();
+		Long prime=clientDto.getPrime();
+		String datePrelevement=clientDto.getDatePrelevement();
+		String dateSoumission=clientDto.getDateSoumission();	
+		String dateNaissance=clientDto.getDateNaissance();
+		String dateRealisation=clientDto.getDateRealisation();
+		String matriculeClient=clientDto.getMatriculeClient();
+//		String banque=clientDto.getBanque();
+		String banque=session.getAttribute("banque").toString().trim();
+		String profession=clientDto.getProfession().trim();
+		String employeur=clientDto.getEmployeur().trim();
+		String ville=clientDto.getVille().trim();
+		String adressePostal=clientDto.getAdressPostal().trim();
+		String codeAgent=clientDto.getCodeAgent().trim();
+		String telephone1=clientDto.getTelephone1().trim();
+		String telephone2=clientDto.getTelephone2().trim();	
+		String nomComPreContrat=clientDto.getNomComPreContrat().trim();
+		String nomAgenceActif=session.getAttribute("nomAgenceActif").toString().trim();
 		
 		String nomSource=session.getAttribute("nomSourceCache").toString().trim();
 		String indiceSource=session.getAttribute("indiceSource").toString().trim();
@@ -586,62 +1068,78 @@ public class SoumissionController {
 		client.setEstSupprimer(estSupprimer);
 		client.setDateCreation(new Date());
 		client.setDateRealisation(dateRealisation);
-		
+		client.setDateCreation(new Date());	
 		Agent agent=agentRepository.findAgentByCodeAgent(codeAgent);
-		client.setIdAgent(agent); session.setAttribute("nomSourceCache",nomSource);
-		
-		Plan plan=planRepository.findPlanByPlanDuree(planDuree); 
-		
-		/////////////////// A voir
-		String nomGuichetSoumis=null;
-		String nomSocieteSoumis=null;
-		try {
-			nomGuichetSoumis=session.getAttribute("nomGuichetSoumis").toString().trim();
-		}
-		
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		////////////////// A voir
-		try {
-			nomSocieteSoumis=session.getAttribute("nomSourceCache").toString().trim();
-		
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-		
-		Banque banqueSoumise=banqueRepository.findBanqueByNomGuichet(nomGuichetSoumis);		
-		
-		Societe societeSoumise=societeRepository.findSocieteByNom(nomSocieteSoumis);
-		
-		Client clientReturn=clientRepository.save(client);
-		
-		clientPlan.setIdClient(clientReturn);
+		client.setIdAgent(agent); 
+		Agence agence=agent.getIdAgence();
+		client.setIdAgence(agence);
+		Sequence sequenceAgence=renvoyerDerniereSequence(nomAgenceActif);
+		client.setIdSequence(sequenceAgence);
+	    //// ClientPlan
+		Plan plan=planRepository.findPlanByPlanDuree(planDuree);
 		clientPlan.setIdPlan(plan);
-		clientPlanRepository.save(clientPlan);
-
-		clientSociete.setIdClient(clientReturn);
-		clientSociete.setIdSociete(societeSoumise);
 		
-		if(indiceSource.equals("societe")) {
-			clientSocieteRepository.save(clientSociete);
-		}
-		
-		clientBanque.setIdBanque(banqueSoumise);
-		clientBanque.setIdClient(clientReturn);
-		
-		if(indiceSource.equals("banque")) {
-			clientBanqueRepository.save(clientBanque);
-		}
-		
-//		List<Client> soumissions=clientRepository.findAllClients(estSupprimer);
-//		model.addAttribute("soumissions", soumissions);
-		
-		
-		
-		
+		    
+	    Client clientExiste=clientRepository.findClientByNumeroPolice(numeroPolice);
+	    
+	    if( clientExiste==null ) {
+	    	client.setNumeroPolice(numeroPolice);
+	    	Client clientSave=clientRepository.save(client);
+	    	clientPlan.setIdClient(clientSave);
+	    	clientPlanRepository.save(clientPlan);
+	    	if(testEnvoye.equals("testGroupe")) {
+	    		clientSociete.setIdClient(clientSave);
+				Societe societeModif=societeRepository.findSocieteByNom(banque);
+				clientSociete.setIdSociete(societeModif);		
+				clientSocieteRepository.save(clientSociete);
+	    	}
+	    	
+	    	if(testEnvoye.equals("testIndividuel")) {
+	    		clientBanque.setIdClient(clientSave);
+				Banque banqueModif=banqueRepository.findBanqueByNomGuichet(banque);
+				clientBanque.setIdBanque(banqueModif);			
+				clientBanqueRepository.save(clientBanque);	
+	    	}
+	    	
+	    }
+	    else {		
+		    List<String> numeroPoliceListSoumis=clientRepository.findAllNumeroPolicesByIdSequence(sequenceAgence);
+		    String dernierNumeroPolice= numeroPoliceListSoumis.get(0);    
+		    String numeroPoliceNouveau=positionnerDernierNumeroPolice( nomAgenceActif, dernierNumeroPolice);
+		    client.setNumeroPolice(numeroPoliceNouveau);
+		   Client clientSave=clientRepository.save(client);	
+		    clientPlan.setIdClient(clientSave);
+	    	clientPlanRepository.save(clientPlan);
+	    }
+	    
+	    String propositionSoumise="oui";
+	    session.setAttribute("propositionSoumise",propositionSoumise);
+	    session.setAttribute("planDuree", " ");
+		session.setAttribute("nomAssure", " ");
+		session.setAttribute("genreAssure", " ");
+		session.setAttribute("nomClient", " ");
+		session.setAttribute("numero", " ");
+		session.setAttribute("periodicite", " ");
+		session.setAttribute("couverture", " ");
+		session.setAttribute("prime", " ");
+		session.setAttribute("datePrelevement", " ");
+		session.setAttribute("dateSoumission", " ");
+		session.setAttribute("dateNaissance", " ");
+		session.setAttribute("matriculeClient", " ");
+		session.setAttribute("banque", " ");
+		session.setAttribute("profession", " ");
+		session.setAttribute("employeur", " ");
+		session.setAttribute("ville", " ");
+		session.setAttribute("adressPostal", " ");
+		session.setAttribute("codeAgent", " ");
+		session.setAttribute("telephone1", " ");
+		session.setAttribute("telephone2", " ");
+		session.setAttribute("nomComPreContrat", " ");
+		session.setAttribute("dateRealisation", " ");
+		session.setAttribute("numeroPolice", " ");
+			
+		session.setAttribute("nomSourceCache",nomSource);
+			
 		model.addAttribute("identifiantSession", identifiantSession);
 		model.addAttribute("titre", " Soumission de Proposition");
 		model.addAttribute("identifiantSession", identifiantSession);
@@ -650,15 +1148,18 @@ public class SoumissionController {
 		model.addAttribute("resultatAjoutProposition", "resultatAjoutProposition");
 		
 		int page = 0;
-		 int size = 4;
+		 int size = 20;
 		 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 	            page = Integer.parseInt(request.getParameter("page")) - 1;
 	        }
 		 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
 	            size = Integer.parseInt(request.getParameter("size"));
 	        }
-		 PageRequest pageable = PageRequest.of(page, 4);
-		 model.addAttribute("clientsPage", clientRepository.findAllClientsPage(estSupprimer, pageable));
+		 String nomAgenceActive=session.getAttribute("nomAgenceActif").toString().trim();
+		 Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActive);
+		
+		 PageRequest pageable = PageRequest.of(page, size);
+		 model.addAttribute("clientsPage", clientRepository.findAllClientsPage(estSupprimer,agenceActive, pageable));
 		 model.addAttribute("listeSoumission", "listeSoumission");
         return "utilisateur/accueilUtilisateur";
     }	
@@ -666,8 +1167,7 @@ public class SoumissionController {
 	
 	@Transactional
 	@RequestMapping(value = {"/resultatAjoutPropositionModif" } , method = RequestMethod.POST)
-    public String resultaAjoutPropositionModif(Model model, @ModelAttribute("client") Client client, @ModelAttribute("clientDto") ClientDto clientDto , @ModelAttribute("clientPlan") ClientPlan clientPlan , @ModelAttribute("clientBanque") ClientBanque clientBanque , @ModelAttribute("clientSociete") ClientSociete clientSociete  ,HttpSession session, HttpServletRequest request) { 
-	 
+    public String resultaAjoutPropositionModif(Model model, @ModelAttribute("client") Client client, @ModelAttribute("clientDto") ClientDto clientDto , @ModelAttribute("clientPlan") ClientPlan clientPlan , @ModelAttribute("clientBanque") ClientBanque clientBanque , @ModelAttribute("clientSociete") ClientSociete clientSociete  ,HttpSession session, HttpServletRequest request) { 	 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -681,9 +1181,11 @@ public class SoumissionController {
 		Integer idClientModif=Integer.valueOf(idClient);
 		
 		Client clientModif=clientRepository.findClientById(idClientModif);
+		Date dc=clientModif.getDateCreation();
 		String nomC=clientModif.getNomClient();
 		Integer idC=clientModif.getIdClient();
 		
+		String numeroPolice=clientDto.getNumeroPolice().trim();
 		String planDuree=clientDto.getPlanDuree().trim();
 		String nomAssure=clientDto.getNomAssure().trim();
 		String nomClient=clientDto.getNomClient().trim();
@@ -705,6 +1207,8 @@ public class SoumissionController {
 		String telephone1=clientDto.getTelephone1().trim();
 		String telephone2=clientDto.getTelephone2().trim();	
 		String nomComPreContrat=clientDto.getNomComPreContrat().trim();
+		
+		clientModif.setNumeroPolice(numeroPolice);
 		clientModif.setNomAssure(nomAssure);
 		clientModif.setNomClient(nomClient);
 		clientModif.setNumero(numero);
@@ -723,54 +1227,53 @@ public class SoumissionController {
 		clientModif.setTellephone1(telephone1);
 		clientModif.setTellephone2(telephone2);
 		clientModif.setNomComPreContrat(nomComPreContrat);
-		clientModif.setDateCreation(new Date());
+		clientModif.setDateCreation(dc);
+		String nomAgenceActif=session.getAttribute("nomAgenceActif").toString().trim();
+		Agent agent=agentRepository.findAgentByCodeAgent(codeAgent);
+		client.setIdAgent(agent); 
+		Agence agence=agent.getIdAgence();
+		client.setIdAgent(agent);
+		Sequence sequenceAgence=renvoyerDerniereSequence(nomAgenceActif);
+		client.setIdSequence(sequenceAgence);
+				
+		clientBanque=clientBanqueRepository.findBanqueByIdClient(clientModif);
+		Client clientReturn=null;
+////	ClientBanque
+		if(clientBanque!=null) {
+			
+			 clientReturn=clientRepository.save(clientModif);	
+			
+			clientBanque.setIdClient(clientReturn);
+			Banque banqueModif=banqueRepository.findBanqueByNomGuichet(banque);
+			clientBanque.setIdBanque(banqueModif);			
+			ClientBanque cb=clientBanqueRepository.save(clientBanque);		
+		}
 		
-		Client clientReturn=clientRepository.save(clientModif);
+	////// ClientSociete
+			clientSociete=clientSocieteRepository.findSocieteByClient(clientModif);
+		if(clientSociete!=null) {
 		
+			numero=societeRepository.findCodeSocieteByNomSociete(banque);
+			clientModif.setNumero(numero);
+			 clientReturn=clientRepository.save(clientModif);	
+			clientSociete.setIdClient(clientReturn);
+			Societe societeModif=societeRepository.findSocieteByNom(banque);
+			clientSociete.setIdSociete(societeModif);		
+			clientSocieteRepository.save(clientSociete);
+			}
 		
 		//// ClientPlan
 		clientPlan=clientPlanRepository.findClientPlanByIdClient(clientModif);
 		clientPlan.setIdClient(clientReturn);
 		Plan plan=planRepository.findPlanByPlanDuree(planDuree);
 		clientPlan.setIdPlan(plan);
-		System.out.println("   Id Client : "+plan.getIdPlan());
-		ClientPlan cp=clientPlanRepository.save(clientPlan);	
-		////	ClientBanque
-		clientBanque=clientBanqueRepository.findBanqueByIdClient(clientModif);
-		if(clientBanque!=null) {
-					clientBanque.setIdClient(clientReturn);
-					Banque banqueModif=banqueRepository.findBanqueByNomGuichet(banque);
-					clientBanque.setIdBanque(banqueModif);			
-					clientBanqueRepository.save(clientBanque);				
-		}
-					
-		////// ClientSociete
-		clientSociete=clientSocieteRepository.findSocieteByClient(clientModif);
-		if(clientSociete!=null) {
-			clientSociete.setIdClient(clientReturn);
-			Societe societeModif=societeRepository.findSocieteByNom(banque);
-			clientSociete.setIdSociete(societeModif);		
-			clientSocieteRepository.save(clientSociete);
-		}
-		
-		/////////	Agent
-		Agent agent=agentRepository.findAgentByCodeAgent(codeAgent);
-		clientModif.setIdAgent(agent);
-		clientModif=clientRepository.save(clientModif);
-		
-			
-		//////////////////////////:Police
-		String police=session.getAttribute("police").toString().trim();
-		police=police.concat(numero);
-		model.addAttribute("police", police);
-		session.setAttribute("police", police);
-			
+		ClientPlan cp=clientPlanRepository.save(clientPlan);		
 		
 		String nomSource=session.getAttribute("nomSourceCache").toString().trim();
 		String indiceSource=session.getAttribute("indiceSource").toString().trim();
 		
 		int page = 0;
-		 int size = 4;
+		 int size = 20;
 		 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 	            page = Integer.parseInt(request.getParameter("page")) - 1;
 	        }
@@ -778,27 +1281,15 @@ public class SoumissionController {
 	            size = Integer.parseInt(request.getParameter("size"));
 	        }
 		 Boolean estSupprimer=false;
-	     PageRequest pageable = PageRequest.of(page, 4);
-		 Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
-//		 clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
+	     PageRequest pageable = PageRequest.of(page, size);
+	     String nomAgenceActive=session.getAttribute("nomAgenceActif").toString().trim();
+		 Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActive);
+		
+		 Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer, agenceActive, pageable);
 		 model.addAttribute("clientsPage", clientPage);
-		
-		
-		 	 
+			 	 
 		model.addAttribute("cheminAccueil",  "Accueil >");
 		model.addAttribute("cheminSoumission",  "Soumission >");
-		
-		
-//		Agent agent=agentRepository.findAgentByCodeAgent(codeAgent);
-		client.setIdAgent(agent); session.setAttribute("nomSourceCache",nomSource);
-		
-//		Plan plan=planRepository.findPlanByPlanDuree(planDuree); 
-		
-		
-		
-//		List<Client> soumissions=clientRepository.findAllClients(estSupprimer);
-//		model.addAttribute("soumissions", soumissions);
-		
 		
 		model.addAttribute("listeSoumission", "listeSoumission");
 		
@@ -813,11 +1304,14 @@ public class SoumissionController {
 	
 		@Transactional
 		@RequestMapping(value = "/clientsPage")
-	    public ModelAndView listArticlesPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="10") int size,  @ModelAttribute("client") Client client, Model model, HttpSession session, HttpServletRequest request) {
+	    public ModelAndView listArticlesPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="20") int size,  @ModelAttribute("client") Client client, Model model, HttpSession session, HttpServletRequest request) {
 	        ModelAndView modelAndView = new ModelAndView("utilisateur/accueilUtilisateur");
 	        Boolean estSupprimer=false;
-	        PageRequest pageable = PageRequest.of(page-1, 4);
-	        Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
+	        String nomAgenceActive=session.getAttribute("nomAgenceActif").toString().trim();
+			 Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActive);
+			
+	        PageRequest pageable = PageRequest.of(page-1, size);
+	        Page<Client> clientPage = clientRepository.findAllClientsPage(estSupprimer,agenceActive, pageable);
  
 			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
 		            page = Integer.parseInt(request.getParameter("page")) - 1;
@@ -825,7 +1319,7 @@ public class SoumissionController {
 			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
 		            size = Integer.parseInt(request.getParameter("size"));
 		        }
-		    clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
+		    clientPage = clientRepository.findAllClientsPage(estSupprimer,agenceActive, pageable);
 			model.addAttribute("clientsPage", clientPage);
 					
 			model.addAttribute("cheminAccueil",  "Accueil >");

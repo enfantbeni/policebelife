@@ -36,8 +36,8 @@
                  <div class="col-md-4 col-xs-4 ft">
                   	<label> Code Agent : </label>
              	 </div>          	 
-             	 <div class="col-md-8 col-xs-8">             	    
-             	    <input type="text" name="codeAgent" class="form-control" maxlength="50" data-th-value="${agentRecherche.codeAgent}" />					
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input type="text" name="codeAgent" required class="form-control" maxlength="20" data-th-value="${agentRecherche.codeAgent}" />					
              	 </div>             	          
              </div> 
              
@@ -45,7 +45,7 @@
                  <div class="col-md-4 col-xs-4 ft">
                   	<label> Nom Direct : </label>
              	 </div> 
-             	 <div class="col-md-8 col-xs-8" style="text-align:left;">           	 
+             	 <div class="col-md-4 col-xs-4" style="text-align:left;">           	 
              	     <select name="nomAgence">                      
                          <option  th:each="nomDirect : ${nomDirects}" th:value="${nomDirect}" th:utext="${nomDirect}"/>
                   	 </select>
@@ -58,8 +58,8 @@
                  <div class="col-md-4 col-xs-4 ft">
                   	<label> Nom Agent : </label>
              	 </div>
-             	 <div class="col-md-8 col-xs-8">
-                  	<input type="text" name="nomAgent" class="form-control" data-th-value="${agentRecherche.nomAgent}" maxlength="5" autocomplete="off"/>	
+             	 <div class="col-md-4 col-xs-4">
+                  	<input type="text" name="nomAgent" required class="form-control" data-th-value="${agentRecherche.nomAgent}" maxlength="40" autocomplete="off"/>	
              	 </div>           
              </div>
              

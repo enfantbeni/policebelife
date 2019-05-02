@@ -397,7 +397,13 @@ td.droit{
 
 .page ul a{font-size:18px; font-weight:bold}
 
-
+.erreurPolice h4{
+  font-style:italic;texte-align:center;
+  
+}
+.erreurPolice{
+	background-color:#cccccc; border-radius:10px;margin-top:20px;
+}
 
 
 
