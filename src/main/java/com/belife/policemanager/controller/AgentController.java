@@ -2,6 +2,7 @@ package com.belife.policemanager.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -177,6 +178,7 @@ public class AgentController {
 				agent.setCodeAgent(codeAgentDto);
 				agent.setNomAgent(nomAgentDto);
 				agent.setEstSupprimer(estSupprimer);
+				agent.setDateCreation(new Date());
 
 				model.addAttribute("listeAgent", "listeAgent");
 				model.addAttribute("gestionAgent", "gestionAgent");
@@ -774,7 +776,6 @@ public class AgentController {
 			session.removeAttribute("codeAgenceCache");
 			String codeAgent=agent.getCodeAgent();
 			Agent agentRecherche=agentRepository.findAgentByCodeAgent(codeAgent);
-			System.out.println(" Code direct : " +agentRecherche);
 			Boolean estSupprimer=false;
 			List<String> nomDirects = new ArrayList<String>();
 			nomDirects = agenceRepository.findAllNomDirects(estSupprimer);
