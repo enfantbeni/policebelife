@@ -84,8 +84,7 @@ public class SocieteController {
 	   
 	 @Transactional
 	 @RequestMapping(value = {"/ajoutSociete" }, method = RequestMethod.GET)
-	    public String ajoutSociete(Model model, HttpSession session) { 
-		 
+	    public String ajoutSociete(Model model, HttpSession session) { 		 
 		 String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
