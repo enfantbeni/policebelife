@@ -140,20 +140,22 @@ public class SocieteController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("menuNavigation", "menuNavigation");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
 			model.addAttribute("cheminAjouterSociete", "Ajouter une Société >");
 			model.addAttribute("titre", " Gestion de Société");
+			model.addAttribute("identifiantSession", identifiantSession);
+			
 			Boolean estSupprimer=false;
 			List<Agence> agences=new ArrayList<Agence>();
 			agences=agenceRepository.findAllAgences(estSupprimer);
-			model.addAttribute("agences", agences);
-			model.addAttribute("identifiantSession", identifiantSession);
-			model.addAttribute("formulaireGestionAgence", "formulaireGestionAgence");
+			model.addAttribute("agences", agences);		
+			model.addAttribute("formulaireGestionSociete", "formulaireGestionSociete");
 			model.addAttribute("listeAgence", "listeAgence");
-			model.addAttribute("gestionAgence", "gestionAgence");
-			model.addAttribute("menuNavigation", "menuNavigation");
+			model.addAttribute("gestionSociete", "gestionSociete");
+			
+			
 	        return "espaceUtilisateur";			
 	    }
 	        
