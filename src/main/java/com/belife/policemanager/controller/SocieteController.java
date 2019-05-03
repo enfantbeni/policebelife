@@ -142,9 +142,9 @@ public class SocieteController {
 			model.addAttribute("accueilDeux", "accueilDeux");
 
 			model.addAttribute("cheminAccueil", "Accueil >");
-			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
-			model.addAttribute("cheminAjouterAgence", "Ajouter une Agence >");
-			model.addAttribute("titre", "Gestion des Agences");
+			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
+			model.addAttribute("cheminAjouterSociete", "Ajouter une Société >");
+			model.addAttribute("titre", " Gestion de Société");
 			Boolean estSupprimer=false;
 			List<Agence> agences=new ArrayList<Agence>();
 			agences=agenceRepository.findAllAgences(estSupprimer);
