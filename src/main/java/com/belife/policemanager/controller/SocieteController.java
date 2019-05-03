@@ -94,7 +94,7 @@ public class SocieteController {
 				resultat="pageErreur";
 				return resultat;
 			}
-//			gestion Menu 
+			//	gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -164,9 +164,9 @@ public class SocieteController {
 						model.addAttribute("listeSociete", "listeSociete");
 						model.addAttribute("gestionSociete", "gestionSociete");
 						DateFormat df = new SimpleDateFormat("dd/MM/yy");
-//						long date =System.currentTimeMillis();						
-//						DateFormat dateFormat= new SimpleDateFormat("dd-MM-yy");
-//						String dateCreation=df.format(date);						
+//						Date date =new Date();						
+//						DateFormat dateFormat= new SimpleDateFormat("dd-MM-yyyy");
+//						String dateCreation=dateFormat.format(date);						
 						societe.setDateCreation(new Date());
 						societeRepository.save(societe);
 						model.addAttribute("ajoutSuccesSociete", "Une société ajoutée avec succès");	
@@ -510,9 +510,9 @@ public class SocieteController {
 	        return "espaceUtilisateur";	
 	    } 
 	 
-//	 Action suppression Societe 
-	 @Transactional
-	 @RequestMapping(value = {"/supprimerSociete" }, method = RequestMethod.GET)
+	//	 Action suppression Societe 
+		 @Transactional
+		 @RequestMapping(value = {"/supprimerSociete" }, method = RequestMethod.GET)
 	    public String supprimerSociete(Model model, HttpSession session) { 
 			String resultat=null;
 			try {
@@ -724,24 +724,6 @@ public class SocieteController {
 			model.addAttribute("menuNavigation", "menuNavigation");			
 	        return "espaceUtilisateur";	
 	    }
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
-	 
+	  
 
 }

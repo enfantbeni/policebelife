@@ -24,7 +24,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Intege
 	@Query("select u from Utilisateur u where u.identifiant = :identifiant AND u.estSupprimer=false")
 	Utilisateur findByIdentifiant(@Param("identifiant") String identifiant);
 	
-	@Query("select u from Utilisateur u where u.estSupprimer = :estSupprimer AND u.estSupprimer=false")
+	@Query("select u from Utilisateur u where u.estSupprimer = :estSupprimer AND u.estSupprimer=false ORDER BY dateCreation DESC ")
 	List<Utilisateur> findAllUtilisateur(@Param("estSupprimer") Boolean estSupprimer);
 	
 	@Query("select idUtilisateur from Utilisateur u where u.identifiant = :identifiant AND u.estSupprimer=false")

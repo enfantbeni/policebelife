@@ -215,35 +215,7 @@ public class SequencePoliceController {
 			return sequenceDtosAffiche;
 			
 		}
-	 
-	 
-//	 	@Transactional
-//		public Page<SequencePoliceDto> transformerSequencePoliceToSequencePoliceDto(Page<SequencePoliceDto> sequencePoliceDtosAffiche, HttpServletRequest request) {
-//			Boolean estSupprimer=false;
-//			
-//			int page = 0;
-//			 int size = 4;
-//			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-//		            page = Integer.parseInt(request.getParameter("page")) - 1;
-//		        }
-//			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-//		            size = Integer.parseInt(request.getParameter("size"));
-//		        }
-//		     PageRequest pageable = PageRequest.of(page, 4);
-//			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-//			
-//
-//			for (SequencePolice sp : seqPolicePage) {
-//				SequencePoliceDto spDto = new SequencePoliceDto();
-//				spDto.setSeq(sp.getIdSequence().getSeq());
-//				spDto.setSeqPolice(sp.getSeqPolice());				
-//				sequencePoliceDtosAffiche.and(spDto);
-//				sequencePoliceDtosAffiche.
-//			}
-//			return sequencePoliceDtosAffiche;		
-//		}
-	 
-	 
+	 	 
 		 @Transactional
 		 @RequestMapping(value = {"/resultatAjoutSequencePolice" }, method = RequestMethod.POST)
 		 public String resultatAjoutSequencePolice(Model model, @ModelAttribute("sequence") Sequence sequence, @ModelAttribute("sequenceDto") SequenceDto sequenceDto, @ModelAttribute("sequencePoliceDto") SequencePoliceDto sequencePoliceDto,  HttpServletRequest request, @ModelAttribute("sequencePolice") SequencePolice sequencePolice , HttpSession session) { 		 
@@ -266,16 +238,13 @@ public class SequencePoliceController {
 		        }
 			 Boolean estSupprimer=false;
 		     PageRequest pageable = PageRequest.of(page, size);
-//			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-//			 model.addAttribute("sequencePolices", seqPolicePage);
-//		    
 			String seq=sequenceDto.getSeq().trim();	
 			String nomAgence=sequenceDto.getNomAgence().trim();
 			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminAjouterSequencePolice", "Positionner une Sequence >");
 			model.addAttribute("titre", " Gestion de Sequence ");
-			
+			model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
 			List<SequencePolice> sequencePolices=new ArrayList<SequencePolice>();
 			List<Sequence> sequences=new ArrayList<Sequence>();
 			Sequence sequenceSave=null;
@@ -284,13 +253,11 @@ public class SequencePoliceController {
 			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
 			model.addAttribute("menuNavigation", "menuNavigation");
 			List<Sequence> sequencesGrouper =sequenceRepository.findAllSequencesGouper(estSupprimer);
-			
+			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
 			
 			if( seq != null && seq.length()>0 ) {
 							Sequence seqExistant=null;
 							sequenceSave=sequenceRepository.findSequenceBySeq(seq);
-							
-//							String seqOrdreChaine=renvoyerDerniereSequence(seq);
 							
 							session.setAttribute("seq", seq);
 							session.setAttribute("nomAgence", nomAgence);
@@ -312,33 +279,7 @@ public class SequencePoliceController {
 								 model.addAttribute("sequencesAffiche", sequencesAffiche);
 								return "espaceUtilisateur";		
 							}
-							
-							
-							
-							
-//							seqExistant=sequenceRepository.findSequenceBySeq(seq);
-//							}
-//							if(sequenceSave!=null) {
-//							  seqExistant=sequenceRepository.findSequenceBySeq(seq);
-//							}
-//							
-//							String seqPoliceOrdreChaine=null;
-//							
-//							seqPoliceOrdreChaine=seq.concat(seqOrdreChaine);
-//							sequencePolice.setDateCreation(new Date());
-//							sequencePolice.setEstSupprimer(estSupprimer);
-//							sequencePolice.setIdSequence(seqExistant);
-//							sequencePolice.setSeqPolice(seqPoliceOrdreChaine);
-//							sequencePoliceRepository.save(sequencePolice);
-//							
-							
-//							model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-//						
-												
-//							seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-//							model.addAttribute("sequencePolices", seqPolicePage);		
-							
-							
+													
 			}
 			List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
 			 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
@@ -346,8 +287,6 @@ public class SequencePoliceController {
 			 model.addAttribute("listeSequencePolice", "listeSequencePolice");
 			model.addAttribute("erreurSequence", " Sequence déjà attribuée");	
 			model.addAttribute("formErreurSequencePolice", "formErreurSequencePolice");	
-//			sequencePolices=sequencePoliceRepository.findAllSequencePolices(estSupprimer);
-//			model.addAttribute("sequencePolices", sequencePolices);
 			List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
 			model.addAttribute("nomAgences", nomAgences);
 			model.addAttribute("cheminAccueil", "Accueil >");
@@ -362,124 +301,6 @@ public class SequencePoliceController {
 			model.addAttribute("menuNavigation", "menuNavigation");
 	        return "espaceUtilisateur";			
 	 }
-	 
-//	 @Transactional
-//	 @RequestMapping(value = {"/modifierSequencePolice" }, method = RequestMethod.GET)
-//	    public String modifierSequencePolice(Model model, HttpSession session, HttpServletRequest request ) { 
-//			String resultat=null;
-//			try {
-//				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-//			}
-//			catch(Exception e) {
-//				resultat="pageErreur";
-//				return resultat;
-//			}	
-//			int page = 0;
-//			 int size = 20;
-//			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-//		            page = Integer.parseInt(request.getParameter("page")) - 1;
-//		        }
-//			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-//		            size = Integer.parseInt(request.getParameter("size"));
-//		        }
-//			 Boolean estSupprimer=false;
-//		     PageRequest pageable = PageRequest.of(page, size);
-//			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-////			 clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
-//			 model.addAttribute("sequencePolices", seqPolicePage);
-//			 
-//			List<SequencePolice> sequencePolices=new ArrayList<SequencePolice>();
-//			model.addAttribute("cheminAccueil", "Accueil >");
-//			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-//			model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence Police >");
-//			model.addAttribute("titre", "Gestion de Sequence");
-//			model.addAttribute("formulaireNumeroModifSequencePolice", "formulaireNumeroModifSequencePolice");
-//			model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
-//			model.addAttribute("identifiantSession", identifiantSession);
-//			model.addAttribute("listeSequencePolice", "listeSequencePolice");
-//			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-//			model.addAttribute("menuNavigation", "menuNavigation");
-//	        return "espaceUtilisateur";	
-//	    }
-//	 
-//	 
-//		 @Transactional
-//		 @RequestMapping(value = {"/formulaireNumeroModifSequencePolice" }, method = RequestMethod.POST)
-//	    public String formulaireNumeroModifSequencePolice(Model model, @ModelAttribute("sequence") Sequence sequence ,HttpServletRequest request  , @ModelAttribute("sequencePolice") SequencePolice sequencePolice, @ModelAttribute("sequenceDto") SequencePoliceDto sequenceDto, HttpSession sessionUtilisateur, HttpSession session) {
-//			String resultat=null;
-//			try {
-//				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-//			}
-//			catch(Exception e) {
-//				resultat="pageErreur";
-//				return resultat;
-//			}
-//			 int page = 0;
-//			 int size = 20;
-//			 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-//		            page = Integer.parseInt(request.getParameter("page")) - 1;
-//		        }
-//			 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-//		            size = Integer.parseInt(request.getParameter("size"));
-//		        }
-//			 Boolean estSupprimer=false;
-//		     PageRequest pageable = PageRequest.of(page, size);
-//			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-////			 clientPage = clientRepository.findAllClientsPage(estSupprimer, pageable);
-//			 model.addAttribute("sequencePolices", seqPolicePage);
-//			model.addAttribute("cheminAccueil", "Accueil >");
-//			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-//			model.addAttribute("cheminModifierSequencePolice", "Modifier une Sequence Police >");
-//			model.addAttribute("titre", "Gestion de Sequence");
-//			String seq=sequence.getSeq().trim();
-//			Sequence sequenceRecherche=sequenceRepository.findSequenceBySeq(seq);
-//			session.setAttribute("seqCache", seq);
-//			if( sequenceRecherche == null) {
-//				 return "redirect:/messageSequencePoliceNonExistante";  
-//			}
-//			
-//			model.addAttribute("titre", " Gestion d'Agence");
-//			session.setAttribute("seqCache", seq);	
-//			model.addAttribute("formulaireGestionModifSequencePolice", "formulaireGestionModifSequencePolice");
-//			model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
-//			model.addAttribute("sequencePoliceRecherche", sequenceRecherche);
-//			model.addAttribute("identifiantSession", identifiantSession);
-//			model.addAttribute("listeSequencePolice", "listeSequencePolice");
-//			model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-//			model.addAttribute("menuNavigation", "menuNavigation");			
-//	        return "espaceUtilisateur";	
-//	    }
-//		 
-//		 @Transactional
-//			@RequestMapping(value = "/sequencePolices")
-//		    public ModelAndView listArticlesPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="20") int size,  @ModelAttribute("sequencePolice") SequencePolice sequencePolice, Model model, HttpSession session, HttpServletRequest request) {
-//		        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
-//		        Boolean estSupprimer=false;
-//		         size=20;
-//		        PageRequest pageable = PageRequest.of(page-1, size);
-//		        Page<SequencePolice> sequencePolices = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-//	 
-//				 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-//			            page = Integer.parseInt(request.getParameter("page")) - 1;
-//			        }
-//				 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-//			            size = Integer.parseInt(request.getParameter("size"));
-//			        }
-//				model.addAttribute("sequencePolices",  sequencePolices);
-//						
-//				model.addAttribute("cheminAccueil", "Accueil >");
-//				model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-//				model.addAttribute("identifiantSession", identifiantSession);
-//				model.addAttribute("titre", "Liste de numeros de Police");
-//				model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
-//				model.addAttribute("identifiantSession", identifiantSession);
-//				model.addAttribute("listeSequencePolice", "listeSequencePolice");
-//				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-//				model.addAttribute("listeSequencePolice", "listeSequencePolice");
-//				model.addAttribute("menuNavigation", "menuNavigation");
-//		        return modelAndView;
-//		    }
-//	 
 		 
 		 @Transactional
 		 @RequestMapping(value = {"/rechercheSequencePolice" }, method = RequestMethod.GET)
@@ -613,39 +434,7 @@ public class SequencePoliceController {
 		
 	    		
 	 }
-		 
-//		 @Transactional
-//			@RequestMapping(value = "/numeroPolices")
-//		    public ModelAndView numeroPolicesBySeq(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="20") int size, @ModelAttribute("sequence") Sequence sequence, @ModelAttribute("sequencePolice") SequencePolice sequencePolice, Model model, HttpSession session, HttpServletRequest request) {
-//		        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
-//		        Boolean estSupprimer=false;
-//		         size=20;
-//		        PageRequest pageable = PageRequest.of(page-1, size);
-//		        Page<SequencePolice> sequencePolices = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
-//	 
-//				 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-//			            page = Integer.parseInt(request.getParameter("page")) - 1;
-//			        }
-//				 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-//			            size = Integer.parseInt(request.getParameter("size"));
-//			        }
-//				 String seq=session.getAttribute("seq").toString().trim();
-//				 sequence=sequenceRepository.findSequenceBySeq(seq);
-//				 Page<SequencePolice> seqPolicePage=sequencePoliceRepository.findAllSequencePolicesBySeq(sequence, estSupprimer, pageable );
-//				 model.addAttribute("sequencePolices", seqPolicePage);	
-//						
-//				model.addAttribute("cheminAccueil", "Accueil >");
-//				model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
-//				model.addAttribute("identifiantSession", identifiantSession);
-//				model.addAttribute("titre", "Liste de numeros de Police");
-//				model.addAttribute("quatreBoutonSequencePolice", "quatreBoutonSequencePolice");
-//				model.addAttribute("identifiantSession", identifiantSession);
-//				model.addAttribute("resultatRechercheSequencePolice", "resultatRechercheSequencePolice");
-//				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
-//				model.addAttribute("menuNavigation", "menuNavigation");
-//		        return modelAndView;
-//		    }
-		 
+	 
 		 @Transactional
 		 @RequestMapping(value = {"/envoiDonneeCacheeSequencePolice" }, method = RequestMethod.POST)
 		    public String envoiDonneeCacheeSociete(Model model,  @ModelAttribute("sequence") Sequence sequence,  @ModelAttribute("sequenceDto") SequenceDto sequenceDto , @ModelAttribute("sequencePolice") SequencePolice sequencePolice, HttpSession session) {

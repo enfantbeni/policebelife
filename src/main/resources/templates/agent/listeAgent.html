@@ -10,11 +10,12 @@
 		<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeAgent">
 	    <h2> Liste des Agents </h2>
 		<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
-                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Agent </th><th> Nom Direct</th><th  > Nom Agent </th><th> </th></tr>
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Agent </th><th> Nom Direct</th><th  > Nom Agent </th><th  > Telephone </th><th> </th></tr>
 					<tr th:each ="agentDto : ${agentDtos}">  									
   						<td  width="100" th:utext="${agentDto.codeAgent}" style="padding-left:10px" ></td>
   						<td  width="100" th:utext="${agentDto.nomAgence}" ></td>
   						<td  width="100" th:utext="${agentDto.nomAgent}" ></td>
+  						<td  width="100" th:utext="${agentDto.telephone}" ></td>
   						<td width="100" >
   						   <input  class="btn btn-danger supprimer"  data-th-name="${agentDto.codeAgent}" onclick="supprimer(this);" type="button" value="Supprimer" >                
   						   <button class="btn btn-primary"  data-th-name="${agentDto.codeAgent}" onclick="modifier(this);"> Modifier</button>

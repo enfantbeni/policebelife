@@ -6,6 +6,7 @@ public class AgentDto {
 	private String nomAgence;
 	private String codeAgent;	
 	private String nomAgent;	
+	private String telephone;
 	private Boolean estSupprimer;
 	public AgentDto() {
 		super();
@@ -39,6 +40,12 @@ public class AgentDto {
 	}
 	public void setEstSupprimer(Boolean estSupprimer) {
 		this.estSupprimer = estSupprimer;
+	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
 	}
 	
 	

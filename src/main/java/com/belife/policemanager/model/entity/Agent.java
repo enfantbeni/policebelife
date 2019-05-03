@@ -32,6 +32,8 @@ public class Agent implements Serializable {
 	private String nomAgent;
 	@Column(name = "codeAgent")
 	private String codeAgent;
+	@Column(name = "telephone")
+	private String telephone;
 	@Column(name = "dateCreation")
 	private Date dateCreation;
 	@Column(name = "estSupprime", nullable=false)
@@ -90,6 +92,13 @@ public class Agent implements Serializable {
 	public void setClients(List<Client> clients) {
 		this.clients = clients;
 	}
+	public String getTelephone() {
+		return telephone;
+	}
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+	
 	
 	
 

@@ -2,6 +2,7 @@ package com.belife.policemanager.model.entity;
 
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -32,6 +33,8 @@ private String fonction;
 private String password;
 @Column(name = "estSupprime", nullable=false)
 private Boolean estSupprimer;
+@Column(name = "dateCreation")
+private Date dateCreation;
 @OneToMany(targetEntity=com.belife.policemanager.model.entity.UtilisateurRoles.class, mappedBy = "idRoles")
 List<Roles> roles;
 @ManyToOne
@@ -124,6 +127,13 @@ public List<Roles> getRoles() {
 }
 public void setRoles(List<Roles> roles) {
 	this.roles = roles;
+}
+
+public Date getDateCreation() {
+	return dateCreation;
+}
+public void setDateCreation(Date dateCreation) {
+	this.dateCreation = dateCreation;
 }
 public Agence getIdAgence() {
 	return idAgence;

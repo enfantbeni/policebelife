@@ -1,6 +1,7 @@
 package com.belife.policemanager.controller;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -156,7 +157,8 @@ public class AgentController {
 		String codeAgentDto = agentDto.getCodeAgent().trim();
 		String nomAgentDto = agentDto.getNomAgent().trim();
 		String nomAgenceDto = agentDto.getNomAgence().trim();
-
+		String telephoneAgentDto=agentDto.getTelephone().trim();
+		
 		Agence agence = new Agence();
 
 		List<Agent> agents = new ArrayList<Agent>();
@@ -166,7 +168,6 @@ public class AgentController {
 		Agent nomDirectSave = null;
 		model.addAttribute("identifiantSession", identifiantSession);
 		model.addAttribute("menuNavigation", "menuNavigation");
-		
 	
 		if (codeAgentDto != null && codeAgentDto.length() > 0 && codeAgentDto.length() <= 5 && nomAgenceDto != null
 				&& nomAgenceDto.length() > 0 && nomAgenceDto.length() <= 50 && nomAgentDto != null
@@ -177,6 +178,7 @@ public class AgentController {
 				agent.setIdAgence(agence);
 				agent.setCodeAgent(codeAgentDto);
 				agent.setNomAgent(nomAgentDto);
+				agent.setTelephone(telephoneAgentDto);
 				agent.setEstSupprimer(estSupprimer);
 				agent.setDateCreation(new Date());
 
@@ -189,10 +191,7 @@ public class AgentController {
 				agents = agentRepository.findAllAgents(estSupprimer);
 				List<AgentDto> agentDtosAff=new ArrayList<AgentDto>();  	
 				model.addAttribute("agentDtos", transformerAgentToAgentDto(agentDtosAff));
-				
-				
-		
-				
+							
 				model.addAttribute("agents", agents);
 				return "espaceUtilisateur";
 			}
@@ -236,6 +235,7 @@ public class AgentController {
 			objetAgentDto.setIdAgent(ag.getIdAgent());
 			objetAgentDto.setCodeAgent(ag.getCodeAgent());
 			objetAgentDto.setNomAgent(ag.getNomAgent());
+			objetAgentDto.setTelephone(ag.getTelephone());
 			objetAgentDto.setEstSupprimer(ag.getEstSupprimer());
 			Integer IdAgence=ag.getIdAgence().getIdAgence();
 			String nomDirect = agenceRepository.findNomDirect(IdAgence);
@@ -284,11 +284,15 @@ public class AgentController {
 	@Transactional
 	public AgentDto donneeAgentDto(AgentDto agentDto, String codeAgent) {
 			Agent agentModifie = agentRepository.findAgentByCodeAgent(codeAgent);
+//			String pattern = "dd-MM-yyyy";
+//			SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//			String date = simpleDateFormat.format(new Date());
 			AgentDto objetAgentDto = new AgentDto();
 			objetAgentDto.setIdAgent(agentModifie.getIdAgent());
 			objetAgentDto.setCodeAgent(agentModifie.getCodeAgent());
 			objetAgentDto.setNomAgent(agentModifie.getNomAgent());
 			objetAgentDto.setEstSupprimer(agentModifie.getEstSupprimer());
+			objetAgentDto.setTelephone(agentModifie.getTelephone());
 			Integer IdAgence=agentModifie.getIdAgence().getIdAgence();
 			String nomDirect = agenceRepository.findNomDirect(IdAgence);
 			objetAgentDto.setNomAgence(nomDirect);			
@@ -375,6 +379,7 @@ public class AgentController {
 		String codeAgentDto = agentDto.getCodeAgent().trim();
 		String nomAgentDto = agentDto.getNomAgent().trim();
 		String nomAgenceDto = agentDto.getNomAgence().trim();
+		String telephoneAgenceDto=agentDto.getTelephone().trim();
 		Agence agenceSave=new Agence();		
 		List<Agent> agents=new ArrayList<Agent>();
 		Boolean estSupprimer=false;			
@@ -382,8 +387,7 @@ public class AgentController {
 		
 		Agent agentRecherche=agentRepository.findAgentByCodeAgent(codeAgentCache);
 		
-		Agent codeAgentRecherche=agentRepository.findAgentByCodeAgent(codeAgentDto);
-		
+		Agent codeAgentRecherche=agentRepository.findAgentByCodeAgent(codeAgentDto);	
 		
 		if( codeAgentDto==null || codeAgentDto.length()==0 || codeAgentDto.length()>5 || nomAgentDto==null || nomAgentDto.length()==0 || nomAgentDto.length()>50 || nomAgenceDto==null || nomAgenceDto.length()==0 || nomAgenceDto.length()>50 || codeAgentRecherche!=null  ) {						
 			
@@ -443,7 +447,8 @@ public class AgentController {
 		 agentRecherche.setCodeAgent(codeAgentDto);
 		 agenceSave = agenceRepository.findAgenceByNomDirect(nomAgenceDto);
 		 agentRecherche.setIdAgence(agenceSave);	 
-		 agentRecherche.setEstSupprimer(estSupprimer);		 
+		 agentRecherche.setEstSupprimer(estSupprimer);	
+		 agentRecherche.setTelephone(telephoneAgenceDto);
 		agentRepository.save(agentRecherche);
 		
 		List<AgentDto> agentDtosAff=new ArrayList<AgentDto>();  	
@@ -459,8 +464,7 @@ public class AgentController {
         return "espaceUtilisateur";	
     }
  
- // Recheche Agent
- 
+    // Recheche Agent
 	 @RequestMapping(value = {"/rechercheAgent" }, method = RequestMethod.GET)
 	 public String rechercherAgence(Model model, HttpSession session) { 
 			String resultat=null;
@@ -471,7 +475,7 @@ public class AgentController {
 				resultat="pageErreur";
 				return resultat;
 			}
-//			gestion Menu 
+			//gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -574,12 +578,10 @@ public class AgentController {
 			model.addAttribute("messageAgentNonExistant", "messageAgentNonExistant");		
 			model.addAttribute("actionQuatreBouton", "actionQuatreBouton");	
 			Boolean estSupprimer=false;
-			List<Agent> agents=new ArrayList<Agent>();
-			
+			List<Agent> agents=new ArrayList<Agent>();		
 			
 			List<AgentDto> agentDtosAff=new ArrayList<AgentDto>();  	
-			model.addAttribute("agentDtos", transformerAgentToAgentDto(agentDtosAff));
-			
+			model.addAttribute("agentDtos", transformerAgentToAgentDto(agentDtosAff));	
 			
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgent", "listeAgent");
@@ -589,7 +591,7 @@ public class AgentController {
 	    }
 	
 	 	//	 Supprimer un Agent
-	 @RequestMapping(value = {"/supprimerAgent" }, method = RequestMethod.GET)
+	 	@RequestMapping(value = {"/supprimerAgent" }, method = RequestMethod.GET)
 	    public String supprimerAgent(Model model, HttpSession session) { 
 			String resultat=null;
 			try {
@@ -623,7 +625,7 @@ public class AgentController {
 	        return "espaceUtilisateur";	        
 	    }
 	 
-	 @RequestMapping(value = {"/resultatSupprimerAgent" }, method = RequestMethod.POST)
+	 	@RequestMapping(value = {"/resultatSupprimerAgent" }, method = RequestMethod.POST)
 	    public String resultatSuppressionAgent(Model model, @ModelAttribute("agent") Agent agent, HttpSession sessionUtilisateur, HttpSession session) {
 			String resultat=null;
 			try {

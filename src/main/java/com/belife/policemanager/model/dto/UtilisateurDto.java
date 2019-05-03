@@ -1,5 +1,7 @@
 package com.belife.policemanager.model.dto;
 
+import java.util.Date;
+
 public class UtilisateurDto {
 		
 	private Integer idUtilisateur;
@@ -13,6 +15,8 @@ public class UtilisateurDto {
 	private String password;
 	
 	private String nomAgence;
+	
+	private Date dateCreation;
 
 	private Boolean estSupprimer;
 
@@ -75,5 +79,14 @@ public class UtilisateurDto {
 	public void setEstSupprimer(Boolean estSupprimer) {
 		this.estSupprimer = estSupprimer;
 	}
+
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+	
 	
 }

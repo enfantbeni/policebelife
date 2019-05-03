@@ -2,6 +2,7 @@ package com.belife.policemanager.controller;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -539,6 +540,9 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
+		model.addAttribute("cheminAccueil", "Accueil >");
+		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
+		model.addAttribute("cheminAjouterUtilisateur", "Ajouter Utilisateur >");
 		
 		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		Utilisateur utilisateurSave=null;
@@ -547,6 +551,7 @@ public class UtilisateurController {
 		String nomEtPrenom=utilisateurDto.getNomEtPrenom().trim();
 		String fonction=utilisateurDto.getFonction().trim();
 		String nomAgence=utilisateurDto.getNomAgence().trim();
+		
 		Boolean estSupprimer=false;
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");	
@@ -560,6 +565,7 @@ public class UtilisateurController {
 					utilisateur.setIdentifiant(identifiant);
 					utilisateur.setNomEtPrenom(nomEtPrenom);
 					utilisateur.setPassword(password);
+					utilisateur.setDateCreation(new Date());
 					
 					Agence agence=agenceRepository.findAgenceByNomDirect(nomAgence);
 					utilisateur.setIdAgence(agence);
@@ -569,7 +575,7 @@ public class UtilisateurController {
 					model.addAttribute("afficheTableau", "afficheTableau");
 					model.addAttribute("utilisateurs", utilisateurs);					
 					model.addAttribute("succes", "succes");
-					model.addAttribute("choisirRole", "choisirRole");
+//					model.addAttribute("choisirRole", "choisirRole");
 					String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 					 model.addAttribute("identifiantSession", identifiantSession);
 					if(identifiantSession.length()>0)
