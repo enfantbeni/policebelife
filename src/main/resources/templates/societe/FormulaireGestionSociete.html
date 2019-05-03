@@ -7,60 +7,61 @@
 <body>
 
 		<form th:action="@{/resultatAjoutSociete}" th:object="${Societe}" class="col-md-12 col-xs-12 formulaireGestionSociete" th:fragment="formulaireGestionSociete" method="POST">
-             <div class="row labelAjout">
-                  <h2>Ajouter une Société </h2>
-             </div>
+<!--              <div class="row labelAjout"> -->
+<!--                   <h2>Ajouter une Société </h2> -->
+<!--              </div> -->
              
-             <div class="row">
-	             <div class="col-lg-4"></div>
-	             <div class="col-lg-4 erreur"  th:if="${formErreurSociete}" > 
-				  	 <div class="alert alert-danger">
+<!--              <div class="row"> -->
+<!-- 	             <div class="col-lg-4"></div> -->
+<!-- 	             <div class="col-lg-4 erreur"  th:if="${formErreurSociete}" >  -->
+<!-- 				  	 <div class="alert alert-danger"> -->
 	
-	                     <ul>   
-	                     	  <li  th:if="${codeSocieteErreur}" th:utext="${codeSocieteErreur}"> </li> 	                 						   
-							  <li  th:if="${nomSocieteErreur}" th:utext="${nomSocieteErreur}"> </li>
-							   <li  th:if="${societeCodeRechercheErreur}" th:utext="${societeCodeRechercheErreur}"> </li>
-							   <li  th:if="${societeNomRechercheErreur}" th:utext="${societeNomRechercheErreur}"> </li>
+<!-- 	                     <ul>    -->
+<!-- 	                     	  <li  th:if="${codeSocieteErreur}" th:utext="${codeSocieteErreur}"> </li> 	                 						    -->
+<!-- 							  <li  th:if="${nomSocieteErreur}" th:utext="${nomSocieteErreur}"> </li> -->
+<!-- 							   <li  th:if="${societeCodeRechercheErreur}" th:utext="${societeCodeRechercheErreur}"> </li> -->
+<!-- 							   <li  th:if="${societeNomRechercheErreur}" th:utext="${societeNomRechercheErreur}"> </li> -->
 							                         	   
-	                     </ul>
+<!-- 	                     </ul> -->
 	                     
-	                  </div> 
-	             </div>
-	             <div class="col-lg-4"></div>
-             </div>
+<!-- 	                  </div>  -->
+<!-- 	             </div> -->
+<!-- 	             <div class="col-lg-4"></div> -->
+<!--              </div> -->
            
-              <div class="row ajoutDonnee">
-                 <div class="col-md-4 col-xs-4 ft">
-                  	<label> Code Société : </label>
-             	 </div>
+<!--               <div class="row ajoutDonnee"> -->
+<!--                  <div class="col-md-4 col-xs-4 ft"> -->
+<!--                   	<label> Code Société : </label> -->
+<!--              	 </div> -->
              	 
-             	 <div class="col-md-4 col-xs-4">             	    
-             	    <input type="text" required name="codeSociete" class="form-control" maxlength="10" />					
-             	 </div>  
-             	 <div class="col-lg-4"></div>        
-             </div>
+<!--              	 <div class="col-md-4 col-xs-4">             	     -->
+<!--              	    <input type="text" required name="codeSociete" class="form-control" maxlength="10" />					 -->
+<!--              	 </div>   -->
+<!--              	 <div class="col-lg-4"></div>         -->
+<!--              </div> -->
              
-              <div class="row ajoutDonnee">
-                 <div class="col-md-4 col-xs-4 ft">
-                  	<label> Nom Société : </label>
-             	 </div>
+<!--               <div class="row ajoutDonnee"> -->
+<!--                  <div class="col-md-4 col-xs-4 ft"> -->
+<!--                   	<label> Nom Société : </label> -->
+<!--              	 </div> -->
              	 
-             	 <div class="col-md-4 col-xs-4">             	    
-             	    <input type="text" required name="nomSociete" class="form-control" maxlength="50"/>					
-             	 </div>  
-             	 <div class="col-lg-4"></div>         
-             </div>
+<!--              	 <div class="col-md-4 col-xs-4">             	     -->
+<!--              	    <input type="text" required name="nomSociete" class="form-control" maxlength="50"/>					 -->
+<!--              	 </div>   -->
+<!--              	 <div class="col-lg-4"></div>          -->
+<!--              </div> -->
                 
                     
-              <div class="row">
-                 <div class="col-md-4 col-xs-4">
+<!--               <div class="row"> -->
+<!--                  <div class="col-md-4 col-xs-4"> -->
                   
-             	 </div>
-             	 <div class="col-md-4 col-xs-4">
-                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
-             	 </div>
-             	 <div class="col-lg-4"></div>           
-             </div>           
+<!--              	 </div> -->
+<!--              	 <div class="col-md-4 col-xs-4"> -->
+<!--                   	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" /> -->
+<!--              	 </div> -->
+<!--              	 <div class="col-lg-4"></div>            -->
+<!--              </div>            -->
+
           </form>
 
 </body>
