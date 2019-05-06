@@ -154,7 +154,7 @@ public class SocieteController {
 //			model.addAttribute("gestionSociete", "gestionSociete");
 //			
 //			
-	        return "espaceUtilisateur";			
+//	        return "espaceUtilisateur";			
 	    }
 	        
 	        
