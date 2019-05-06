@@ -115,7 +115,7 @@ public class SocieteController {
 			societes=societeRepository.findAllSocietes(estSupprimer);
 			model.addAttribute("societes", societes);
 			model.addAttribute("identifiantSession", identifiantSession);
-			model.addAttribute("formulaireGestionSociete", "formulaireGestionSociete");
+			model.addAttribute("formGestionSociete", "formGestionSociete");
 			model.addAttribute("listeSociete", "listeSociete");
 			model.addAttribute("titre", " Gestion de Société");
 			model.addAttribute("gestionSociete", "gestionSociete");
