@@ -90,41 +90,6 @@ public class SocieteController {
 	 @RequestMapping(value = {"/ajoutSociete" }, method = RequestMethod.GET)
 	    public String ajoutSociete(Model model, HttpSession session) { 		 
 		 String resultat=null;
-			try {
-				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-			}
-			catch(Exception e) {
-				resultat="pageErreur";
-				return resultat;
-			}
-			//	gestion Menu 
-			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
-			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
-			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
-			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
-			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
-			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
-			model.addAttribute("accueilDeux", "accueilDeux");
-			
-			model.addAttribute("cheminAccueil", "Accueil >");
-			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
-			model.addAttribute("cheminAjouterSociete", "Ajouter une Société >");
-			model.addAttribute("titre", "Gestion des Sociétés");
-			Boolean estSupprimer=false;
-			List<Societe> societes=new ArrayList<Societe>();
-			societes=societeRepository.findAllSocietes(estSupprimer);
-			model.addAttribute("societes", societes);
-			model.addAttribute("identifiantSession", identifiantSession);
-			model.addAttribute("formulaireGestionSociete", "formulaireGestionSociete");
-			model.addAttribute("listeSociete", "listeSociete");
-			model.addAttribute("titre", " Gestion de Société");
-			model.addAttribute("gestionSociete", "gestionSociete");
-			model.addAttribute("menuNavigation", "menuNavigation");
-	        return "espaceUtilisateur";	
-	        
-	        
-	        
-//	        String resultat=null;
 //			try {
 //				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 //			}
@@ -132,7 +97,43 @@ public class SocieteController {
 //				resultat="pageErreur";
 //				return resultat;
 //			}
-////			gestion Menu 
+//			//	gestion Menu 
+//			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+//			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+//			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+//			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+//			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+//			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+//			model.addAttribute("accueilDeux", "accueilDeux");
+//			
+//			model.addAttribute("cheminAccueil", "Accueil >");
+//			model.addAttribute("cheminGestionSociete", "Gestion Sociéte >");
+//			model.addAttribute("cheminAjouterSociete", "Ajouter une Société >");
+//			model.addAttribute("titre", "Gestion des Sociétés");
+//			Boolean estSupprimer=false;
+//			List<Societe> societes=new ArrayList<Societe>();
+//			societes=societeRepository.findAllSocietes(estSupprimer);
+//			model.addAttribute("societes", societes);
+//			model.addAttribute("identifiantSession", identifiantSession);
+//			model.addAttribute("formulaireGestionSociete", "formulaireGestionSociete");
+//			model.addAttribute("listeSociete", "listeSociete");
+//			model.addAttribute("titre", " Gestion de Société");
+//			model.addAttribute("gestionSociete", "gestionSociete");
+//			model.addAttribute("menuNavigation", "menuNavigation");
+//	        return "espaceUtilisateur";	
+//	        
+	        
+	        
+	        
+	        
+			try {
+				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+			}
+			catch(Exception e) {
+				resultat="pageErreur";
+				return resultat;
+			}
+//			gestion Menu 
 //			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 //			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 //			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -156,7 +157,7 @@ public class SocieteController {
 //			model.addAttribute("gestionSociete", "gestionSociete");
 //			
 //			
-//	        return "espaceUtilisateur";			
+	        return "espaceUtilisateur";			
 	    }
 	        
 	        
