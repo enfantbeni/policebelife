@@ -17,7 +17,7 @@ public interface SocieteRepository extends JpaRepository<Societe, Integer> {
 	Societe findSocieteByCode(@Param("codeSociete") String codeSociete);
 	
 	
-	@Query("select s from Societe s where s.estSupprimer = :estSupprimer")
+	@Query("select s from Societe s where s.estSupprimer = :estSupprimer ORDER BY dateCreation DESC")
 	List<Societe> findAllSocietes(@Param("estSupprimer") Boolean estSupprimer);
 	
 	@Query("select s from Societe s where s.idSocite <> :idSocite AND s.estSupprimer =false")
