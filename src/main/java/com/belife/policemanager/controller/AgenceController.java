@@ -61,7 +61,6 @@ public class AgenceController {
 			Boolean estSupprimer=false;
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgence", "listeAgence");
-			model.addAttribute("gestionMenuSequencePolice", "gestionMenuSequencePolice");
 			model.addAttribute("listeAgence", "listeAgence");
 			
 //			gestion Menu 
