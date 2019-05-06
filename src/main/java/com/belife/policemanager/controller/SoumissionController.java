@@ -248,7 +248,6 @@ public class SoumissionController {
 			model.addAttribute("couverture", couverture);
 			model.addAttribute("prime", prime);
 			model.addAttribute("datePrelevement", datePrelevement);
-//			model.addAttribute("dateSoumission", dateSoumission);
 			model.addAttribute("dateNaissance", dateNaissance);
 			model.addAttribute("matriculeClient", matriculeClient);
 			model.addAttribute("banque",banque);
@@ -344,7 +343,8 @@ public class SoumissionController {
 		 }
 		 String nomAgenceActif=session.getAttribute("nomAgenceActif").toString().trim();
 		 Agence agenceActive=agenceRepository.findAgenceByNomDirect(nomAgenceActif);
-				
+		
+		 
 	 
 		 int page = 0;
 		 int size = 20;
@@ -382,7 +382,14 @@ public class SoumissionController {
 			session.setAttribute("genreSource", " Numero Société * : ");
 			model.addAttribute("testGroupe", "testGroupe");
 		    session.setAttribute("police", codeSocieteSoumis);
+			
 		}	
+		
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String dateSoumi = simpleDateFormat.format(new Date());
+		model.addAttribute("dateSoumission", dateSoumi);	
+			
 		session.setAttribute("testGroupe", "testGroupe");
 		session.removeAttribute("testIndividuel");
 		String identifiant=session.getAttribute("identifiantSession").toString().trim();
