@@ -9,7 +9,7 @@
            
             <form th:action="@{/resultatRechercheSociete}" class="col-md-12 col-xs-12" method="POST">
              <div class="row labelAjout">
-                  <h2>Rechercher une société par son code </h2>
+                  <h2> Ajouter une société </h2>
              </div>
              
              
@@ -17,25 +17,51 @@
             
               <input type="hidden" name="idSociete" value=" " />
               <input type="hidden" name="estSupprimer" />
-              <input type="hidden" name="nomSociete" value=" " />
+<!--               <input type="hidden" name="nomSociete" value=" " /> -->
              
            
             
-             <div class="row ajoutDonnee">
-                 <div class="col-md-4 col-xs-4 np">
+            <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-6 erreur"  th:if="${formErreurSociete}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>                        
+							   <li  th:if="${nomSocieteErreur}" th:utext="${nomSocieteErreur}"> </li>
+							   <li  th:if="${codeSocieteErreur}" th:utext="${codeSocieteErreur}"> </li>   
+							   <li  th:if="${societeCodeRechercheErreur}" th:utext="${societeCodeRechercheErreur}"> </li>
+							   <li  th:if="${societeNomRechercheErreur}" th:utext="${societeNomRechercheErreur}"> </li>  
+							   <li  th:if="${codeSocieteExistantErreur}" th:utext="${codeSocieteExistantErreur}"> </li> 
+							   <li  th:if="${nomSocieteExistantErreur}" th:utext="${nomSocieteExistantErreur}"> </li>                    	   
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-2"></div>
+             </div>
+             
+<!--              <input type="hidden" name="idSociete" value=" " /> -->
+              
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
                   	<label> Code Société : </label>
              	 </div>
-             	 <div class="col-md-4 col-xs-4">
-                  	<input type="text" name="codeSociete" required maxlength="10" class="form-control"  autocomplete="off"/>
-             	 </div>           
-             </div>  
-             <div class="row">
-                 <div class="col-md-4 col-xs-4">
-                  	<label>  </label>
+             	 
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input type="text" name="codeSociete" required class="form-control"  maxlength="10"/>					
+             	 </div>  
+             	          
+             </div>
+                
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nom Société : </label>
              	 </div>
-             	 <div class="col-md-8 col-xs-8">
-                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
-             	 </div>           
+             	 
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input type="text" name="nomSociete" required class="form-control" maxlength="50"  />					
+             	 </div>  
+             	          
              </div> 
              
              
