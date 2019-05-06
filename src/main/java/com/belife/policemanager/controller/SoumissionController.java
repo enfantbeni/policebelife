@@ -1,6 +1,7 @@
 package com.belife.policemanager.controller;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -186,6 +187,10 @@ public class SoumissionController {
 		model.addAttribute("testIndividuel", "testIndividuel");
 		session.setAttribute("testIndividuel", "testIndividuel");
 		
+		Date aujourdhui = new Date();
+		String pattern = "dd/MM/yyyy";
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		String dateSoumi = simpleDateFormat.format(new Date());
 		
 		String planDuree=null;
 		String nomAssure=null;
@@ -243,7 +248,7 @@ public class SoumissionController {
 			model.addAttribute("couverture", couverture);
 			model.addAttribute("prime", prime);
 			model.addAttribute("datePrelevement", datePrelevement);
-			model.addAttribute("dateSoumission", dateSoumission);
+//			model.addAttribute("dateSoumission", dateSoumission);
 			model.addAttribute("dateNaissance", dateNaissance);
 			model.addAttribute("matriculeClient", matriculeClient);
 			model.addAttribute("banque",banque);
@@ -256,7 +261,7 @@ public class SoumissionController {
 			model.addAttribute("telephone2", telephone2);
 			model.addAttribute("nomComPreContrat", nomComPreContrat);
 			model.addAttribute("dateRealisation", dateRealisation);
-		
+			model.addAttribute("dateSoumission",dateSoumi);
 		
 		///////////////////////// 	//////////////////// Données à soumettre
 		session.setAttribute("nomGuichetSoumis", nomGuichet);

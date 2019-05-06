@@ -71,12 +71,14 @@
 							             	 </div>     
 						  			   	</div>						  			   	
 						  			   	
-						  			   	<div class="row" th:if="${testIndividuel}">					  			   	
-						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission" >
-							                  <label > Numero de compte : * </label> 
+						  			   	
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Source de prélèvement * : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="numero" data-th-value="${numero}" class="form-control"  />
+							                  	<input type="text" required name="banque"   class="form-control"  data-th-value="${banque}" readonly />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -102,14 +104,16 @@
 							  			   	</div>
 						  			   	</div>
 						  			   	
-						  			   	<div class="row">
-						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
-							                  <label> Source de prélèvement * : </label>
+						  			   	<div class="row" th:if="${testIndividuel}">					  			   	
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission" >
+							                  <label > Numero de compte : * </label> 
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="banque"   class="form-control"  data-th-value="${banque}" readonly />
+							                  	<input type="text" required name="numero" data-th-value="${numero}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
+						  			   	
+						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
 							                  <label> Périodicité * : </label>
@@ -190,10 +194,10 @@
 						  		    	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
-							                  <label> Date de soumission * : </label>
+							                  <label> Date de soumission : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="date" required name="dateSoumission" data-th-value="${dateSoumission}" class="form-control"   />
+							                  	<input type="text" name="dateSoumission" data-th-value="${dateSoumission}" class="form-control" readonly  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -217,7 +221,7 @@
 						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
-							                  <label> Employeur * : </label>
+							                  <label> Employeur : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
 							                  	<input type="text" required name="employeur" data-th-value="${employeur}"  class="form-control" />
@@ -226,7 +230,7 @@
 						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
-							                  <label> Ville * : </label>
+							                  <label> Ville : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
 							                  	<input type="text" required name="ville"  class="form-control" data-th-value="${ville}" />
@@ -253,7 +257,7 @@
 						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
-							                  <label> Telephone 2 * : </label>
+							                  <label> Telephone 2 : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
 							                  	<input type="tel" required name="telephone2" data-th-value="${telephone2}" class="form-control"  />
