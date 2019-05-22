@@ -24,14 +24,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.belife.policemanager.model.dto.UtilisateurDto;
 import com.belife.policemanager.model.entity.Agence;
-import com.belife.policemanager.model.entity.Agent;
-import com.belife.policemanager.model.entity.Client;
+import com.belife.policemanager.model.entity.AgenceBanque;
 import com.belife.policemanager.model.entity.Roles;
+import com.belife.policemanager.model.entity.Societe;
 import com.belife.policemanager.model.entity.SourcePolice;
 import com.belife.policemanager.model.entity.Utilisateur;
 import com.belife.policemanager.model.repository.AgenceRepository;
 import com.belife.policemanager.model.repository.AgentRepository;
 import com.belife.policemanager.model.repository.RolesRepository;
+import com.belife.policemanager.model.repository.SocieteRepository;
 import com.belife.policemanager.model.repository.SourcePoliceRepository;
 import com.belife.policemanager.model.repository.UtilisateurRepository;
 
@@ -54,6 +55,9 @@ public class UtilisateurController {
 	 
 	 @Autowired
      AgentRepository agentRepository;
+	 
+	 @Autowired
+     SocieteRepository societeRepository;
 	 
 	 private String fonctioInformaticien="Informaticien";
 	 private String fonctionMedecin="Medecin";
@@ -102,7 +106,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/resultatModifDonnee" }, method = RequestMethod.POST)
-    public String resultatModifDonnee(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
+    public String resultatModifDonnee(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -111,6 +115,9 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -119,6 +126,10 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
+		model.addAttribute("cheminAccueil", "Accueil >");
+		model.addAttribute("titre", "Gestion des utilisateurs");
+		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
+		model.addAttribute("cheminModifierUtilisateur", "Desactiver Utilisateur >");
 		
 		Utilisateur utilisateurRenvoi=new Utilisateur();
 		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
@@ -128,18 +139,15 @@ public class UtilisateurController {
 		System.out.println(" Identifiant session utilisateur : "+identifiant);
 		identifiantSession=identifiantSession.trim();
 		
-		
-		Boolean estSupprimer=false;
-		
 		model.addAttribute("dialog_background", "dialog_background");
 		model.addAttribute("identifiantSession",identifiantSession);
 		model.addAttribute("dialog_box", "dialog_box");
 		
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		
-		List<Utilisateur> utilisateurA=new ArrayList<Utilisateur>();
-		utilisateurA=utilisateurRepository.findAllUtilisateur(estSupprimer);
-		model.addAttribute("utilisateurs", utilisateurA);
+		
+		Page<Utilisateur> utilisateursPage =utilisateurRepository.findAllUtilisateurPage(pageable);	
+		model.addAttribute("utilisateurs",utilisateursPage);
 		model.addAttribute("afficheTableau", "afficheTableau");	
 		utilisateurRenvoi=utilisateurRepository.findByIdentifiant(identifiant);	
 		model.addAttribute("utilisateurRenvoi", utilisateurRenvoi);	
@@ -186,7 +194,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/sourcePolice" }, method = RequestMethod.GET)
-    public String sourcePrelevement(Model model, HttpSession session) { 
+    public String sourcePrelevement(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -195,6 +203,9 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -207,6 +218,8 @@ public class UtilisateurController {
 		Boolean estSupprimer=false;
 		List<SourcePolice> sourcePolices=new ArrayList<SourcePolice>();
 		sourcePolices=sourcePoliceRepository.findAllSourcePrelevement(estSupprimer);
+		
+
 		model.addAttribute("sourcePolices", sourcePolices);
 		model.addAttribute("identifiantSession", identifiantSession);
 		model.addAttribute("formSourceGenre", "formSourceGenre");
@@ -235,6 +248,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		
 		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim();
 		Utilisateur utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
@@ -248,6 +262,7 @@ public class UtilisateurController {
 		model.addAttribute("menuNavigation", "menuNavigation");
         return "utilisateur/accueilUtilisateur";	
     }
+	
 	
 	@Transactional
 	@RequestMapping(value = {"/accueilUtilisateurLien" }, method = RequestMethod.GET)
@@ -268,7 +283,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		
 		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim();
 		Utilisateur utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
@@ -328,9 +343,13 @@ public class UtilisateurController {
 		}
 		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		model.addAttribute("modules", "modules");
-		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
-		model.addAttribute("utilisateurs", utilisateurs);
+		
+		
+//		Boolean estSupprimer=false;
+//		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+//		model.addAttribute("utilisateurs", utilisateurs);
+//		
+		
 		if(identifiantSession.length()>0){
 			 String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 			 model.addAttribute("identifiantSession", identifiantSession);
@@ -369,11 +388,13 @@ public class UtilisateurController {
 //							gestion Menu 
 							model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 							model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+							model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 							model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
 							model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
 							model.addAttribute("gestionMenuAgent", "gestionMenuAgent"); 
 							model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 							model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
+							model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 							model.addAttribute("accueilDeux", "accueilDeux");
 						 
 						 return "espaceUtilisateur";
@@ -413,6 +434,7 @@ public class UtilisateurController {
 			return resultat;
 		}
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -421,6 +443,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
 		model.addAttribute("accueilDeux", "accueilDeux");
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");	
 		model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
 		model.addAttribute("accueilAdmin", "accueilAdmin");
 		model.addAttribute("cheminAccueil", "Accueil >");
@@ -438,7 +461,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/listeUtilisateur" }, method = RequestMethod.GET)
-    public String listeUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
+    public String listeUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionn, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -447,7 +470,8 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
-//		gestion Menu 
+//		gestion Menu
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -459,10 +483,13 @@ public class UtilisateurController {
 		model.addAttribute("titre", "Gestion des utilisateurs");
 		model.addAttribute("cheminGestionUtilisateur", "Gestion des utilisateurs >");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("utilisateurs", utilisateurs);
+		
+		
 		model.addAttribute("afficheTableau", "afficheTableau");
 		if(identifiantSession.length()>0) {
 			String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -477,7 +504,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/formulaireAjoutUtilisateur" }, method = RequestMethod.GET)
-    public String formulaireAjoutUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
+    public String formulaireAjoutUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -487,6 +514,7 @@ public class UtilisateurController {
 			return resultat;
 		}
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -497,7 +525,7 @@ public class UtilisateurController {
 		
 		Boolean estSupprimer=false;
 		List<String> agences=new ArrayList<String>();
-		agences=agenceRepository.findAllNomDirects(estSupprimer);
+		agences=agenceRepository.findAllNomDirects();
 		model.addAttribute("agences",agences);
 		model.addAttribute("ajout", "ajout");
 		
@@ -509,8 +537,10 @@ public class UtilisateurController {
 		model.addAttribute("formulaireAjoutUtil", "formulaireAjoutUtil");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("afficheTableau", "afficheTableau");
 		model.addAttribute("utilisateurs", utilisateurs);
 		if(identifiantSession.length()>0) {
@@ -523,7 +553,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/ajoutUtilisateur" }, method = RequestMethod.POST)
-    public String ajoutUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, @ModelAttribute("utilisateurDto") UtilisateurDto utilisateurDto, HttpSession session) { 
+    public String ajoutUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, @ModelAttribute("utilisateurDto") UtilisateurDto utilisateurDto, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -533,6 +563,7 @@ public class UtilisateurController {
 			return resultat;
 		}
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -544,7 +575,6 @@ public class UtilisateurController {
 		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
 		model.addAttribute("cheminAjouterUtilisateur", "Ajouter Utilisateur >");
 		
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		Utilisateur utilisateurSave=null;
 		String identifiant=utilisateurDto.getIdentifiant().trim();
 		String password=utilisateurDto.getPassword().trim();
@@ -554,13 +584,17 @@ public class UtilisateurController {
 		
 		Boolean estSupprimer=false;
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
-		model.addAttribute("actionTroisBouton", "actionTroisBouton");	
+		model.addAttribute("actionTroisBouton", "actionTroisBouton");
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		
 		if( identifiant != null && identifiant.length() > 0 && identifiant.length()<=10 && password != null && password.length() > 0 && password.length()>4 && nomEtPrenom != null && nomEtPrenom.length() > 0 && fonction != null && fonction.length() > 0 ) {
 			utilisateurSave=utilisateurRepository.findByIdentifiant(identifiant);
 				if(utilisateurSave == null) {
-					
-					utilisateur.setEstSupprimer(estSupprimer);
+					String status="A";
+					utilisateur.setStatus(status);
 					utilisateur.setFonction(fonction);
 					utilisateur.setIdentifiant(identifiant);
 					utilisateur.setNomEtPrenom(nomEtPrenom);
@@ -570,7 +604,6 @@ public class UtilisateurController {
 					Agence agence=agenceRepository.findAgenceByNomDirect(nomAgence);
 					utilisateur.setIdAgence(agence);
 					utilisateurRepository.save(utilisateur);	
-					utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);	
 					model.addAttribute("ajout", "ajout");
 					model.addAttribute("afficheTableau", "afficheTableau");
 					model.addAttribute("utilisateurs", utilisateurs);					
@@ -599,10 +632,9 @@ public class UtilisateurController {
 		
 			String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 			List<String> agences=new ArrayList<String>();
-			agences=agenceRepository.findAllNomDirects(estSupprimer);
+			agences=agenceRepository.findAllNomDirects();
 			model.addAttribute("agences",agences);
-			model.addAttribute("identifiantSession", identifiantSession);
-			utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);	
+			model.addAttribute("identifiantSession", identifiantSession);	
 			model.addAttribute("ajout", "ajout");
 			model.addAttribute("afficheTableau", "afficheTableau");
 			model.addAttribute("utilisateurs", utilisateurs);
@@ -618,7 +650,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/numeroModifUtilisateur" }, method = RequestMethod.GET)
-    public String numeroModifUtilisateur(Model model, HttpSession session) { 
+    public String numeroModifUtilisateur(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -627,7 +659,12 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
+		
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -645,9 +682,8 @@ public class UtilisateurController {
 		model.addAttribute("cheminModifierUtilisateur", "Modifier Utilisateur >");
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		model.addAttribute("afficheTableau", "afficheTableau");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("utilisateurs", utilisateurs);
 		if(identifiantSession.length()>0) {
 			String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -661,7 +697,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/formModifDonneeUtil" }, method = RequestMethod.POST)
-    public String formModifDonneeUtil(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionUtilisateur, HttpSession session) {
+    public String formModifDonneeUtil(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -670,7 +706,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -678,9 +718,13 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("cheminAccueil", "Accueil >");
+		model.addAttribute("titre", "Gestion des utilisateurs");
+		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
+		model.addAttribute("cheminModifierUtilisateur", "Modifier Utilisateur >");
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		String identifiant=utilisateur.getIdentifiant().trim();
-		sessionUtilisateur.setAttribute("identifiantCache", utilisateur.getIdentifiant());
+		session.setAttribute("identifiantCache", utilisateur.getIdentifiant());
 		
 		Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiant);
 			
@@ -691,7 +735,9 @@ public class UtilisateurController {
 			 return "redirect:/messageUtilisateurNonExistant";  
 		}
 		
-				
+		List<String> agences=new ArrayList<String>();
+		agences=agenceRepository.findAllNomDirects();
+		model.addAttribute("agences",agences);		
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
@@ -705,9 +751,7 @@ public class UtilisateurController {
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		model.addAttribute("utilisateurRecherche", utilisateurRecherche);
 		model.addAttribute("afficheTableau", "afficheTableau");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
 		model.addAttribute("utilisateurs", utilisateurs);
 		String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantSession);
@@ -721,7 +765,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/formModifDonneeUtilV2" }, method = RequestMethod.GET)
-    public String formModifDonneeUtilV2(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionUtilisateur, HttpSession session) {
+    public String formModifDonneeUtilV2(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionUtilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -730,7 +774,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -738,11 +786,14 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
+		model.addAttribute("cheminAccueil", "Accueil >");
+		model.addAttribute("titre", "Gestion des utilisateurs");
+		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
+		model.addAttribute("cheminModifierUtilisateur", "Modifier Utilisateur >");
 	
 		String identifiant=session.getAttribute("identifiantCache").toString().trim();
 		sessionUtilisateur.setAttribute("identifiant", utilisateur.getIdentifiant());
 		
-		System.out.println(" Identifiant " +identifiant);
 		Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiant);
 			
 		model.addAttribute("afficheTableau", "afficheTableau");
@@ -752,7 +803,9 @@ public class UtilisateurController {
 			 return "redirect:/messageUtilisateurNonExistant";  
 		}
 		
-				
+		List<String> agences=new ArrayList<String>();
+		agences=agenceRepository.findAllNomDirects();
+		model.addAttribute("agences",agences);	
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
@@ -766,9 +819,8 @@ public class UtilisateurController {
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		model.addAttribute("utilisateurRecherche", utilisateurRecherche);
 		model.addAttribute("afficheTableau", "afficheTableau");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+		
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("utilisateurs", utilisateurs);
 		String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantSession);
@@ -784,7 +836,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/messageUtilisateurNonExistant" }, method = RequestMethod.GET)
-    public String messageUtilisateurNonExistant(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) {  
+    public String messageUtilisateurNonExistant(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {  
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -793,7 +845,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -807,9 +863,8 @@ public class UtilisateurController {
 		model.addAttribute("messageUtilisateurNonExistant", "messageUtilisateurNonExistant");
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		model.addAttribute("afficheTableau", "afficheTableau");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+		
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("utilisateurs", utilisateurs);	
 		if(identifiantSession.length()>0) {
 			String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -824,7 +879,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/rechercheUtilisateur" }, method = RequestMethod.GET)
-    public String rechercheUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
+    public String rechercheUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -833,7 +888,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -850,23 +909,18 @@ public class UtilisateurController {
 		model.addAttribute("titre", "Gestion des utilisateurs");
 		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
 		model.addAttribute("cheminRechercherUtilisateur", "Rechercher Utilisateur >");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
+		
 //		model.addAttribute("afficheTableau", "afficheTableau");
-		Boolean estSupprimer=false;
 		String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantSession);
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
-		if(identifiantSession.length()>0) {
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
+
 			return "espaceUtilisateur";
-		}
-		else {
-			  return "pageErreur";
-		} 
     }
 	
 	@Transactional
 	@RequestMapping(value = {"/succesRecherche" }, method = RequestMethod.POST)
-    public String succesRecherche(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) {
+    public String succesRecherche(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -875,7 +929,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -899,22 +957,17 @@ public class UtilisateurController {
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		model.addAttribute("succesRecherche", "succesRecherche");
 		model.addAttribute("utilisateurRechercher", utilisateurRecherche);
-//		model.addAttribute("afficheTableau", "afficheTableau");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+		
+		//model.addAttribute("afficheTableau", "afficheTableau");
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("utilisateurs", utilisateurs);	
-		if(identifiant.length()>0) {
-			 return "espaceUtilisateur";
-		}
-		else {
-			 return "pageErreur";
-		}	
+	
+	    return "espaceUtilisateur";		
     }
 	
 	@Transactional
 	@RequestMapping(value = {"/messageUtilisateurNonRetrouver" }, method = RequestMethod.GET)
-    public String messageUtilisateurNonRetrouver(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
+    public String messageUtilisateurNonRetrouver(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -923,7 +976,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -939,21 +996,16 @@ public class UtilisateurController {
 		model.addAttribute("messageUtilisateurNonRetrouver", "messageUtilisateurNonRetrouver");
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		model.addAttribute("afficheTableau", "afficheTableau");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("utilisateurs", utilisateurs);
-		if(identifiantSession.length()>0) {
-			return "espaceUtilisateur";
-		}
-		else {
-			return "espaceUtilisateur";
-		}      
+	
+			return "espaceUtilisateur";	     
     }
 	
 	@Transactional
 	@RequestMapping(value = {"/supprimerUtilisateur" }, method = RequestMethod.GET)
-    public String supprimerUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) {
+    public String supprimerUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -962,7 +1014,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -982,9 +1038,8 @@ public class UtilisateurController {
 		model.addAttribute("supprimerUtilisateur", "supprimerUtilisateur");
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		model.addAttribute("afficheTableau", "afficheTableau");
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-		Boolean estSupprimer=false;
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+		
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("utilisateurs", utilisateurs);
 		if(identifiantSession.length()>0) {
 			return "espaceUtilisateur";
@@ -996,7 +1051,7 @@ public class UtilisateurController {
 	
 	@Transactional
 	@RequestMapping(value = {"/succesSuppression" }, method = RequestMethod.POST)
-    public String SuccesSuppression(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) {
+    public String SuccesSuppression(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -1005,7 +1060,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -1013,6 +1072,10 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
+		model.addAttribute("cheminAccueil", "Accueil >");
+		model.addAttribute("titre", "Gestion des utilisateurs");
+		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
+		model.addAttribute("cheminSupprimerUtilisateur", "Supprimer Utilisateur >");
 		
 		String identifiant=utilisateur.getIdentifiant().trim();
 		Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiant);
@@ -1033,28 +1096,21 @@ public class UtilisateurController {
 		model.addAttribute("utilisateurRechercher", utilisateurRecherche);
 		model.addAttribute("afficheTableau", "afficheTableau");
 		
-		
-		Boolean supprimerUtil=true;
-		utilisateurRecherche.setEstSupprimer(supprimerUtil);
+		String status="Inactif";
+		utilisateurRecherche.setStatus(status);
 		utilisateurRepository.save(utilisateurRecherche);
-		Boolean estSupprimer=false;
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);
+		
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		model.addAttribute("utilisateurs",utilisateurs);		
-		if(identifiantSession.length()>0) {
-			return "espaceUtilisateur";
-		}
-		else {
-			return "pageErreur";
-		}
-			
+		
+			return "espaceUtilisateur";		
     }
 	
 	
 	
 	@Transactional
 	@RequestMapping(value = {"/resultatModif"}, method = RequestMethod.POST)
-    public String resultatModif(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionUtilisateur, HttpSession session) {  
+    public String resultatModif(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur,  @ModelAttribute("utilisateurDto") UtilisateurDto utilisateurDto,  HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {  
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -1063,7 +1119,11 @@ public class UtilisateurController {
 			resultat="pageErreur";
 			return resultat;
 		}
+		int page = 0;
+		int size = 100;			 
+		pageable = PageRequest.of(page, size);
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -1072,73 +1132,77 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
 		
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
 		model.addAttribute("identifiantSession", identifiantSession);
-		String identifiant=utilisateur.getIdentifiant().trim();
-		String fonction=utilisateur.getFonction().trim();
-		String nomEtPrenom=utilisateur.getNomEtPrenom().trim();
+		String identifiant=utilisateurDto.getIdentifiant().trim();
+		String fonction=utilisateurDto.getFonction().trim();
+		String nomEtPrenom=utilisateurDto.getNomEtPrenom().trim();
+		String nomAgence=utilisateurDto.getNomAgence().trim();
 		
-		String identifiantSession=sessionUtilisateur.getAttribute("identifiantCache").toString();
+		
+		String identifiantSession=session.getAttribute("identifiantCache").toString();
 		identifiantSession=identifiantSession.trim();
-		
+		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		Boolean estSupprimer=false;
 		
 		
-		if( identifiant != null && identifiant.length() > 0 && identifiant.length()>=0 && fonction != null && fonction.length() > 0 && nomEtPrenom != null && nomEtPrenom.length() > 0 ) {
+		if( identifiant != null && identifiant.length() > 0 && identifiant.length()<=40 && fonction != null && fonction.length() > 0 && nomEtPrenom != null && nomEtPrenom.length() > 0 && nomEtPrenom.length()<=40 ) {
 			     
 			    Utilisateur utilisateurSave=utilisateurRepository.findByIdentifiant(identifiantSession);
 			
-				
+			    Integer utilisateurId=utilisateurSave.getIdUtilisateur();
+			    		
 				model.addAttribute("listeUtilisateur", "listeUtilisateur");
-				model.addAttribute("actionTroisBouton", "actionTroisBouton");	
-				
-				utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);	
+				model.addAttribute("actionTroisBouton", "actionTroisBouton");				
 				model.addAttribute("ajout", "ajout");
 				model.addAttribute("afficheTableau", "afficheTableau");
 				model.addAttribute("utilisateurs", utilisateurs);
-				
+				model.addAttribute("actionTroisBouton", "actionTroisBouton");
+				List<String> agences=new ArrayList<String>();
+				agences=agenceRepository.findAllNomDirects();
+				model.addAttribute("agences",agences);
 					
 					/////Recuperer l'Id de l'utilisateur Recherchee
 					Integer idUtilisateurRecherche=utilisateurRepository.findIdUtilisateur(identifiantSession);
 					Integer idUtilisateurModif=utilisateurRepository.findIdUtilisateur(identifiant);
-					Utilisateur utilisateurParIdentifiant=utilisateurRepository.findByIdentifiant(identifiant);
+					Utilisateur utilisateurParNomPrenom=utilisateurRepository.findUtilisateurByNomPrenomModif(nomEtPrenom, utilisateurId);
+					Utilisateur utilisateurParIdentifiant=utilisateurRepository.findUtilisateurByIdentifiantModif(identifiant, utilisateurId);
 					
 					///////
-					if(utilisateurParIdentifiant!=null) {
+					if(utilisateurParNomPrenom==null && utilisateurParIdentifiant==null ) {
 						
-						if(idUtilisateurRecherche!=idUtilisateurModif) {
-							model.addAttribute("formErreur", "formErreur");
-							Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiantSession);
-							model.addAttribute("utilisateurRecherche", utilisateurRecherche);
-							model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
-							model.addAttribute("identifiantErreur", "Identifiant utilisateur déjà existant");
+//							model.addAttribute("formErreur", "formErreur");
+//							Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiantSession);
+//							model.addAttribute("utilisateurRecherche", utilisateurRecherche);
+//							model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
+//							model.addAttribute("identifiantErreur", "Identifiant utilisateur déjà existant");
+							Agence agence=agenceRepository.findAgenceByCodeDirect(nomAgence);	
+							model.addAttribute("succes", "succes"); 
+							utilisateurSave.setIdAgence(agence);
+							utilisateurSave.setFonction(fonction);
+							utilisateurSave.setIdentifiant(identifiant);
+							utilisateurSave.setNomEtPrenom(nomEtPrenom);
+							utilisateurRepository.save(utilisateurSave);
 							return "espaceUtilisateur";
-							
-							}
-					}
-					model.addAttribute("succes", "succes");   
-					utilisateurSave.setFonction(fonction);
-					utilisateurSave.setIdentifiant(identifiant);
-					utilisateurSave.setNomEtPrenom(nomEtPrenom);
-					utilisateurRepository.save(utilisateurSave);
 					
-		
+					}
+					if(utilisateurParNomPrenom!=null ) {
+						model.addAttribute("nomEtPrenomErreur", "Nom et prenom déjà existant");
+					}
+					
+					if(utilisateurParIdentifiant!=null ) {
+						model.addAttribute("identifiantErreur", "Identifiant déjà existant");
+					}
 				
-				if(utilisateurSave != null) {
-					if(identifiantSession.length()>0) {
-						return "espaceUtilisateur";
-					}					
-				}
+							
 		}
 		
 		identifiant=utilisateur.getIdentifiant().trim();
 		
 		Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiantSession);
-		System.out.println("  Utilisateur affiche "+ identifiantSession);
+
 		model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
 		model.addAttribute("utilisateurRecherche", utilisateurRecherche);
-		
-		utilisateurs=utilisateurRepository.findAllUtilisateur(estSupprimer);	
+			
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("afficheTableau", "afficheTableau");
 		model.addAttribute("utilisateurs", utilisateurs);
@@ -1156,9 +1220,7 @@ public class UtilisateurController {
 		}
 		if(fonction==null || fonction.length()==0) {
 			model.addAttribute("fonctionErreur", "Fonction invalide");
-		}
-		
-		
+		}		
 			return "espaceUtilisateur";
 		
     }
@@ -1176,6 +1238,7 @@ public class UtilisateurController {
 			return resultat;
 		}
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -1183,29 +1246,23 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
-		List<Utilisateur> utilisateurs=new ArrayList<Utilisateur>();
-
-		if(identifiantSession.length()>0) {
-			return "espaceUtilisateur";
-		}
-		else {
-			return "pageErreur";
-		}     
-    }
+	
+		return "espaceUtilisateur";
+	}
+	
 	
 	@Transactional
-	@RequestMapping(value = {"/listeAgentsDansAgence" }, method = RequestMethod.GET)
-    public String listeAgentsDansAgence(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur,@PageableDefault(size = 4) Pageable pageable , HttpSession session, HttpServletRequest request ) {  
-		String resultat=null;
-		try {
-			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-		}
-		catch(Exception e) {
-			resultat="pageErreur";
-			return resultat;
-		}
+	@RequestMapping(value = "/listeUtilisateurs")
+    public ModelAndView listeUtilisateursPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="100") int size,  @ModelAttribute("utilisateur") Utilisateur utilisateur, Model model, HttpSession session, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
+       
+        PageRequest pageable = PageRequest.of(page-1, size);
+        Page<Utilisateur> utilisateurPage = utilisateurRepository.findAllUtilisateurPage(pageable);
+
+		model.addAttribute("utilisateurs", utilisateurPage);
+				
 //		gestion Menu 
+		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -1214,79 +1271,21 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
 		
-		List<Agent> agents=new ArrayList<Agent>();		
-		
-		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim(); 
-				
-		utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
-		Agence agence=utilisateur.getIdAgence();
-		agents=agentRepository.findAgentsByIdAgence(agence);
+		model.addAttribute("accueilDeux", "accueilDeux");
 		model.addAttribute("cheminAccueil", "Accueil >");
-		model.addAttribute("listeAgentsDansAgence", "Liste des Agents > ");
-		model.addAttribute("agents", agents);
+		model.addAttribute("titre", "Gestion des utilisateurs");
+		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
 		model.addAttribute("identifiantSession", identifiantSession);
-		model.addAttribute("contenuAccueilUtilisateur", "contenuAccueilUtilisateur");
+		model.addAttribute("listeUtilisateur", "listeUtilisateur");
+		model.addAttribute("gestionUtilisateur", "gestionUtilisateur");
 		model.addAttribute("menuNavigation", "menuNavigation");
+		model.addAttribute("afficheTableau", "afficheTableau");
 		
-		
-		int page = 0;
-		int size = 4;
-		 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-	            page = Integer.parseInt(request.getParameter("page")) - 1;
-	        }
-		 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-	            size = Integer.parseInt(request.getParameter("size"));
-	        }
-		 
-		 Boolean estSupprimer=false;
-		 pageable = PageRequest.of(page, size);
-	     Page<Agent> agentPage = agentRepository.findAllAgentsPage(estSupprimer, pageable);
-		 model.addAttribute("agentsPage", agentPage);
-		
-        return "utilisateur/accueilUtilisateur";		
-    }
-	
-	
-	@Transactional
-	@RequestMapping(value = "/agentsPage")
-    public ModelAndView listAgentsPageByPage(@RequestParam(name="page", defaultValue="0") int page, @ModelAttribute("utilisateur") Utilisateur utilisateur ,@RequestParam(name="size", defaultValue="10") int size,  @ModelAttribute("client") Client client, Model model, HttpSession session, HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("utilisateur/accueilUtilisateur");
-        Boolean estSupprimer=false;
-        PageRequest pageable = PageRequest.of(0, 4);
-        Page<Agent> agentPage = agentRepository.findAllAgentsPage(estSupprimer, pageable);
-		 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {
-	            page = Integer.parseInt(request.getParameter("page")) - 1;
-	        }
-		 if (request.getParameter("size") != null && !request.getParameter("size").isEmpty()) {
-	            size = Integer.parseInt(request.getParameter("size"));
-	        }
-		model.addAttribute("agentsPage", agentPage);
-				
-		model.addAttribute("cheminAccueil",  "Accueil >");		
-        model.addAttribute("identifiantSession", identifiantSession);
-		model.addAttribute("identifiantSession", identifiantSession);
-		List<Agent> agents=new ArrayList<Agent>();		
-		
-		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim(); 
-				
-		utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
-		Agence agence=utilisateur.getIdAgence();
-		agents=agentRepository.findAgentsByIdAgence(agence);
-		model.addAttribute("cheminAccueil", "Accueil >");
-		model.addAttribute("listeAgentsDansAgence", "Liste des Agents > ");
-		model.addAttribute("agents", agents);
-		model.addAttribute("menuNavigation", "menuNavigation");
         return modelAndView;
-    }
-	
-	
-
+	}	
 	
 	
 	
 	
 	
-	
-	
-
 }

@@ -8,23 +8,53 @@
 
 		<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeBanquePrincipale">
 	    <h2> Liste des Banques </h2>
-		<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
-                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Banque </th> <th  > Nom de la Banque </th><th> </th></tr>
-					<tr th:each ="banquePrincipale : ${banquePrincipales}">  
+		<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur" class="table-bordered">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> No </th><th  > Code Banque </th> <th  > Nom de la Banque </th><th  > Status </th><th> </th></tr>
+					<tr th:each ="banquePrincipale,b : ${banquePrincipales}"> 
+					 	<td  width="100" th:utext="${banquePrincipales.size*(banquePrincipales.number)+b.index+1}" style="padding-left:10px" ></td>
 						<td  width="100" th:utext="${banquePrincipale.codeBanque}" style="padding-left:10px" ></td>								
   						<td  width="100" th:utext="${banquePrincipale.nomBanque}" ></td>
+  						<td  width="100" th:utext="${banquePrincipale.status}" ></td>
   						<td width="100" >
   						   <input  class="btn btn-danger supprimer"  data-th-name="${banquePrincipale.codeBanque}" onclick="supprimer(this);" type="button" value="Supprimer" >                
   						   <button class="btn btn-primary"  data-th-name="${banquePrincipale.codeBanque}" onclick="modifier(this);"> Modifier</button>
   						</td>
 					</tr>					            
 		 </table>
+		 <nav class="page" aria-label="Pagination" th:if="${banquePrincipales.totalPages gt 0}">	
+		    <ul class="pagination justify-content-center font-weight-bold">
+		    
+		        <li class="page-item" th:classappend="${banquePrincipales.number eq 0} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/listeBanquePrincipales?page={id}(id=${banquePrincipales.number lt 2 ? 1 :banquePrincipales.number})}"
+		               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+		                <span aria-hidden="true">&lt; Précédent </span>
+		            </a>
+		        </li>
+		        
+		        <li class="page-item" th:classappend="${i eq banquePrincipales.number + 1} ? 'active'" th:each="i : ${#numbers.sequence( 1, banquePrincipales.totalPages, 1)}">
+		            <a class="page-link" th:href="@{/listeBanquePrincipales?page={id}(id=${i})}" th:text="${i}"
+		               th:title="${'Page '+ i}" data-toggle="tooltip">
+		            </a>
+		        </li>
+		        
+		        <li class="page-item" th:classappend="${banquePrincipales.number+1  eq banquePrincipales.totalPages} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/listeBanquePrincipales?page={id}(id=${banquePrincipales.number+1  eq banquePrincipales.totalPages ?banquePrincipales.number+1 :banquePrincipales.number + 2})}"
+		               aria-label="Next" title="Next Page" data-toggle="tooltip">
+		                <span aria-hidden="true"> Suivant &gt;</span>
+		            </a>
+		        </li>
+		        
+		    </ul>
+		    
+		</nav>			
 		 	 
 				 <div th:if="${dialog_boxBanquePrincipale}">
 					<div id="dialog_boxBanquePrincipale"  >
 					     
 							 <form th:action="@{/succesSuppressionBanquePrincipale}" th:object="${BanquePrincipale}" class="col-md-12 col-xs-12"  method="POST">
-		                           <h4> Voulez-vous supprimer la Banque de code <b  th:utext="${codeBanque}"></b> </h4>
+		                           <h4> Voulez-vous desactiver la Banque de code <b  th:utext="${codeBanque}"></b> </h4>
 		                         
 						           <div class="row envoiCancel">
 						           			 

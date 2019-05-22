@@ -36,10 +36,10 @@
                   	<label> Nom Banque : </label>
              	 </div>
              	 
-             	 <div class="col-lg-6 col-xs-4">             	    
-             	    <input required type="text" name="nomBanque" class="form-control" maxlength="50" />					
-             	 </div>  
-             	          
+             	 <div class="col-lg-8 col-xs-8">             	    
+             	    <input required type="text" name="nomBanque" class="form-control" maxlength="50" data-th-value="${nomBanque}" />					
+             	 
+             	  </div>    
              </div> 
              
              <div class="row ajoutDonnee">
@@ -47,8 +47,12 @@
                   	<label> Code Banque : </label>
              	 </div>
              	 
-             	 <div class="col-lg-6 col-xs-4">             	    
-             	    <input required type="text" name="codeBanque" class="form-control" maxlength="20"/>					
+             	 <div class="col-lg-8 col-xs-8"> 
+             	 		<select name="codeBanque"   class="form-control"  >                      
+			                  <option  th:each="codeBanque : ${codeBanques}" th:value="${codeBanque}" th:utext="${codeBanque}"/>
+			            </select>
+             	             	    
+             	    				
              	 </div>  
              	          
              </div>

@@ -6,11 +6,11 @@
 	<link rel="stylesheet" type="text/css" href="css/espaceUtilisateurStyle.css"/>
 </head>
 <body>
-		<div th:fragment="accueilUtilisateurMessage" style="margin-left:18%">
-			<div class="row">
+		<div th:fragment="accueilUtilisateurMessage" style="margin-left:2%">
+			<div class="row" >
 <!-- 					<div class="col-lg-2"></div>	 -->
-					<div class="col-lg-8 messageAcueil"><h1> Bienvenue à l'Agence de <span th:utext="${nomAgence}" > </span></h1> </div>
-					<div class="col-lg-2"></div>
+					<div class="col-lg-12 messageAcueil" style="margin-left:2%" ><h1> Bienvenue à l'Agence de <span th:utext="${nomAgence}" > </span></h1> </div>
+<!-- 					<div class="col-lg-2"></div> -->
 			</div>
 			
 			<div class="row">
@@ -20,6 +20,7 @@
 <!-- 						<div class="col-lg-2"> </div> -->
 						 <div class="col-lg-2"> 			 
 						 	<div class="row">
+<!-- 							 	<div class="col-lg-12 titre_image" style=" margin-bottom:20px " ><a href="listeSoumissionDeux" title=" Liste des soumissions" > Liste des soumissions</a></div> -->
 							 	<div class="col-lg-12 titre_image" style=" margin-bottom:20px " ><a href="#" title=" Liste des soumissions" > Liste des soumissions</a></div>
 							 	<div class="col-lg-12"> <a href="#" title=" Liste des soumissions" >  <img alt="listeB Soumissions" src="images/liste.png"> </a> </div>
 						 	</div>	
@@ -28,7 +29,8 @@
 						 <div class="col-lg-2"> 
 						 
 						 		<div class="row">
-								 	<div class="col-lg-12  titre_image"><a href="#" title=" Consultation LB " > Consultation LB </a></div>
+<!-- 								 	<div class="col-lg-12  titre_image"><a href="gestionConsultationLB" title=" Consultation LB " > Consultation LB </a></div> -->
+										<div class="col-lg-12  titre_image"><a href="#" title=" Consultation LB " > Consultation LB </a></div>
 								 	<div class="col-lg-12"> <a href="#" title=" Consultation LB " > <img alt="listeB Soumissions" src="images/transmission.png"></a></div>
 						 		</div>
 						 
@@ -53,7 +55,7 @@
 						  <div class="col-lg-2"> 
 						 
 						 		<div class="row">
-								 	<div class="col-lg-12  titre_image"><a href="listeAgentsDansAgence" title=" Impayés" >Impayés </a></div>
+								 	<div class="col-lg-12  titre_image"><a href="#" title=" Impayés" >Impayés </a></div>
 								 	<div class="col-lg-12 "> <a href="#" title=" Impayés " > <img  WIDTH=130 HEIGHT=130 alt="Liste Agnets" src="images/impaye.jpg" style="border:1px solid grey" ></a></div>
 						 		</div>
 						 
@@ -67,6 +69,6 @@
 	<meta charset="utf-8">
 	<title>Accueil utilisateur message</title>
 	<link rel="stylesheet" type="text/css" href="css/espaceUtilisateurStyle.css"/>
-</head>
+	</head>
 
 </html>

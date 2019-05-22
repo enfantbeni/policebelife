@@ -9,19 +9,11 @@
 		<div class="row " th:fragment="formulaireNumeroRechercheSociete">
            
             <form th:action="@{/resultatRechercheSociete}" class="col-md-12 col-xs-12" method="POST">
-             <div class="row labelAjout">
-                  <h2>Rechercher une société par son code </h2>
-             </div>
+<!--              <div class="row labelAjout"> -->
+<!--                   <h2>Rechercher une société par son code </h2> -->
+<!--              </div> -->
+                     
              
-             
-             
-            
-              <input type="hidden" name="idSociete" value=" " />
-              <input type="hidden" name="estSupprimer" />
-              <input type="hidden" name="nomSociete" value=" " />
-             
-           
-            
              <div class="row ajoutDonnee">
                  <div class="col-md-4 col-xs-4 np">
                   	<label> Code Société : </label>
@@ -38,11 +30,7 @@
                   	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
              	 </div>           
              </div> 
-             
-             
-             
-             
-                              
+                                      
           </form>        
            
            

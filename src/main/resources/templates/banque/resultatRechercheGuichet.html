@@ -10,13 +10,16 @@
            
             <div class="col-lg-12 " >          
             <table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
-                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Banque </th><th> Code Guichet</th><th  > Nom de la Banque </th></tr>
-					<tr th:each ="banqueRecherche : ${banqueRecherche}">  									
-  						<td  width="100" th:utext="${banqueRecherche.codeBanque}" style="padding-left:10px" ></td>
-  						<td  width="100" th:utext="${banqueRecherche.codeGuichet}" ></td>
-  						<td  width="100" th:utext="${banqueRecherche.nomBanque}" ></td>  						
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Apb </th><th  > Code Banque </th><th  > Code Agence Banque </th><th  > Agence de Banque </th><th> Status </th></tr>
+					<tr th:each ="agenceBanque : ${agenceBanqueRecherche}">  												
+  						<td  width="100" th:utext="${agenceBanque.codeApb}" style="padding-left:10px" ></td>
+  						<td  width="100" th:utext="${agenceBanque.codeBanque}" ></td>
+  						<td  width="100" th:utext="${agenceBanque.codeGuichet}" ></td>
+  						<td  width="100" th:utext="${agenceBanque.libelleAgence}"></td>
+  						<td  width="100" th:utext="${agenceBanque.status}" ></td>
+  						
 					</tr>					            
-		 </table>        
+		 </table>       
       </div>
            
            

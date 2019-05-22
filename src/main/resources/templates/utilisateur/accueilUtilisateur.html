@@ -24,13 +24,35 @@
 	        
 	<div class="row" id="contenuMain">
 	           		
-		  <section class="col-lg-12 ">	
-		  	  
-				     <div th:replace="utilisateur/sidebarUtilisateur :: sidebarUtilisateur"></div> 
-				      <div th:replace="utilisateur/chemin :: chemin"></div> 
+		  <section class="col-lg-12 ">
+		  	<div class="row">  <div th:replace="utilisateur/sidebarUtilisateur :: sidebarUtilisateur"></div>  </div>	
+		    <div class="row">  
+		    	<div class="col-lg-2">
+		    	
+		    	
+		    	    <br> <br> <br> <br><br><br>
+		    		 <nav class="navigation">
+					  <ul class="mainmenu">
+					    <li class="outilsWeight" ><a href="#" >Outils</a></li>
+					    <li><a href="soumission" title="Soumission">Soumission</a></li>
+					    <li><a href="gestionConsultationLB" title="Consultation LB"> Consultation LB</a></li>
+<!-- 					    <li><a href="">Products</a> -->
+<!-- 					      <ul class="submenu"> -->
+<!-- 					        <li><a href="">Tops</a></li> -->
+<!-- 					        <li><a href="">Bottoms</a></li> -->
+<!-- 					        <li><a href="">Footwear</a></li> -->
+<!-- 					      </ul> -->
+<!-- 					    </li> -->
+					    <li><a href="#" title="Consultation Alpha Inquery">Consultation Alpha Inquery</a></li>
+					    <li><a href="#" title="Export Excel">Export Excel</a></li>
+					  </ul>
+					</nav> 
+					
+		    	 </div>
+		    	<div class="col-lg-10" >
+		    			<div th:replace="utilisateur/chemin :: chemin"></div> 				      
 				      <div th:replace="utilisateur/titre :: titre"></div>
-				       
-				      <div th:if="${choisirSourcePrelevement}" >				      
+		    			<div th:if="${choisirSourcePrelevement}" >				      
 				        <div th:replace="soumission/choisirSourcePrelevement :: choisirSourcePrelevement"></div>  
 				      </div>
 				      
@@ -38,7 +60,7 @@
 				        <div th:replace="soumission/choisirGuichetBanque :: choisirGuichetBanque"></div>  
 				      </div>
 				      
-				      <div th:if="${accueilUtilisateurMessage}" >				      
+				      <div th:if="${accueilUtilisateurMessage}"  >				      
 				        <div th:replace="utilisateur/accueilUtilisateurMessage :: accueilUtilisateurMessage"></div>  
 				      </div>
 				      
@@ -65,18 +87,9 @@
 				      </div>
 				      
 				      <div th:if="${voirDonneeSoumission}" >				      
-				        <div th:replace="soumission/voirDonneeSoumission :: voirDonneeSoumission"></div>  
-				      </div>
-				      
-				      <div th:if="${listeSoumission}" >				      
-				        <div th:replace="soumission/listeSoumission :: listeSoumission"></div>  
-				      </div>
-				      
-				      <div th:if="${listeAgentsDansAgence}" >				      
-				        <div th:replace="utilisateur/listeAgentsDansAgence :: listeAgentsDansAgence"></div>  
-				      </div>
-				      
-				      <div th:if="${MessageSequenceNonPositionne}" >				      
+				        <div th:replace="soumission/voirDonneeSoumission :: voirDonneeSoumission"></div> 
+		    	      </div>
+		    	      <div th:if="${MessageSequenceNonPositionne}" >				      
 				        <div th:replace="soumission/messageSequenceNonPositionne :: messageSequenceNonPositionne"></div>  
 				      </div>
 				      
@@ -87,12 +100,35 @@
 				      <div th:if="${gestionEditionCompte}" >				      
 				        <div th:replace="editionCompte/gestionEditionCompte :: gestionEditionCompte"></div>  
 				      </div>
-				     
+				       <div th:if="${gestionLB}" >				      
+				        <div th:replace="lb/gestionLB :: gestionLB"></div>  
+				      </div>
+				   
+		    	
+		    	</div>
+		       
+		    
+		    </div>
+		    <div class="row">
+		    		  <div th:if="${listeSoumission}" >				      
+				        <div th:replace="soumission/listeSoumission :: listeSoumission"></div>  
+				      </div>
 				      
-		      
+				      <div th:if="${listeSoumissionDeux}" >				      
+				        <div th:replace="soumission/listeSoumissionDeux :: listeSoumissionDeux"></div>  
+				      </div>
+				      
+				      <div th:if="${listeAgentsDansAgence}" >				      
+				        <div th:replace="utilisateur/listeAgentsDansAgence :: listeAgentsDansAgence"></div>  
+				      </div>
+				      
+		    
+		    </div>       
+		  	        
 		  </section> 
 		  		  
 	 </div>
+	 
 	
 	 <div th:replace="footer :: footer"></div>
 	
@@ -110,4 +146,8 @@
    
 
 </body>
+	<head>
+	 <link rel="stylesheet" type="text/css" href="css/espaceUtilisateurStyle.css"/>
+	</head>
+		
 </html>

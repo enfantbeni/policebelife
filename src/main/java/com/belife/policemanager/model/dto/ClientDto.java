@@ -1,5 +1,7 @@
 package com.belife.policemanager.model.dto;
 
+import java.util.Date;
+
 public class ClientDto {
 	private String testEnvoye;
 	private String propositionSoumise;
@@ -9,8 +11,9 @@ public class ClientDto {
 	private String nomAssure;
 	private String nomClient;
 	private String nomSource;
-	private String numero;
+	private String numeroCompte;
 	private String banque;
+	private String codeSource;
 	private String periodicite;
 	private Long couverture;
 	private Long prime;
@@ -64,12 +67,28 @@ public class ClientDto {
 		this.numeroPolice = numeroPolice;
 	}
 
+	public String getDatePrelevement() {
+		return datePrelevement;
+	}
+
+	public void setDatePrelevement(String datePrelevement) {
+		this.datePrelevement = datePrelevement;
+	}
+
 	public String getDateNaissance() {
 		return dateNaissance;
 	}
 
 	public void setDateNaissance(String dateNaissance) {
 		this.dateNaissance = dateNaissance;
+	}
+
+	public String getDateRealisation() {
+		return dateRealisation;
+	}
+
+	public void setDateRealisation(String dateRealisation) {
+		this.dateRealisation = dateRealisation;
 	}
 
 	public String getPlanDuree() {
@@ -96,18 +115,30 @@ public class ClientDto {
 	public void setNomClient(String nomClient) {
 		this.nomClient = nomClient;
 	}
-	public String getNumero() {
-		return numero;
+	
+	public String getNumeroCompte() {
+		return numeroCompte;
 	}
-	public void setNumero(String numero) {
-		this.numero = numero;
+
+	public void setNumeroCompte(String numeroCompte) {
+		this.numeroCompte = numeroCompte;
 	}
+
 	public String getBanque() {
 		return banque;
 	}
 	public void setBanque(String banque) {
 		this.banque = banque;
 	}
+	
+	public String getCodeSource() {
+		return codeSource;
+	}
+
+	public void setCodeSource(String codeSource) {
+		this.codeSource = codeSource;
+	}
+
 	public String getPeriodicite() {
 		return periodicite;
 	}
@@ -126,12 +157,8 @@ public class ClientDto {
 	public void setPrime(Long prime) {
 		this.prime = prime;
 	}
-	public String getDatePrelevement() {
-		return datePrelevement;
-	}
-	public void setDatePrelevement(String datePrelevement) {
-		this.datePrelevement = datePrelevement;
-	}
+	
+	
 	public String getDateSoumission() {
 		return dateSoumission;
 	}
@@ -194,14 +221,8 @@ public class ClientDto {
 		this.nomComPreContrat = nomComPreContrat;
 	}
 	
-	public String getDateRealisation() {
-		return dateRealisation;
-	}
-
-	public void setDateRealisation(String dateRealisation) {
-		this.dateRealisation = dateRealisation;
-	}
-
+	
+	
 	public Boolean getEstSupprimer() {
 		return estSupprimer;
 	}

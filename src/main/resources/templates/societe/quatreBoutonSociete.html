@@ -5,12 +5,30 @@
 <title> Quatre Boutonn Societe </title>
 </head>
 <body>
-<div class="col-lg-6 ajouter troisBouton" th:fragment="quatreBoutonSociete">
-             <a href="ajoutSociete" class="btn btn-success" role="button" aria-pressed="true">Ajouter</a>
-             <a href="modifierSociete" class="btn btn-success" role="button" aria-pressed="true">Modifier</a>
-             <a href="rechercheSociete" class="btn btn-success" role="button" aria-pressed="true">Rechercher</a>
-             <a href="supprimerSociete" class="btn btn-success" role="button" aria-pressed="true">Supprimer</a>                                                              
+		<div class="col-lg-6 ajouter troisBouton" th:fragment="quatreBoutonSociete">
+           
+             <form th:action="@{/resultatRechercheSociete}" class="col-md-12 col-xs-12" method="POST">           
+                <div class="row ">
+                    <div class="col-md-4 col-xs-4 codeSocieteRecherche">
+                  	<label> Code Société : </label>
+             	 </div>
+             	 
+             	 <div class="input-group col-lg-4">
+					<input type="text" class="form-control" name="codeSociete" required maxlength="20" data-th-value="${codeSociete}" >
+ 					<span class="input-group-btn">					    
+						<button  class="btn btn-success" type="submit" title="Rechercher"> Rechercher </button>
+					</span>
+				 </div>
+             	              	        
+                </div> 
+                                      
+              </form> 
+                                                                          
     	</div>
-
+    	
 </body>
+
+
+
+
 </html>

@@ -8,32 +8,27 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.belife.policemanager.model.entity.Agence;
-import com.belife.policemanager.model.entity.Agent;
-import com.belife.policemanager.model.entity.Client;
+import com.belife.policemanager.model.entity.Commercial;
 
-public interface AgentRepository extends JpaRepository<Agent, Integer> {
+public interface AgentRepository extends JpaRepository<Commercial, String> {
 	
-	@Query("select a from Agent a where a.codeAgent = :codeAgent AND a.estSupprimer=false")
-	Agent findAgentByCodeAgent(@Param("codeAgent") String codeAgent);
+	@Query("select c from Commercial c where c.codeAgent = :codeAgent")
+	Commercial findAgentByCodeAgent(@Param("codeAgent") String codeAgent);
 	
-//	@Query("select a from Agence a where a.nomDirect = :nomDirect AND a.estSupprimer=false")
-//	Agence findAgenceByNomDirect(@Param("nomDirect") String nomDirect);
-//	
-//	@Query("select a from Agence a where a.codeDirect = :codeDirect AND a.estSupprimer=false")
-//	List<Agence> findCodeAgences(@Param("codeDirect") String codeDirect);
-//	
-	@Query("select a from Agent a where a.estSupprimer = :estSupprimer")
-	List<Agent> findAllAgents(@Param("estSupprimer") Boolean estSupprimer);
+	@Query("select codeAgent from Commercial c where c.codeAgence = :codeAgence")
+	List<String> findAllCodeAgentByCodeAgence(@Param("codeAgence") String codeAgence);
 	
-	@Query("select codeAgent from Agent a where a.idAgence = :idAgence AND a.estSupprimer =false")
-	List<String> findAllCodeAgents(@Param("idAgence") Agence agence);
+	@Query("select codeAgent from Commercial c ")
+	List<String> findAllCodeAgent();
+	
+	@Query("select nomAgent from Commercial c where c.codeAgence = :codeAgence")
+	List<String> findAllNomAgentByCodeAgence(@Param("codeAgence") String codeAgence);
+		
+	@Query("select c from Commercial c")
+	List<Commercial> findAllAgents();
 	
 	
-	@Query("select a from Agent a where a.idAgence = :idAgence AND a.estSupprimer=false")
-	List<Agent> findAgentsByIdAgence(@Param("idAgence") Agence idAgence);
-	
-	@Query("select a from Agent a where a.estSupprimer = :estSupprimer")
-	Page<Agent> findAllAgentsPage(@Param("estSupprimer") Boolean estSupprimer, Pageable pageable);
+	@Query("select c from Commercial c ")
+	Page<Commercial> findAllAgentsPage(Pageable pageable);
 
 }

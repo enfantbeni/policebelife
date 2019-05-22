@@ -27,6 +27,6 @@ public class BanqueDto {
 	public void setNomBanque(String nomBanque) {
 		this.nomBanque = nomBanque;
 	}	
-	
+		
 
 }

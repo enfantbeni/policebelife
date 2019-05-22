@@ -28,9 +28,12 @@ public class Client implements Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idClient;
-	
 	@Column(name = "numeroPolice")
 	private String numeroPolice;
+	@Column(name = "sequencePolice")
+	private String sequencePolice;
+	@Column(name = "produit")
+	private String produit;
 	@Column(name = "genreAssure")
 	private String genreAssure;
 	@Column(name = "nomAssure")
@@ -39,8 +42,12 @@ public class Client implements Serializable {
 	private String nomClient;	
 	@Column(name = "matriculeClient")
 	private String matriculeClient;
-	@Column(name = "numero")
-	private String numero;
+	@Column(name = "numeroCompte")
+	private String numeroCompte;
+	@Column(name = "nomSource")
+	private String nomSource;
+	@Column(name = "codeSource")
+	private String codeSource;	
 	@Column(name = "periodicite")
 	private String periodicite ;
 	@Column(name = "couverture")
@@ -64,20 +71,20 @@ public class Client implements Serializable {
 	@Column(name = "adressePostale")
 	private String adressePostale ;
 	@Column(name = "telephone1")
-	private String tellephone1 ;
+	private String telephone1 ;
 	@Column(name = "telephone2")
-	private String tellephone2 ;
-	
+	private String telephone2 ;
 	@Column(name = "nomComPreContrat")
 	private String nomComPreContrat;
 	@Column(name = "dateRealisation")
 	private String dateRealisation;
-	@Column(name = "estSupprime", nullable=false)
-	private Boolean estSupprimer;
-	
-//	@OneToMany(targetEntity=com.belife.policemanager.model.entity.Societe.class, mappedBy = "idSocite")
-//	List<Societe> societes;
-	
+	@Column(name = "codeAgent")
+	private String codeAgent;
+	@Column(name = "codeAgence")
+	private String codeAgence;
+	@Column(name = "status")
+	private String status;
+		
 	@OneToMany(targetEntity=com.belife.policemanager.model.entity.ClientBanque.class, mappedBy = "idBanque")
 	List<Banque> banques;
 	
@@ -87,20 +94,6 @@ public class Client implements Serializable {
 	@OneToMany(targetEntity=com.belife.policemanager.model.entity.ClientSociete.class, mappedBy = "idSociete")
 	List<Societe> societes;
 	
-	
-	
-	@ManyToOne
-    @JoinColumn(name = "idAgent")
-    Agent idAgent;
-	
-	@ManyToOne
-    @JoinColumn(name = "idAgence")
-    Agence idAgence;
-	
-	@ManyToOne
-    @JoinColumn(name = "idSequence")
-    Sequence idSequence;
-
 	public Client() {
 		super();
 	}
@@ -113,6 +106,22 @@ public class Client implements Serializable {
 		this.numeroPolice = numeroPolice;
 	}
 
+	public String getSequencePolice() {
+		return sequencePolice;
+	}
+
+	public void setSequencePolice(String sequencePolice) {
+		this.sequencePolice = sequencePolice;
+	}
+
+	public String getProduit() {
+		return produit;
+	}
+
+	public void setProduit(String produit) {
+		this.produit = produit;
+	}
+
 	public Date getDateCreation() {
 		return dateCreation;
 	}
@@ -121,17 +130,29 @@ public class Client implements Serializable {
 		this.dateCreation = dateCreation;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getNumeroCompte() {
+		return numeroCompte;
 	}
 
-
-
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setNumeroCompte(String numeroCompte) {
+		this.numeroCompte = numeroCompte;
+	}
+	
+	public String getNomSource() {
+		return nomSource;
 	}
 
+	public void setNomSource(String nomSource) {
+		this.nomSource = nomSource;
+	}
 
+	public String getCodeSource() {
+		return codeSource;
+	}
+
+	public void setCodeSource(String codeSource) {
+		this.codeSource = codeSource;
+	}
 
 	public Integer getIdClient() {
 		return idClient;
@@ -197,13 +218,6 @@ public class Client implements Serializable {
 		this.prime = prime;
 	}
 
-	public String getDatePrelevement() {
-		return datePrelevement;
-	}
-
-	public void setDatePrelevement(String datePrelevement) {
-		this.datePrelevement = datePrelevement;
-	}
 
 	public String getDateSoumission() {
 		return dateSoumission;
@@ -211,14 +225,6 @@ public class Client implements Serializable {
 
 	public void setDateSoumission(String dateSoumission) {
 		this.dateSoumission = dateSoumission;
-	}
-
-	public String getDateNaissance() {
-		return dateNaissance;
-	}
-
-	public void setDateNaissance(String dateNaissance) {
-		this.dateNaissance = dateNaissance;
 	}
 
 	public String getProfession() {
@@ -253,20 +259,22 @@ public class Client implements Serializable {
 		this.adressePostale = adressePostale;
 	}
 
-	public String getTellephone1() {
-		return tellephone1;
+	
+
+	public String getTelephone1() {
+		return telephone1;
 	}
 
-	public void setTellephone1(String tellephone1) {
-		this.tellephone1 = tellephone1;
+	public void setTelephone1(String telephone1) {
+		this.telephone1 = telephone1;
 	}
 
-	public String getTellephone2() {
-		return tellephone2;
+	public String getTelephone2() {
+		return telephone2;
 	}
 
-	public void setTellephone2(String tellephone2) {
-		this.tellephone2 = tellephone2;
+	public void setTelephone2(String telephone2) {
+		this.telephone2 = telephone2;
 	}
 
 	public String getNomComPreContrat() {
@@ -277,12 +285,13 @@ public class Client implements Serializable {
 		this.nomComPreContrat = nomComPreContrat;
 	}
 
-	public Boolean getEstSupprimer() {
-		return estSupprimer;
+	
+	public String getStatus() {
+		return status;
 	}
 
-	public void setEstSupprimer(Boolean estSupprimer) {
-		this.estSupprimer = estSupprimer;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public List<Societe> getSocietes() {
@@ -308,9 +317,23 @@ public class Client implements Serializable {
 
 	public void setPlans(List<Plan> plans) {
 		this.plans = plans;
+	}	
+
+	public String getDatePrelevement() {
+		return datePrelevement;
 	}
-	
-	
+
+	public void setDatePrelevement(String datePrelevement) {
+		this.datePrelevement = datePrelevement;
+	}
+
+	public String getDateNaissance() {
+		return dateNaissance;
+	}
+
+	public void setDateNaissance(String dateNaissance) {
+		this.dateNaissance = dateNaissance;
+	}
 
 	public String getDateRealisation() {
 		return dateRealisation;
@@ -320,28 +343,20 @@ public class Client implements Serializable {
 		this.dateRealisation = dateRealisation;
 	}
 
-	public Agent getIdAgent() {
-		return idAgent;
+	public String getCodeAgent() {
+		return codeAgent;
 	}
 
-	public void setIdAgent(Agent idAgent) {
-		this.idAgent = idAgent;
+	public void setCodeAgent(String codeAgent) {
+		this.codeAgent = codeAgent;
 	}
 
-	public Agence getIdAgence() {
-		return idAgence;
+	public String getCodeAgence() {
+		return codeAgence;
 	}
 
-	public void setIdAgence(Agence idAgence) {
-		this.idAgence = idAgence;
-	}
-
-	public Sequence getIdSequence() {
-		return idSequence;
-	}
-
-	public void setIdSequence(Sequence idSequence) {
-		this.idSequence = idSequence;
+	public void setCodeAgence(String codeAgence) {
+		this.codeAgence = codeAgence;
 	}
 
 	

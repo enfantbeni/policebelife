@@ -24,14 +24,16 @@ public class Agence implements Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idAgence;
+	
 	@Column(name = "nomDirect")
 	private String nomDirect;
 	@Column(name = "codeAgence")
 	private String codeAgence;
 	@Column(name = "codeDirect")
 	private String codeDirect;
-	@Column(name = "estSupprime", nullable=false)
-	private Boolean estSupprimer;
+	
+	@Column(name = "status")
+	private String status;
 	
 	@OneToMany(targetEntity=com.belife.policemanager.model.entity.Agent.class, mappedBy = "idAgent")
 	List<Agent> agents;
@@ -81,12 +83,12 @@ public class Agence implements Serializable {
 		this.codeDirect = codeDirect;
 	}
 
-	public Boolean getEstSupprimer() {
-		return estSupprimer;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setEstSupprimer(Boolean estSupprimer) {
-		this.estSupprimer = estSupprimer;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public List<Agent> getAgents() {

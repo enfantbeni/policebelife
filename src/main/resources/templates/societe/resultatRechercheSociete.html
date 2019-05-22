@@ -9,13 +9,19 @@
 	<div class="row " th:fragment="resultatRechercheSociete">
            
             <div class="col-lg-12 " >          
-            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
-                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Société </th><th > Nom Société </th></tr>
-					<tr th:each ="societeRecherche : ${societeRecherche}">  									
-  						<td  width="100" th:utext="${societeRecherche.codeSociete}" style="padding-left:10px" ></td>
-  						<td  width="100" th:utext="${societeRecherche.nomSociete}" style="padding-left:10px" ></td> 						
+            
+			<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Code Société </th><th> Nom de la Société </th> <th> Telephone </th>   <th> Status </th></tr>
+					<tr th:each ="societe : ${societeRecherche}">  									
+  						<td style="padding-left:10px"  width="100" th:utext="${societe.codeSociete}" ></td>
+  						<td  width="100" th:utext="${societe.nomSociete}" ></td>
+  						<td  width="100" th:utext="${societe.telephone}" ></td>
+  						<td  width="100" th:utext="${societe.status}" ></td>
+  						
 					</tr>					            
-			</table>        
+		 </table>
+			
+			      
       		</div>
            
            

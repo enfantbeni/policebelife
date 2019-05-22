@@ -25,21 +25,17 @@ public class Societe implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer idSocite;
-	@Column(name = "codeSociete")
+	@Column(name = "BGGRPID")
 	private String codeSociete;
-	@Column(name = "nomSociete")
-	private String nomSociete;
-	@Column(name = "dateCreation")
-	private Date dateCreation;
-	@Column(name = "estSupprime")
-	private Boolean estSupprimer;
 	
-//	@ManyToOne
-//    @JoinColumn(name = "idClient")
-//    Client idClient;
+	@Column(name = "BGZIP")
+	private String telephone;
+	
+	@Column(name = "BGNAME")
+	private String nomSociete;
+	
+	@Column(name = "BGSTATUS")
+	private String status;
 	
 	@OneToMany(targetEntity=com.belife.policemanager.model.entity.ClientSociete.class, mappedBy = "idClient")
 	List<Client> clients;
@@ -47,39 +43,47 @@ public class Societe implements Serializable {
 	public Societe() {
 		super();
 	}
-	
-	public Date getDateCreation() {
-		return dateCreation;
-	}
 
-	public void setDateCreation(Date dateCreation) {
-		this.dateCreation = dateCreation;
-	}
-
-	public Integer getIdSocite() {
-		return idSocite;
-	}
-	public void setIdSocite(Integer idSocite) {
-		this.idSocite = idSocite;
-	}
 	public String getCodeSociete() {
 		return codeSociete;
 	}
+
 	public void setCodeSociete(String codeSociete) {
 		this.codeSociete = codeSociete;
 	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
+
 	public String getNomSociete() {
 		return nomSociete;
 	}
+
 	public void setNomSociete(String nomSociete) {
 		this.nomSociete = nomSociete;
 	}
-	public Boolean getEstSupprimer() {
-		return estSupprimer;
+
+	public String getStatus() {
+		return status;
 	}
-	public void setEstSupprimer(Boolean estSupprimer) {
-		this.estSupprimer = estSupprimer;
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
+
+	public List<Client> getClients() {
+		return clients;
+	}
+
+	public void setClients(List<Client> clients) {
+		this.clients = clients;
+	}
+	
 	
 	
 	

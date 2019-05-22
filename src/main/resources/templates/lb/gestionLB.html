@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Gestion LB </title>
+</head>
+<body>
+		<div th:fragment="gestionLB">
+         
+         
+<!--           <div class="row" > -->
+<!--           	  <div class="col-lg-6"></div>                  -->
+<!--               <div  th:replace="lb/unBoutonLB :: unBoutonLB" ></div>       -->
+<!--           </div> -->
+          					   
+		   
+		   <div class="row">
+		         	<div class="col-lg-2">  </div>
+          			
+			          <div th:if="${messageLBNonExistante}">
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;">  L'élément recherché n'existe pas dans le système. </h4></div>  
+					  </div>
+					  <div class="col-lg-2"></div>		         	
+		   </div>  
+         
+          <div th:if="${formulaireNumeroPoliceRechercheLbb}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="lb/formulaireNumeroPoliceRechercheLbb :: formulaireNumeroPoliceRechercheLbb" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+         
+         
+         
+
+         
+         
+        
+         
+         
+         <div th:if="${resultatRechercheLB}" >
+          <div class="row">
+          
+             <div  class="col-lg-12 formulaireAjout">
+             	<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         	
+		         	<div class="col-lg-2"></div>
+				</div>
+
+				<div class="row">
+		         	<div class="col-lg-2">  </div>
+		         	
+		         	
+		         		<div  th:replace="lb/resultatRechercheLB :: resultatRechercheLB" ></div>  
+					
+		         	
+		         	<div class="col-lg-2"></div>
+		         	
+		         </div>	
+		       </div>
+		       
+          </div>
+         </div>
+             
+         
+          <div th:if="${listeLB}" >
+          		<div  th:replace="lb/listeLB :: listeLB" ></div> 
+          </div>
+
+     </div>
+
+
+</body>
+</html>

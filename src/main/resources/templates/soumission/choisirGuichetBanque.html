@@ -16,11 +16,11 @@
   
   </div>
   
-  <form action="redirectionSuppressionSessionChoixGuichet" th:object="${BanqueDto}" class="col-lg-12 sourceForms" method="POST">
+  <form action="soumissionProposition@@Individuel" th:object="${AgenceBanqueDto}" class="col-lg-12 sourceForms" method="POST">
 		       <div class="row sourceForm">						  					  		
 					<div class="col-lg-4 labelSource"> <label> Nom du Guichet : </label></div>								  		 
 				    <div class="col-lg-6 ajoutDonneeUtilisateur">						  
-							<select name="nomGuichet"  required   >                      
+							<select name="libelleAgence"  required   >                      
 			                         <option  th:each="nomGuichet : ${nomGuichets}" th:value="${nomGuichet}" th:utext="${nomGuichet}"/>
 			                </select>
 					</div>	

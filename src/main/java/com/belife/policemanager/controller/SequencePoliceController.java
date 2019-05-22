@@ -135,7 +135,7 @@ public class SequencePoliceController {
 		     List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
 			 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
 			 model.addAttribute("sequencesAffiche", sequencesAffiche);
-			List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+			List<String> nomAgences=agenceRepository.findAllNomDirects();	
 			model.addAttribute("nomAgences", nomAgences);
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
@@ -287,7 +287,7 @@ public class SequencePoliceController {
 			 model.addAttribute("listeSequencePolice", "listeSequencePolice");
 			model.addAttribute("erreurSequence", " Sequence déjà attribuée");	
 			model.addAttribute("formErreurSequencePolice", "formErreurSequencePolice");	
-			List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+			List<String> nomAgences=agenceRepository.findAllNomDirects();	
 			model.addAttribute("nomAgences", nomAgences);
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
@@ -386,7 +386,7 @@ public class SequencePoliceController {
 						seqSave.setIdAgence(idAgence);
 						seqSave.setEstSupprimer(estSupprimer);
 						sequenceRepository.save(seqSave);
-						List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+						List<String> nomAgences=agenceRepository.findAllNomDirects();	
 						model.addAttribute("nomAgences", nomAgences);
 						model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
 						model.addAttribute("cheminAccueil", "Accueil >");
@@ -412,7 +412,7 @@ public class SequencePoliceController {
 				}
 							model.addAttribute("erreurSequence", " Sequence déjà attribuée");	
 							model.addAttribute("formErreurSequencePolice", "formErreurSequencePolice");	
-							List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+							List<String> nomAgences=agenceRepository.findAllNomDirects();	
 							model.addAttribute("nomAgences", nomAgences);
 							model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
 							model.addAttribute("cheminAccueil", "Accueil >");
@@ -452,7 +452,7 @@ public class SequencePoliceController {
 				session.setAttribute("seqARecuperer", seq);
 				
 				model.addAttribute("seq", session.getAttribute("seq"));
-				List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+				List<String> nomAgences=agenceRepository.findAllNomDirects();	
 				model.addAttribute("nomAgences", nomAgences);
 				model.addAttribute("gestionSequencePolice", "gestionSequencePolice");
 				model.addAttribute("cheminAccueil", "Accueil >");
@@ -493,7 +493,7 @@ public class SequencePoliceController {
 			     List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
 				 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
 				 model.addAttribute("sequencesAffiche", sequencesAffiche);
-				List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+				List<String> nomAgences=agenceRepository.findAllNomDirects();	
 				model.addAttribute("nomAgences", nomAgences);
 				model.addAttribute("cheminAccueil", "Accueil >");
 				model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
@@ -531,17 +531,18 @@ public class SequencePoliceController {
 				 Boolean estSupprimer=false;
 			     PageRequest pageable = PageRequest.of(page, size);
 				
-				
+				String status="A";
 				String nomAgence=agence.getNomDirect();
 				agence=agenceRepository.findAgenceByNomDirect(nomAgence);
+				String codeAgence=agence.getCodeAgence();
 				
-				Page<Client> clientSoumis=clientRepository.findAllClientsPage(estSupprimer,agence, pageable);
+				Page<Client> clientSoumis=clientRepository.findAllClientsPage(status,codeAgence, pageable);
 				model.addAttribute("clientSoumis", clientSoumis);
 				
 			     List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
 				 List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
 				 model.addAttribute("sequencesAffiche", sequencesAffiche);
-				List<String> nomAgences=agenceRepository.findAllNomDirects(estSupprimer);	
+				List<String> nomAgences=agenceRepository.findAllNomDirects();	
 				model.addAttribute("nomAgences", nomAgences);
 				model.addAttribute("nomAgence", nomAgence);
 				model.addAttribute("cheminAccueil", "Accueil >");

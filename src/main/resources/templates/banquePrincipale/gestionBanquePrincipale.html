@@ -30,7 +30,7 @@
 		         	<div class="col-lg-2">  </div>
           			
 			          <div th:if="${resultatModifBanquePrincipale}">
-					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Banque de code <b th:utext="${banquePrincipaleRecherche.codeBanque}" ></b> modifiée avec succès </h4></div>  
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Banque de code <b th:utext="${codeBanqueRecherche}" ></b> modifiée avec succès </h4></div>  
 					  </div>
 					  <div class="col-lg-2"></div>		         	
 		   </div>
@@ -48,7 +48,7 @@
 		         	<div class="col-lg-2">  </div>
           			
 			          <div th:if="${resultatSuppressionBanquePrincipale}">
-					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Banque de code <b th:utext="${codeBanque}" ></b> supprimée avec succès. </h4></div>  
+					         		<div  class="col-lg-8 ajoutSucces"  > <h4 style="text-align:center;"> Banque de code <b th:utext="${codeBanque}" ></b> desactivée avec succès. </h4></div>  
 					  </div>
 					  <div class="col-lg-2"></div>		         	
 		   </div>

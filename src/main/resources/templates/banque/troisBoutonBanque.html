@@ -7,10 +7,23 @@
 <body>
 		
 		<div class="col-lg-6 ajouter troisBouton" th:fragment="troisBoutonBanque">
-             <a href="ajoutBanque" class="btn btn-success" role="button" aria-pressed="true">Ajouter</a>
-             <a href="modifierBanque" class="btn btn-success" role="button" aria-pressed="true">Modifier</a>
-             <a href="rechercheBanque" class="btn btn-success" role="button" aria-pressed="true">Rechercher</a>
-             <a href="supprimerBanque" class="btn btn-success" role="button" aria-pressed="true">Supprimer</a>                                                              
+		
+             <form th:action="@{/resultatRechercheAgenceBanque}" class="col-md-12 col-xs-12" method="POST">           
+                <div class="row ">
+                    <div class="col-md-4 col-xs-4 codeSocieteRecherche">
+                  	<label> Code Agence Banque : </label>
+             	 </div>
+             	 
+             	 <div class="input-group col-lg-4">
+					<input type="text" class="form-control" name="codeGuichet" required maxlength="20" data-th-value="${codeGuichet}" >
+ 					<span class="input-group-btn">					    
+						<button  class="btn btn-success" type="submit" title="Rechercher"> Rechercher </button>
+					</span>
+				 </div>
+             	              	        
+                </div> 
+                                      
+              </form>                                                           
     	</div>
 
 </body>

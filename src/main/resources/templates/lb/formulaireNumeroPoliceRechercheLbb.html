@@ -1,35 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html  xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>Numero modification Banque</title>
+<title> Formulaire numero police LB</title>
 </head>
 <body>
-
-
-		<div class="row " th:fragment="formulaireNumeroModifBanque">
+	<div class="row " th:fragment="formulaireNumeroPoliceRechercheLbb">
            
-            <form th:action="@{/formulaireNumeroModifBanque}" class="col-md-12 col-xs-12" method="POST">
+           <form th:action="@{/resultatRechercheLB}" class="col-md-12 col-xs-12" method="POST">
              <div class="row labelAjout">
-                  <h2>Modifier un Guichet par son code Guichet</h2>
+                  <h2>Recherche Par numero de Police </h2>
              </div>
              
             
-              <input type="hidden" name="idBanque" value=" " />
-              <input type="hidden" name="estSupprimer" />
-              <input type="hidden" name="nomBanque" value=" " />
-              <input type="hidden" name="codeBanque" />
-             
-           
-            
              <div class="row ajoutDonnee">
                  <div class="col-md-4 col-xs-4 np">
-                  	<label> Code Guichet : </label>
+                  	<label> Nmero de Police : </label>
              	 </div>
              	 <div class="col-md-4 col-xs-4">
-                  	<input type="text" required name="codeGuichet"  maxlength="10" class="form-control"  autocomplete="off"/>
+                  	<input type="text" name="LBPOLN"  maxlength="20" class="form-control"  autocomplete="off" required/>
              	 </div>           
              </div>  
+             
              <div class="row">
                  <div class="col-md-4 col-xs-4">
                   	<label>  </label>
@@ -44,7 +36,6 @@
            
            
      </div>
-
 
 </body>
 </html>

@@ -25,6 +25,7 @@ public class Plan implements Serializable {
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idPlan;
+	
 	@Column(name = "codePlan")
 	private String codePlan;
 	@Column(name = "planDuree")

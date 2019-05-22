@@ -13,12 +13,19 @@
                   <h2>Rechercher une Banque par son code </h2>
              </div>
              
-            
-              <input type="hidden" name="idBanque" value=" " />
-              <input type="hidden" name="estSupprimer" />
-              <input type="hidden" name="nomBanque" value=" " />
-        
-             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-6 erreur"  th:if="${formErreurBanquePrincipale}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>   
+							   <li  th:if="${codeBanquePrincipaleErreur}" th:utext="${codeBanquePrincipaleErreur}"> </li>	                     
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-2"></div>
+             </div>
            
             
              <div class="row ajoutDonnee">
@@ -26,7 +33,7 @@
                   	<label> Code Banque : </label>
              	 </div>
              	 <div class="col-lg-4 col-xs-4">
-                  	<input type="text" required name="codeBanque" maxlength="20" class="form-control"  autocomplete="off"/>
+                  	<input type="text" required name="codeBanque" maxlength="20" class="form-control" data-th-value="${codeBanque}"  autocomplete="on"/>
              	 </div>           
              </div>  
              <div class="row">

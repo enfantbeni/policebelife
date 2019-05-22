@@ -31,15 +31,14 @@
              </div>
              
              <input type="hidden" name="id" value=" " />
-              
-                
+                            
              <div class="row ajoutDonnee">
                  <div class="col-md-4 col-xs-4 ft">
                   	<label> Nom Banque : </label>
              	 </div>
              	 
              	 <div class="col-md-4 col-xs-4">             	    
-             	    <input type="text" name="nomBanque" required class="form-control" maxlength="50" data-th-value="${banquePrincipaleRecherche.nomBanque}" />					
+             	    <input type="text" name="nomBanque" required class="form-control" maxlength="50" data-th-value="${nomBanqueRecherche}" />					
              	 </div>  
              	          
              </div> 
@@ -50,7 +49,10 @@
              	 </div>
              	 
              	 <div class="col-md-4 col-xs-4">             	    
-             	    <input type="text" name="codeBanque" required class="form-control" data-th-value="${banquePrincipaleRecherche.codeBanque}" maxlength="20"/>					
+<!--              	    <input type="text" name="codeBanque" required class="form-control" data-th-value="${codeBanqueRecherche}" maxlength="20"/> -->
+             	    <select name="codeBanque"   class="form-control"  >                      
+			             <option  th:each="codeBanque : ${codeBanques}" th:value="${codeBanque}" th:utext="${codeBanque}"/>
+			        </select>					
              	 </div>  
              	          
              </div>

@@ -30,7 +30,7 @@
         	      	    </div>
         	      	   <div class="col-lg-12 sourceForm"> 
         	      	     
-        	      	   		<form  th:action="@{/resultatAjoutProposition}"  th:object="${clientDto}"  method="POST" > 
+        	      	   		<form  th:action="@{/resultatAjoutProposition}"  th:object="${Client}"  method="POST" > 
 						  		<div class="row ajoutDonneeUtilisateur">
 						  			<div class="col-lg-6">
 						  				
@@ -52,7 +52,7 @@
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
 							              		
-							                  <input type="text" readonly name="planDuree" data-th-value="${planDuree}" class="form-control"   />   
+							                  <input type="text" readonly name="produit" data-th-value="${planDuree}" class="form-control"   />   
 							                               							                  	
 							             	 </div>     
 						  			   	</div>
@@ -96,7 +96,7 @@
 							                  <label > Numero Compte :  </label> 
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="numero" readonly data-th-value="${numero}" class="form-control"  />
+							                  	<input type="text" required name="numeroCompte" readonly data-th-value="${numero}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -106,7 +106,7 @@
 								                  <label> Code Guichet : </label>
 								             	 </div>
 								             	 <div class="col-md-8 col-xs-8 inputSoumission">
-								                  	<input type="text" name="codeGuichet" readonly  class="form-control"  data-th-value="${codeGuichet}"  />
+								                  	<input type="text" name="codeSource" readonly  class="form-control"  data-th-value="${codeBanque}"  />
 								             	 </div>     
 							  			   	</div>
 						  			   	</div>
@@ -117,19 +117,20 @@
 								                  <label> Code société : </label>
 								             	 </div>
 								             	 <div class="col-md-8 col-xs-8 inputSoumission">
-								                  	<input type="text" name="numero" readonly  class="form-control"  data-th-value="${numero}"   />
+								                  	<input type="text" name="codeSource" readonly  class="form-control"  data-th-value="${codeBanque}"   />
 								             	 </div>     
 							  			   	</div>
 						  			   	</div>
 						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
-							                  <label> Source de prélèvement : </label>
+							                  <label> Source de :<br><br> prélèvement </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" name="banque"   class="form-control"  data-th-value="${banque}"  readonly />
+							                  	<input type="text" name="nomSource"   class="form-control"  data-th-value="${banque}"  readonly />
 							             	 </div>     
 						  			   	</div>
+						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
 							                  <label> Périodicité : </label>
@@ -172,7 +173,7 @@
 							                    <label>Date de réalisation du : <br><br> contrat par l'agent </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="date" name="dateRealisation" data-th-value="${dateRealisation}" class="form-control" readonly  />
+							                  	<input type="text" name="dateRealisation" data-th-value="${dateRealisation}" class="form-control" readonly  />
 							             	 </div>     
 						  			   	</div>					  			   	
 						  			   		  			  				  			   				  			
@@ -186,7 +187,7 @@
 							                  <label> Date de prélèvement : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="date" name="datePrelevement" data-th-value="${datePrelevement}" class="form-control" readonly  />
+							                  	<input type="text" name="datePrelevement" data-th-value="${datePrelevement}" class="form-control" readonly  />
 							             	 </div>     
 						  			   	</div>
 						  		    	
@@ -195,7 +196,7 @@
 							                  <label> Date de soumission : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="date"  name="dateSoumission" data-th-value="${dateSoumission}" class="form-control"  readonly />
+							                  	<input type="text"  name="dateSoumission" data-th-value="${dateSoumission}" class="form-control"  readonly />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -204,7 +205,7 @@
 							                  <label> Date de naissance : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="date" name="dateNaissance" data-th-value="${dateNaissance}"  class="form-control" readonly />
+							                  	<input type="text" name="dateNaissance" data-th-value="${dateNaissance}"  class="form-control" readonly />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -240,7 +241,7 @@
 							                  <label> Adresse postale : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" name="adressPostal" data-th-value="${adressPostal}" class="form-control"  readonly />
+							                  	<input type="text" name="adressePostale" data-th-value="${adressPostal}" class="form-control"  readonly />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -275,7 +276,7 @@
 						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
-							                  <label> Nom commercial en pré-contrat </label>
+							                  <label> Nom commercial : <br><br> en pré-contrat </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
 							                  	<input type="text" name="nomComPreContrat" data-th-value="${nomComPreContrat}" class="form-control" readonly  />
@@ -287,7 +288,7 @@
 							                    <label>Date de réalisation du : <br><br> contrat par l'agent </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="date" name="dateRealisation" data-th-value="${dateRealisation}" class="form-control" readonly  />
+							                  	<input type="text" name="dateRealisation" data-th-value="${dateRealisation}" class="form-control" readonly  />
 							             	 </div>     
 						  			   	</div>	
 						  		    		  		    	

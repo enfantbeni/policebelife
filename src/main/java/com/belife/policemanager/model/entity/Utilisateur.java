@@ -31,8 +31,8 @@ private String identifiant;
 private String fonction;
 @Column(name = "password")
 private String password;
-@Column(name = "estSupprime", nullable=false)
-private Boolean estSupprimer;
+@Column(name = "status")
+private String status;
 @Column(name = "dateCreation")
 private Date dateCreation;
 @OneToMany(targetEntity=com.belife.policemanager.model.entity.UtilisateurRoles.class, mappedBy = "idRoles")
@@ -49,7 +49,7 @@ public Utilisateur(Integer id, String nomEtPrenom, String identifiant, String fo
 	this.identifiant = identifiant;
 	this.fonction = fonction;
 	this.password = password;
-	this.estSupprimer = estSupprimer;
+	this.status = status;
 }
 public Utilisateur(String nomEtPrenom, String identifiant, String fonction, String password,
 		Boolean estSupprimer) {
@@ -58,7 +58,7 @@ public Utilisateur(String nomEtPrenom, String identifiant, String fonction, Stri
 	this.identifiant = identifiant;
 	this.fonction = fonction;
 	this.password = password;
-	this.estSupprimer = estSupprimer;
+	this.status = status;
 }
 
 //Setters, getters and constructors
@@ -70,13 +70,6 @@ public Utilisateur(Integer id) {
     this.idUtilisateur = id;
 }
 
-public Utilisateur(String nomEtPrenom, String identifiant, String password, Boolean estSupprimer) {
-	super();
-	this.nomEtPrenom = nomEtPrenom;
-	this.identifiant = identifiant;
-	this.password = password;
-	this.estSupprimer = estSupprimer;
-}
 public Utilisateur(String nomEtPrenom, String password) {
 	super();
 	this.nomEtPrenom = nomEtPrenom;
@@ -109,12 +102,6 @@ public String getPassword() {
 public void setPassword(String password) {
 	this.password = password;
 }
-public Boolean getEstSupprimer() {
-	return estSupprimer;
-}
-public void setEstSupprimer(Boolean estSupprimer) {
-	this.estSupprimer = estSupprimer;
-}
 public String getFonction() {
 	return fonction;
 }
@@ -140,6 +127,12 @@ public Agence getIdAgence() {
 }
 public void setIdAgence(Agence idAgence) {
 	this.idAgence = idAgence;
+}
+public String getStatus() {
+	return status;
+}
+public void setStatus(String status) {
+	this.status = status;
 }
 
 

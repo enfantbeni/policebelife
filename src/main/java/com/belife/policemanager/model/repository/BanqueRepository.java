@@ -2,34 +2,49 @@ package com.belife.policemanager.model.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.belife.policemanager.model.entity.Banque;
-import com.belife.policemanager.model.entity.BanquePrincipale;
 
 public interface BanqueRepository extends JpaRepository<Banque, Integer> {
 	
 	
-	@Query("select b from Banque b where b.codeGuichet = :codeGuichet AND b.estSupprimer=false")
-	Banque findBanqueByCodeGuichet(@Param("codeGuichet") String codeGuichet);
+	@Query("select b from Banque b where b.nomBanque = :nomBanque AND b.idBanque <> :idBanque ")
+	Banque findBanquePrincipaleByNom(@Param("nomBanque") String nomBanque,  @Param("idBanque") Integer idBanque);
 	
-	@Query("select b from Banque b where b.nomGuichet = :nomGuichet AND b.estSupprimer=false")
-	Banque findBanqueByNomGuichet(@Param("nomGuichet") String nomGuichet);
+	@Query("select b from Banque b where b.codeBanque = :codeBanque AND b.idBanque <> :idBanque ")
+	Banque findBanquePrincipaleByCode(@Param("codeBanque") String codeBanque, @Param("idBanque") Integer idBanque);
 	
-	@Query("select nomGuichet from Banque b where b.idBanquePrincipale = :idBanquePrincipale AND b.estSupprimer=false")
-	List<String> findNomGuichets(@Param("idBanquePrincipale") BanquePrincipale idBanquePrincipale);
+	@Query("select b from Banque b where b.nomBanque = :nomBanque  ")
+	Banque findBanquePrincipaleByNomBanque(@Param("nomBanque") String nomBanque );
 	
-	@Query("select codeGuichet from Banque b where b.nomGuichet = :nomGuichet AND b.estSupprimer=false")
-	String findCodeGuichetByNomGuichet(@Param("nomGuichet") String nomGuichet);
+	@Query("select b from Banque b where b.codeBanque = :codeBanque  ")
+	Banque findBanquePrincipaleByCodeBanque(@Param("codeBanque") String codeBanque );
 	
-	@Query("select b from Banque b where b.estSupprimer = :estSupprimer AND b.estSupprimer=false")
-	List<Banque> findAllBanques(@Param("estSupprimer") Boolean estSupprimer);
+	@Query("select codeBanque from Banque b where b.nomBanque = :nomBanque ")
+	String findCodeBanquePrincipale(@Param("nomBanque") String nomBanque);
 	
+	@Query("select b from Banque b ")
+	List<Banque> findAllBanquePrincipales();
 	
-	@Query("select idBanquePrincipale from Banque b where b.nomGuichet = :nomGuichet AND b.estSupprimer=false")
-	BanquePrincipale findBanquePrincipaleByNomGuichet(@Param("nomGuichet") String nomGuichet);
+	@Query("select nomBanque from Banque b where b.status = :status ")
+	List<String> findAllNomBanque(@Param("status") String status);
 	
-
+	@Query("select codeBanque from Banque b where b.status = :status ")
+	List<String> findAllCodeBanque(@Param("status") String status);
+	
+	@Query("select codeBanque from Banque b")
+	List<String> findAllCodeBanque();
+	
+	@Query("select b from Banque b where b.nomBanque = :nomBanque AND b.codeBanque= :codeBanque")
+	Banque findBanquePrincipaleByNomAndCode(@Param("nomBanque") String nomBanque,@Param("codeBanque") String codeBanque);
+	
+	@Query(" select b from Banque b ")
+	Page<Banque> findAllBanquePage( Pageable pageable);
+		
+	
 }

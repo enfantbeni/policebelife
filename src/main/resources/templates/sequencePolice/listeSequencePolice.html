@@ -9,7 +9,7 @@
 	<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeSequencePolice">
 	
 	    		<h2> Liste des sequences de police </h2>
-				<table width="100%" border="0" cellspacing="1" cellpadding="2">
+				<table width="100%" border="0" cellspacing="1" cellpadding="2" class="table-bordered table" >
 		                    <tr class="entete-tableau"><th style="padding-left:10px"> Seqence </th> <th> Nom Agence </th> <th> Date création </th> <th> </th></tr>
 							<tr th:each ="sequence : ${sequencesAffiche}">  									
 		  						<td  width="100" th:utext="${sequence.seq}" style="padding-left:10px" ></td>  

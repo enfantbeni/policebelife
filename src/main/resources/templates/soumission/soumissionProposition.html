@@ -23,7 +23,7 @@
         	      	    </div>
         	      	   <div class="col-lg-12 sourceForm"> 
         	      	     
-        	      	   		<form  th:action="@{/confirmationAjoutProposition}"  th:object="${clientDto}"  method="POST" > 
+        	      	   		<form  th:action="@{/confirmationAjoutProposition}"  th:object="${ClientDto}"  method="POST" > 
 						  		<div class="row ajoutDonneeUtilisateur">
 						  			<div class="col-lg-6">
 						  					<input type="hidden" name="propositionSoumise" data-th-value="non"  />		  									
@@ -58,7 +58,7 @@
 							                  <label> Nom de l'Assuré * : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input required type="text" name="nomAssure" data-th-value="${nomAssure}" class="form-control"  />
+							                  	<input required type="text" maxlength="40" name="nomAssure" data-th-value="${nomAssure}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -67,7 +67,7 @@
 							                  <label> Nom du client * : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input required type="text" name="nomClient" data-th-value="${nomClient}" class="form-control" />
+							                  	<input required type="text" maxlength="40" name="nomClient" data-th-value="${nomClient}" class="form-control" />
 							             	 </div>     
 						  			   	</div>						  			   	
 						  			   	
@@ -75,7 +75,7 @@
 						  			   	
 						  			   	<div class="row">
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
-							                  <label> Source de prélèvement * : </label>
+							                  <label> Source de : <br><br> prélèvement * </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
 							                  	<input type="text" required name="banque"   class="form-control"  data-th-value="${banque}" readonly />
@@ -88,7 +88,7 @@
 								                  <label> Code du Guichet * : </label>
 								             	 </div>
 								             	 <div class="col-md-8 col-xs-8 inputSoumission">
-								                  	<input type="text" required name="codeGuichet" readonly  class="form-control"  data-th-value="${codeGuichetSoumis}"  />
+								                  	<input type="text" required name="codeSource" readonly  class="form-control"  data-th-value="${codeGuichetSoumis}"  />
 								             	 </div>     
 							  			   	</div>
 						  			   	</div>
@@ -99,7 +99,7 @@
 								                  <label> Code société * : </label>
 								             	 </div>
 								             	 <div class="col-md-8 col-xs-8 inputSoumission">
-								                  	<input type="text" required name="numero" readonly  class="form-control"  data-th-value="${codeSociete}"  />
+								                  	<input type="text" required name="codeSource" readonly  class="form-control"  data-th-value="${codeSociete}"  />
 								             	 </div>     
 							  			   	</div>
 						  			   	</div>
@@ -109,7 +109,7 @@
 							                  <label > Numero de compte : * </label> 
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="numero" data-th-value="${numero}" class="form-control"  />
+							                  	<input type="text" required name="numeroCompte" maxlength="20" data-th-value="${numeroCompte}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -133,7 +133,7 @@
 							                  <label> Couverture * : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input pattern="[0-9]+" type="text" required name="couverture" data-th-value="${couverture}" class="form-control"  />
+							                  	<input pattern="[0-9]+" type="text" maxlength="11" required name="couverture" data-th-value="${couverture}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -142,7 +142,7 @@
 							                  <label> Prime * : </label>    
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input pattern="[0-9]+" type="text" required name="prime" data-th-value="${prime}"  class="form-control"  />
+							                  	<input pattern="[0-9]+" type="text" maxlength="11" required name="prime" data-th-value="${prime}"  class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -153,13 +153,11 @@
 								                  <label> Matricule client  : </label>
 								             	 </div>
 								             	 <div class="col-md-8 col-xs-8 inputSoumission">
-								                  	<input type="text" name="matriculeClient"  class="form-control" data-th-value="${matriculeClient}"   />
+								                  	<input type="text" maxlength="40" name="matriculeClient"  class="form-control" data-th-value="${matriculeClient}"   />
 								             	 </div>     
 							  			   	</div>
 						  			   	</div >
-						  			   	
-						  			 
-						  			   	
+						  			   					  			   	
 						  			   	<div class="row" th:if="${testGroupe}" >
 						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
 							                    <label>Date de réalisation : <br><br> du contrat par l'agent * </label>
@@ -178,8 +176,7 @@
 							             	 </div>     
 						  			   	</div>									
 						  			   						  			   				  			
-						  			</div>	
-						  			
+						  			</div>							  			
 						  								  		
 						  		    <div class="col-lg-6">
 						  		    
@@ -197,7 +194,8 @@
 							                  <label> Date de soumission : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" name="dateSoumission" data-th-value="${dateSoumission}" class="form-control" readonly  />
+<!-- 							                  	<input type="date" name="dateSoumission" data-th-value="${dateSoumission}" class="form-control" readonly  /> -->
+							                  	<input type="text" required name="dateSoumission" readonly  class="form-control"  data-th-value="${dateSoumission}"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -215,7 +213,7 @@
 							                  <label> Profession * : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="profession" data-th-value="${profession}" class="form-control"  />
+							                  	<input type="text" required maxlength="40" name="profession" data-th-value="${profession}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -224,7 +222,7 @@
 							                  <label> Employeur : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="employeur" data-th-value="${employeur}"  class="form-control" />
+							                  	<input type="text" required maxlength="40" name="employeur" data-th-value="${employeur}"  class="form-control" />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -233,7 +231,7 @@
 							                  <label> Ville : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="ville"  class="form-control" data-th-value="${ville}" />
+							                  	<input type="text" required name="ville" maxlength="40"  class="form-control" data-th-value="${ville}" />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -242,7 +240,7 @@
 							                  <label> Adresse postale * : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="adressPostal" data-th-value="${adressPostal}" class="form-control"  />
+							                  	<input type="text" required name="adressPostal" maxlength="40" data-th-value="${adressPostal}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -251,7 +249,7 @@
 							                  <label> Telephone 1 * : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="telephone1" data-th-value="${telephone1}" class="form-control"  />
+							                  	<input type="text" required name="telephone1" maxlength="40" data-th-value="${telephone1}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -260,7 +258,7 @@
 							                  <label> Telephone 2 : </label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="tel" required name="telephone2" data-th-value="${telephone2}" class="form-control"  />
+							                  	<input type="tel" name="telephone2" maxlength="40" data-th-value="${telephone2}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>
 						  			   	
@@ -282,15 +280,14 @@
 							                  <label> Nom commercial : <br><br> en pré-contrat *</label>
 							             	 </div>
 							             	 <div class="col-md-8 col-xs-8 inputSoumission">
-							                  	<input type="text" required name="nomComPreContrat" data-th-value="${nomComPreContrat}" class="form-control"  />
+							                  	<input type="text" required name="nomComPreContrat" maxlength="40" data-th-value="${nomComPreContrat}" class="form-control"  />
 							             	 </div>     
 						  			   	</div>	
 						  			   	
 						  			   			
 						  		    		  		    	
 						  		    </div>
-						  		    
-						  		    
+						  		    						  		    
 						  		</div>  
 						  		<div class="row">
 						  					<div class="col-lg-6 validerSoumission"> </div>

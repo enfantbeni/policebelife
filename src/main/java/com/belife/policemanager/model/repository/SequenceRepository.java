@@ -17,6 +17,9 @@ public interface SequenceRepository extends JpaRepository<Sequence, Integer> {
 	@Query("select s from Sequence s where s.idAgence = :idAgence AND s.estSupprimer=false ORDER BY dateCreation DESC")
 	List<Sequence> findSequenceListeByIdSequence(@Param("idAgence") Agence idAgence);
 	
+	@Query("select seq from Sequence s where s.idAgence = :idAgence AND s.estSupprimer=false ORDER BY dateCreation DESC")
+	List<String> findSequenceByIdAgence(@Param("idAgence") Agence idAgence);
+	
 	@Query("select s from Sequence s where s.seq = :seq AND s.estSupprimer=false")
 	Sequence findSequenceBySeq(@Param("seq") String seq);
 	

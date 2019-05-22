@@ -3,17 +3,25 @@ package com.belife.policemanager.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.belife.policemanager.model.entity.Agence;
+import com.belife.policemanager.model.entity.Utilisateur;
 import com.belife.policemanager.model.repository.AgenceRepository;
 import com.belife.policemanager.model.repository.BanqueRepository;
 import com.belife.policemanager.model.repository.RolesRepository;
@@ -45,7 +53,7 @@ public class AgenceController {
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/gestionAgence" }, method = RequestMethod.GET)
-	    public String gestionAgence(Model model, HttpSession session) { 
+	    public String gestionAgence(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		 
 		 String resultat=null;
 			try {
@@ -55,14 +63,17 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
-			model.addAttribute("titre", "Gestion des Agences");
+			model.addAttribute("titre", "Gestion des Agences de BELIFE");
 			Boolean estSupprimer=false;
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgence", "listeAgence");
 			model.addAttribute("listeAgence", "listeAgence");
-			
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -73,16 +84,15 @@ public class AgenceController {
 			model.addAttribute("accueilDeux", "accueilDeux");
 			
 			model.addAttribute("gestionAgence", "gestionAgence");
-			model.addAttribute("menuNavigation", "menuNavigation");
-			List<Agence> agences=new ArrayList<Agence>();		
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			model.addAttribute("menuNavigation", "menuNavigation");		
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 	        return "espaceUtilisateur";			
 	    }
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/ajoutAgence" }, method = RequestMethod.GET)
-	    public String ajoutAgence(Model model, HttpSession session) { 
+	    public String ajoutAgence(Model model, HttpSession session,@PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		 
 		 String resultat=null;
 			try {
@@ -92,6 +102,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -100,14 +113,12 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminAjouterAgence", "Ajouter une Agence >");
-			model.addAttribute("titre", "Gestion des Agences");
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			model.addAttribute("titre", "Gestion des Agences de BELIFE");
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("formulaireGestionAgence", "formulaireGestionAgence");
@@ -119,7 +130,7 @@ public class AgenceController {
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/resultatAjoutAgence" }, method = RequestMethod.POST)
-	    public String resultatAjoutAgence(Model model, @ModelAttribute("agence") Agence agence , HttpSession session) { 		 
+	    public String resultatAjoutAgence(Model model, @ModelAttribute("agence") Agence agence , HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 		 
 		 String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -128,6 +139,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -136,17 +150,16 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			String codeAgence=agence.getCodeAgence().trim();
 			String codeDirect=agence.getCodeDirect().trim();
 			String nomDirect=agence.getNomDirect().trim();
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminAjouterAgence", "Ajouter une Agence >");
-			model.addAttribute("titre", "Gestion des Agences");
+			model.addAttribute("titre", "Gestion des Agences de BELIFE ");
 			
-			List<Agence> agences=new ArrayList<Agence>();
-			Boolean estSupprimer=false;
+			
 			Agence agenceSave=null;
 			Agence nomDirectSave=null;
 			model.addAttribute("identifiantSession", identifiantSession);
@@ -157,16 +170,17 @@ public class AgenceController {
 					nomDirectSave=agenceRepository.findAgenceByNomDirect(nomDirect);
 //					nomAgenceVerification=agenceSave.getNomAgence();
 					if(agenceSave==null && nomDirectSave ==null) {
+							String status="A";
 							agence.setCodeAgence(codeAgence);
 							agence.setCodeDirect(codeDirect);
 							agence.setNomDirect(nomDirect);
-							agence.setEstSupprimer(estSupprimer);
+							agence.setStatus(status);
 							
 							model.addAttribute("listeAgence", "listeAgence");
 							model.addAttribute("gestionAgence", "gestionAgence");
 							agenceRepository.save(agence);
-							model.addAttribute("ajoutSuccesAgence", "Un Direct ajouté avec succès");	
-							agences=agenceRepository.findAllAgences(estSupprimer);
+							model.addAttribute("ajoutSuccesAgence", "Un Direct ajouté avec succès");
+							Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 							model.addAttribute("agences", agences);					
 								return "espaceUtilisateur";
 					}	
@@ -186,8 +200,7 @@ public class AgenceController {
 			if(codeDirect==null || codeDirect.length()==0 || codeDirect.length()>5) {
 				model.addAttribute("codeDirectErreur", "Code Direct invalide");
 			}
-			
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("resultatAjoutAgence", "resultatAjoutAgence");
@@ -200,7 +213,7 @@ public class AgenceController {
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/modifierAgence" }, method = RequestMethod.GET)
-	    public String modifierAgence(Model model, HttpSession session) { 
+	    public String modifierAgence(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -209,6 +222,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -217,14 +233,13 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-			
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminModifierAgence", "Modifier une Agence >");
-			model.addAttribute("titre", "Gestion des Agences");
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			model.addAttribute("titre", "Gestion des Agences de BELIFE");
+			
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("formulaireNumeroModifAgence", "formulaireNumeroModifAgence");
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");	
@@ -237,7 +252,7 @@ public class AgenceController {
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/formulaireNumeroModifAgence" }, method = RequestMethod.POST)
-	    public String formulaireNumeroModifAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session) {
+	    public String formulaireNumeroModifAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -246,6 +261,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -254,20 +272,19 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-			
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminModifierAgence", "Modifier une Agence >");
-			model.addAttribute("titre", "Gestion des Agences");
+			model.addAttribute("titre", "Gestion des Agences de BELIFE");
 			String codeDirect=agence.getCodeDirect().trim();
 			Agence agenceRecherche=agenceRepository.findAgenceByCodeDirect(codeDirect);				
 			
 			if( agenceRecherche == null) {
 				 return "redirect:/messageAgenceNonExistante";  
 			}							
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+		
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("titre", " Gestion d'Agence");
 			session.setAttribute("codeAgenceCache", codeDirect);	
@@ -279,13 +296,14 @@ public class AgenceController {
 			model.addAttribute("gestionAgence", "gestionAgence");
 			model.addAttribute("menuNavigation", "menuNavigation");			
 	        return "espaceUtilisateur";	
+	        
 	    }
 
 	 
 //	 Resultat de la modification des données d'un formulaire
 	 @Transactional
 	 @RequestMapping(value = {"/resultatModifAgence" }, method = RequestMethod.POST)
-	    public String resultatModifAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session) {
+	    public String resultatModifAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -294,6 +312,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -302,13 +323,13 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
+			
 			String codeAgence=agence.getCodeAgence().trim();
 			String codeDirect=agence.getCodeDirect().trim();
 			String nomDirect=agence.getNomDirect().trim();
-					
-			List<Agence> agences=new ArrayList<Agence>();
-			Boolean estSupprimer=false;			
+			String status="A";
+			
 			String codeAgenceCache=session.getAttribute("codeAgenceCache").toString().trim();	
 			
 			Agence agenceRecherche=agenceRepository.findAgenceByCodeDirect(codeAgenceCache);
@@ -319,6 +340,7 @@ public class AgenceController {
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminModifierAgence", "Modifier une Agence >");
 			model.addAttribute("titre", "Gestion des Agences");
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			if( codeAgence==null || codeAgence.length()==0 || codeAgence.length()>5 || codeDirect==null || codeDirect.length()==0 || codeDirect.length()>5 || nomDirect==null || nomDirect.length()==0 || nomDirect.length()>50 ) {						
 				
 				model.addAttribute("agenceRecherche", agenceRecherche);
@@ -346,7 +368,6 @@ public class AgenceController {
 					model.addAttribute("codeDirectExistantErreur", "Code du Direct déjà existant");
 				}
 				
-				agences=agenceRepository.findAllAgences(estSupprimer);
 				model.addAttribute("agences", agences);				
 				return "espaceUtilisateur";	
 			}
@@ -366,7 +387,6 @@ public class AgenceController {
 					model.addAttribute("nomDirectExistantErreur", "Nom direct déjà existant");
 				}
 				if(estEgal) {
-					agences=agenceRepository.findAllAgences(estSupprimer);
 					model.addAttribute("agences", agences);	
 					model.addAttribute("agenceRecherche", agenceRecherche);
 					model.addAttribute("formErreurAgence", "formErreur");
@@ -383,9 +403,9 @@ public class AgenceController {
 			 agenceRecherche.setNomDirect(nomDirect);
 			 agenceRecherche.setCodeAgence(codeAgence);
 			 agenceRecherche.setCodeDirect(codeDirect);
-			 agenceRecherche.setEstSupprimer(estSupprimer);
+			 agenceRecherche.setStatus(status);
+			 
 			agenceRepository.save(agenceRecherche);
-			agences=agenceRepository.findAllAgences(estSupprimer);
 			model.addAttribute("agenceRecherche", agenceRecherche);
 			model.addAttribute("agences", agences);	
 			model.addAttribute("listeAgence", "listeAgence");
@@ -401,7 +421,7 @@ public class AgenceController {
 ////	  Action Recherche Banque
 	 @Transactional
 	 @RequestMapping(value = {"/rechercheAgence" }, method = RequestMethod.GET)
-	    public String rechercherAgence(Model model, HttpSession session) { 
+	    public String rechercherAgence(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -410,6 +430,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -418,14 +441,13 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminRechercherAgence", "Rechercher une Agence >");
-			model.addAttribute("titre", "Gestion des Agences");
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			model.addAttribute("titre", "Gestion des Agences de BELIFE");
+	
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("formulaireNumeroRechercheAgence", "formulaireNumeroRechercheAgence");
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");	
@@ -438,7 +460,7 @@ public class AgenceController {
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/resultatRechercheAgence" }, method = RequestMethod.POST)
-	    public String resultatRechercheAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session) {
+	    public String resultatRechercheAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -447,6 +469,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -455,7 +480,7 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			String codeDirect=agence.getCodeDirect().trim();
 			
 			session.setAttribute("codeAgenceCache", codeDirect);
@@ -466,10 +491,9 @@ public class AgenceController {
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminRechercherAgence", "Rechercher une Agence >");
-			model.addAttribute("titre", "Gestion des Agences");
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			model.addAttribute("titre", "Gestion des Agences de BELIFE ");
+		
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agenceRecherche", agenceRecherche);			
 			model.addAttribute("resultatRechercheAgence", "resultatRechercheAgence");	
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");	
@@ -482,7 +506,7 @@ public class AgenceController {
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/messageAgenceNonExistante" }, method = RequestMethod.GET)
-	    public String messageAgenceNonExistante(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session) {
+	    public String messageAgenceNonExistante(Model model, @ModelAttribute("agence") Agence agence, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -491,6 +515,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -499,7 +526,7 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminRechercherAgence", " Agence non existante >");
@@ -507,10 +534,9 @@ public class AgenceController {
 			String codeAgenceCache=session.getAttribute("codeAgenceCache").toString().trim();
 			model.addAttribute("codeAgence", codeAgenceCache);	
 			model.addAttribute("messageAgenceNonExistante", "messageAgenceNonExistante");		
-			model.addAttribute("actionTroisBouton", "actionTroisBouton");	
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			model.addAttribute("actionTroisBouton", "actionTroisBouton");
+			
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgence", "listeAgence");
@@ -519,10 +545,10 @@ public class AgenceController {
 	        return "espaceUtilisateur";	
 	    }
 	 	
-////	 Action suppression Agence	
+	 /// Action suppression Agence	
 	 @Transactional
 	 @RequestMapping(value = {"/supprimerAgence" }, method = RequestMethod.GET)
-	    public String supprimerAgence(Model model, HttpSession session) { 
+	    public String supprimerAgence(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -531,6 +557,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}	
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -539,13 +568,12 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("formulaireNumeroSupprimerAgence", "formulaireNumeroSupprimerAgence");
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");	
@@ -558,7 +586,7 @@ public class AgenceController {
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/resultatSupprimerAgence" }, method = RequestMethod.POST)
-	    public String resultatSuppressionAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session) {
+	    public String resultatSuppressionAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -567,6 +595,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -575,7 +606,7 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
@@ -585,9 +616,8 @@ public class AgenceController {
 			if( agenceRecherche == null) {				
 				 return "redirect:/messageAgenceNonExistante";  
 			}								
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agenceRecherche", agenceRecherche);			
 			model.addAttribute("dialog_boxAgence", "dialog_boxAgence");	
 			model.addAttribute("dialog_backgroundAgence", "dialog_backgroundAgence");	
@@ -604,7 +634,7 @@ public class AgenceController {
 	 
 	 @Transactional
 	 @RequestMapping(value = {"/succesSuppressionAgence" }, method = RequestMethod.POST)
-	    public String succesSuppressionAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session) {
+	    public String succesSuppressionAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -613,6 +643,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -621,20 +654,20 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
 			String codeAgenceSuppression=session.getAttribute("codeAgenceCache").toString().trim();
 			Agence agenceSuppression=agenceRepository.findAgenceByCodeDirect(codeAgenceSuppression);
-			agenceSuppression.setEstSupprimer(true);
+	
 			agenceRepository.save(agenceSuppression);
-			Boolean estSupprimer=false;				
+					
 			model.addAttribute("codeAgence", codeAgenceSuppression);
 			model.addAttribute("resultatSuppressionAgence", "resultatSuppressionAgence");	
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);	
+	
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgence", "listeAgence");
@@ -645,7 +678,7 @@ public class AgenceController {
 	
 	    @Transactional
 	 	@RequestMapping(value = {"/resultatModifDonneeAgence" }, method = RequestMethod.POST)
-	    public String resultatModifDonneeAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session) {
+	    public String resultatModifDonneeAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -654,6 +687,9 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
@@ -662,7 +698,7 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
@@ -671,11 +707,11 @@ public class AgenceController {
 			session.setAttribute("codeAgenceCache",codeDirect);						
 			model.addAttribute("dialog_boxAgence", "dialog_boxAgence");	
 			model.addAttribute("dialog_backgroundAgence", "dialog_backgroundAgence");				
-			Boolean estSupprimer=false;	
+		
 			model.addAttribute("codeAgence", codeDirect);	
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);	
+		
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);	
 			model.addAttribute("agences", agences);
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgence", "listeAgence");
@@ -686,7 +722,7 @@ public class AgenceController {
 	 
 	    @Transactional
 	 	@RequestMapping(value = {"/envoiDonneeCacheeAgence" }, method = RequestMethod.POST)
-	    public String envoiDonneeCacheeAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession sessionUtilisateur, HttpSession session) {
+	    public String envoiDonneeCacheeAgence(Model model, @ModelAttribute("agence") Agence agence, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 			String resultat=null;
 			try {
 				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -695,7 +731,10 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}	
-//			gestion Menu 
+			int page = 0;
+			int size = 100;			 
+			pageable = PageRequest.of(page, size);
+			//gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -703,16 +742,15 @@ public class AgenceController {
 			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
-
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminModifierAgence", "Modifier Agence >");
 			session.removeAttribute("codeAgenceCache");
 			String codeDirect=agence.getCodeDirect();
 			Agence agenceRecherche=agenceRepository.findAgenceByCodeDirect(codeDirect);
-			Boolean estSupprimer=false;
-			List<Agence> agences=new ArrayList<Agence>();
-			agences=agenceRepository.findAllAgences(estSupprimer);
+			
+			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);	
 			model.addAttribute("agences", agences);
 			session.setAttribute("codeAgenceCache", codeDirect);	
 			model.addAttribute("formulaireGestionModifAgence", "formulaireGestionModifAgence");
@@ -724,6 +762,38 @@ public class AgenceController {
 			model.addAttribute("menuNavigation", "menuNavigation");			
 	        return "espaceUtilisateur";	
 	    }
+	    
+	    @Transactional
+		@RequestMapping(value = "/listeAgences")
+	    public ModelAndView listeUtilisateursPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="100") int size,  @ModelAttribute("agence")  Agence agence, Model model, HttpSession session, HttpServletRequest request) {
+	        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
+	       
+	        PageRequest pageable = PageRequest.of(page-1, size);
+	        Page<Agence> agencePage = agenceRepository.findAllAgencePage(pageable);
+
+			model.addAttribute("agences", agencePage);
+					
+//			gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
+			model.addAttribute("cheminAccueil", "Accueil >");
+			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
+			model.addAttribute("cheminModifierAgence", "Modifier Agence >");
+			
+			model.addAttribute("identifiantSession", identifiantSession);
+			model.addAttribute("listeAgence", "listeAgence");
+			model.addAttribute("gestionAgence", "gestionAgence");
+			model.addAttribute("menuNavigation", "menuNavigation");		
+			
+			
+	        return modelAndView;
+		}	
 	 
 	 
 	

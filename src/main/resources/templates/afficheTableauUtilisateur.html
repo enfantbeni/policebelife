@@ -7,18 +7,49 @@
 <body>
 
      <div class="col-lg-12 listeUser"  th:fragment="afficheTableauUtilisateur">          
-            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur">
-                    <tr class="entete-tableau"> <th Style="padding-left:10px"> Identifiant </th> <th> Nom et prenom </th><th> Fonction </th><th> </th></tr>
-					<tr th:each ="utilisateur : ${utilisateurs}">  						
-  						<td width="100" th:utext="${utilisateur.identifiant}" Style="padding-left:10px" ></td>
+            <table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur" class="table-bordered">
+                    <tr class="entete-tableau"> <th Style="padding-left:10px"> No </th><th> Identifiant </th> <th> Nom et prenom </th><th> Fonction </th> <th> Status </th> <th> </th></tr>
+					<tr th:each ="utilisateur,u : ${utilisateurs}">  
+						<td width="100" th:utext="${utilisateurs.size*(utilisateurs.number)+u.index+1}" Style="padding-left:10px" ></td>					
+  						<td width="100" th:utext="${utilisateur.identifiant}" ></td>
   						<td width="100" th:utext="${utilisateur.nomEtPrenom}" ></td>				
   						<td width="100" th:utext="${utilisateur.fonction}"></td>
+  						<td width="100" th:utext="${utilisateur.status}"></td>
   						<td width="100" >
-  						   <input  class="btn btn-danger supprimer"  data-th-name="${utilisateur.identifiant}" onclick="supprimer(this);" type="button" value="Supprimer" >                
+  						   <input  class="btn btn-danger supprimer"  data-th-name="${utilisateur.identifiant}" onclick="supprimer(this);" type="button" value=" Desactiver" >                
   						   <button class="btn btn-primary" id="modifier" data-th-id="${utilisateur.identifiant}"  data-th-name="${utilisateur.identifiant}" onclick="modifier(this);"> Modifier</button>
   						</td>
 					</tr>					
 			</table>
+			
+			<nav class="page" aria-label="Pagination" th:if="${utilisateurs.totalPages gt 0}">	
+		    <ul class="pagination justify-content-center font-weight-bold">
+		    
+		        <li class="page-item" th:classappend="${utilisateurs.number eq 0} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/listeUtilisateurs?page={id}(id=${utilisateurs.number lt 2 ? 1 :utilisateurs.number})}"
+		               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+		                <span aria-hidden="true">&lt; Précédent </span>
+		            </a>
+		        </li>
+		        
+		        <li class="page-item" th:classappend="${i eq utilisateurs.number + 1} ? 'active'" th:each="i : ${#numbers.sequence( 1, utilisateurs.totalPages, 1)}">
+		            <a class="page-link" th:href="@{/listeUtilisateurs?page={id}(id=${i})}" th:text="${i}"
+		               th:title="${'Page '+ i}" data-toggle="tooltip">
+		            </a>
+		        </li>
+		        
+		        <li class="page-item" th:classappend="${utilisateurs.number+1  eq utilisateurs.totalPages} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/listeUtilisateurs?page={id}(id=${utilisateurs.number+1  eq utilisateurs.totalPages ?utilisateurs.number+1 :utilisateurs.number + 2})}"
+		               aria-label="Next" title="Next Page" data-toggle="tooltip">
+		                <span aria-hidden="true"> Suivant &gt;</span>
+		            </a>
+		        </li>
+		        
+		    </ul>
+		    
+		</nav>	
 			
 			
 			<div th:if="${dialog_box}">

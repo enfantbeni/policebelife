@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta  charset="utf-8">
+<title> Formulaire numero recherche Agence</title>
+</head>
+<body>
+	  <form th:action="@{/resultatRechercheAgenceBanque}" th:object="${AgenceBanque}" class="col-md-8 col-xs-12 formulaireGestionBanque" th:fragment="formulaireNumeroRechercheAgenceAgenceBanque" method="POST">
+             <div class="row labelAjout">
+                  <h2>Rechercher une Agence de Banque</h2>
+             </div>
+             
+             
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-6 erreur"  th:if="${formErreurBanque}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>   
+							   <li  th:if="${codeGuichetErreur}" th:utext="${codeGuichetErreur}"> </li>	                     
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-2"></div>
+             </div>
+             
+              
+             <div class="row ajoutDonnee">
+                 <div class="col-lg-4 col-xs-4 ft">
+                  	<label> Code Agence de Banque : </label>
+             	 </div>
+             	 
+             	 <div class="col-lg-6 col-xs-6">             	    
+             	    <input type="text" required name="codeGuichet" title="Code Guichet" class="form-control" maxlength="20" data-th-value="${codeGuichet}"/>					
+             	 </div>  
+             	          
+             </div>
+                      
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>

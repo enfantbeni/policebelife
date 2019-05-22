@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Liste LB </title>
+</head>
+<body>
+	<div class="col-lg-12 " th:fragment="listeLB">
+	 <h2> Consultation LB </h2>
+		<table width="100%" border="0" cellspacing="1" cellpadding="2" class="table-bordered">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> No </th><th> LBCOMP </th><th> LBPOLN </th><th> LBACNT </th> <th >LBNAME </th>
+                     <th>LBPREM </th><th> LBLOAN </th><th> LBSTPR </th><th>LBGRID </th> <th> LBCDPR </th> <th>LBPROC </th><th> LBAGNT </th><th> LBSBDT </th>
+                     <th> LBEFDT </th> <th> LBDTPL </th> <th>LBDMAJ </th><th> LBUSER </th>
+                    </tr>
+					<tr th:each ="lb, c : ${consultationPage}" >  															
+  						<td  width="100" th:utext="${consultationPage.size*(consultationPage.number)+c.index+1}" style="padding-left:10px" ></td>
+  						
+  						<td  width="100" th:utext="${lb.LBCOMP}" ></td>
+  						<td  width="100" th:utext="${lb.LBPOLN}" ></td>
+  						<td  width="100" th:utext="${lb.LBACNT}" ></td>
+  						<td  width="100" th:utext="${lb.LBNAME}" ></td>
+  						<td  width="100" th:utext="${lb.LBPREM}" ></td>
+  						<td  width="100" th:utext="${lb.LBLOAN}" ></td>
+  						<td  width="100" th:utext="${lb.LBSTPR}" ></td>
+  						
+  						<td  width="100" th:utext="${lb.LBGRID}" ></td>
+  						<td  width="100" th:utext="${lb.LBCDPR}" ></td>
+  						<td  width="100" th:utext="${lb.LBPROC}" ></td>
+  						<td  width="100" th:utext="${lb.LBAGNT}" ></td>
+  						
+  						<td  width="100" th:utext="${lb.LBSBDT}" ></td>
+						<td  width="100" th:utext="${lb.LBEFDT}" ></td>
+						
+  						<td  width="100" th:utext="${lb.LBDTPL}" ></td>
+  						<td  width="100" th:utext="${lb.LBDMAJ}" ></td>
+  						<td  width="100" th:utext="${lb.LBUSER}" ></td>
+  						
+					</tr>					            
+		 </table>
+	
+		<nav class="page" aria-label="Pagination" th:if="${consultationPage.totalPages gt 0}">
+		
+		    <ul class="pagination justify-content-center font-weight-bold">
+		    
+		        <li class="page-item" th:classappend="${consultationPage.number eq 0} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/consultationPage?page={id}(id=${consultationPage.number lt 2 ? 1 : consultationPage.number})}"
+		               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+		                <span aria-hidden="true">&lt; Précédent </span>
+		            </a>
+		        </li>
+		        
+		        <li class="page-item" th:classappend="${i eq consultationPage.number + 1} ? 'active'" th:each="i : ${#numbers.sequence( 1, consultationPage.totalPages, 1)}">
+		            <a class="page-link" th:href="@{/consultationPage?page={id}(id=${i})}" th:text="${i}"
+		               th:title="${'Page '+ i}" data-toggle="tooltip">
+		            </a>
+		        </li>
+		        
+		        <li class="page-item" th:classappend="${consultationPage.number+1  eq consultationPage.totalPages} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/consultationPage?page={id}(id=${consultationPage.number+1  eq consultationPage.totalPages ?consultationPage.number+1 :consultationPage.number + 2})}"
+		               aria-label="Next" title="Next Page" data-toggle="tooltip">
+		                <span aria-hidden="true"> Suivant &gt;</span>
+		            </a>
+		        </li>
+		        
+		    </ul>
+		    
+		</nav>
+		
+	</div>
+
+</body>
+</html>

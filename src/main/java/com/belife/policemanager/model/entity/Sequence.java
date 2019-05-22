@@ -27,10 +27,13 @@ public class Sequence implements Serializable{
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idSequence;
+	
 	@Column(name = "sequence")
 	private String  seq;
+	
 	@Column(name = "dateCreation")
 	private Date  dateCreation;
+	
 	@Column(name = "estSupprimer")
 	private Boolean estSupprimer;
 	
