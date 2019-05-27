@@ -124,7 +124,7 @@ public class AaronUtilisateurController {
 		int page = 0;
 		int size = 100;			 
 		pageable = PageRequest.of(page, size);
-//		gestion Menu 
+		//		gestion Menu 
 		model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 		model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 		model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -149,8 +149,7 @@ public class AaronUtilisateurController {
 		model.addAttribute("dialog_box", "dialog_box");
 		
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
-		
-		
+				
 		Page<AaronUtilisateur> utilisateursPage =aaronUtilisateurRepository.findAllUtilisateurPage(pageable);	
 		model.addAttribute("utilisateurs",utilisateursPage);
 		model.addAttribute("afficheTableau", "afficheTableau");	
@@ -676,7 +675,7 @@ public class AaronUtilisateurController {
 		}
 		
 		List<String> agences=new ArrayList<String>();
-		agences=agenceRepository.findAllNomDirects();
+		agences=aaronAgenceRepository.findAllNomDirects();
 		model.addAttribute("agences",agences);		
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
@@ -691,7 +690,7 @@ public class AaronUtilisateurController {
 		model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		model.addAttribute("utilisateurRecherche", utilisateurRecherche);
 		model.addAttribute("afficheTableau", "afficheTableau");
-		Boolean estSupprimer=false;
+	
 		model.addAttribute("utilisateurs", utilisateurs);
 		String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantSession);
@@ -927,7 +926,9 @@ public class AaronUtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("cheminAccueil", "Accueil >");
+		model.addAttribute("titre", "Gestion des utilisateurs");
+		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantAffiche);
 		model.addAttribute("ajout", "ajout");
@@ -1092,7 +1093,7 @@ public class AaronUtilisateurController {
 				model.addAttribute("utilisateurs", utilisateurs);
 				model.addAttribute("actionTroisBouton", "actionTroisBouton");
 				List<String> agences=new ArrayList<String>();
-				agences=agenceRepository.findAllNomDirects();
+				agences=aaronAgenceRepository.findAllNomDirects();
 				model.addAttribute("agences",agences);
 					
 					/////Recuperer l'Id de l'utilisateur Recherchee
@@ -1110,7 +1111,7 @@ public class AaronUtilisateurController {
 //							model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
 //							model.addAttribute("identifiantErreur", "Identifiant utilisateur déjà existant");
 							AaronAgence agence=aaronAgenceRepository.findAgenceByCodeDirect(nomAgence);	
-							model.addAttribute("succes", "succes"); 
+							model.addAttribute("succesModif", "succesModif"); 
 							utilisateurSave.setIdAgence(agence);
 							utilisateurSave.setFonction(fonction);
 							utilisateurSave.setIdentifiant(identifiant);
@@ -1135,7 +1136,6 @@ public class AaronUtilisateurController {
 		model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
 		model.addAttribute("utilisateurRecherche", utilisateurRecherche);
 			
-		model.addAttribute("ajout", "ajout");
 		model.addAttribute("afficheTableau", "afficheTableau");
 		model.addAttribute("utilisateurs", utilisateurs);
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");

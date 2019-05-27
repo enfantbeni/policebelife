@@ -875,6 +875,7 @@ public class UtilisateurController {
 		model.addAttribute("afficheTableau", "afficheTableau");
 		if( utilisateurRecherche == null) {
 			 String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+			 session.setAttribute("identifiantCache", identifiant);
 			 model.addAttribute("identifiantSession", identifiantSession);
 			 return "redirect:/messageUtilisateurNonExistant";  
 		}
@@ -1013,6 +1014,8 @@ public class UtilisateurController {
 		if(identifiantSession.length()>0) {
 			String identifiantSession=session.getAttribute("identifiantSession").toString().trim();
 			model.addAttribute("identifiantSession", identifiantSession);
+			model.addAttribute("messageUtilisateurNonRetrouver", "messageUtilisateurNonRetrouver");
+			
 			return "espaceUtilisateur";
 		}
 		else {
@@ -1285,8 +1288,6 @@ public class UtilisateurController {
 		String identifiantSession=session.getAttribute("identifiantCache").toString();
 		identifiantSession=identifiantSession.trim();
 		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
-		Boolean estSupprimer=false;
-		
 		
 		if( identifiant != null && identifiant.length() > 0 && identifiant.length()<=40 && fonction != null && fonction.length() > 0 && nomEtPrenom != null && nomEtPrenom.length() > 0 && nomEtPrenom.length()<=40 ) {
 			     
@@ -1307,19 +1308,20 @@ public class UtilisateurController {
 					/////Recuperer l'Id de l'utilisateur Recherchee
 					Integer idUtilisateurRecherche=utilisateurRepository.findIdUtilisateur(identifiantSession);
 					Integer idUtilisateurModif=utilisateurRepository.findIdUtilisateur(identifiant);
+					
 					Utilisateur utilisateurParNomPrenom=utilisateurRepository.findUtilisateurByNomPrenomModif(nomEtPrenom, utilisateurId);
+					
 					Utilisateur utilisateurParIdentifiant=utilisateurRepository.findUtilisateurByIdentifiantModif(identifiant, utilisateurId);
 					
 					///////
-					if(utilisateurParNomPrenom==null && utilisateurParIdentifiant==null ) {
+					if( utilisateurParIdentifiant==null ) {
 						
-							model.addAttribute("formErreur", "formErreur");
+					
 							Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiantSession);
 							model.addAttribute("utilisateurRecherche", utilisateurRecherche);
-							model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
 							model.addAttribute("identifiantErreur", "Identifiant utilisateur déjà existant");
 							Agence agence=agenceRepository.findAgenceByCodeDirect(nomAgence);	
-							model.addAttribute("succes", "succes"); 
+							model.addAttribute("succesModification", "succesModification"); 
 							utilisateurSave.setIdAgence(agence);
 							utilisateurSave.setFonction(fonction);
 							utilisateurSave.setIdentifiant(identifiant);
@@ -1328,10 +1330,10 @@ public class UtilisateurController {
 							return "espaceUtilisateur";
 					
 					}
-					if(utilisateurParNomPrenom!=null ) {
-						model.addAttribute("nomEtPrenomErreur", "Nom et prenom déjà existant");
-					}
-					
+//					if(utilisateurParNomPrenom!=null ) {
+//						model.addAttribute("nomEtPrenomErreur", "Nom et prenom déjà existant");
+//					}
+					model.addAttribute("formErreur", "formErreur");
 					if(utilisateurParIdentifiant!=null ) {
 						model.addAttribute("identifiantErreur", "Identifiant déjà existant");
 					}

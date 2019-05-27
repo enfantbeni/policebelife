@@ -205,7 +205,6 @@ public class BanquePrincipaleController {
 //				System.out.println("Ok");
 //			}
 			
-			System.out.println(" Code Banque : "+codeAgenceBanque);
 			
 			List<String> codeAgenceBanqueSansDoublon=new ArrayList<String>();
 			Integer nombreTrouver=0;
@@ -533,64 +532,7 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}
-//			gestion Menu 
-			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
-			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
-			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
-			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
-			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
-			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
-			model.addAttribute("accueilDeux", "accueilDeux");
-			model.addAttribute("actionTroisBouton", "actionTroisBouton");
-			model.addAttribute("identifiantSession", identifiantSession);
-			model.addAttribute("listeBanquePrincipale", "listeBanquePrincipale");
-			model.addAttribute("gestionBanquePrincipale", "gestionBanquePrincipale");
-			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-			model.addAttribute("gestionConnexion", "gestionConnexion");
-			String codeBanque=banque.getCodeBanque().trim();
-			Banque banqueRecherche=banqueRepository.findBanquePrincipaleByCodeBanque(codeBanque);			
-			model.addAttribute("cheminAccueil", "Accueil >");
-			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
-			model.addAttribute("cheminModifierBanque", "Modifier Banque >");
-			model.addAttribute("titre", "Gestion des Banques");
-			session.setAttribute("codeBanqueCache", codeBanque);	
-			if( banqueRecherche == null) {
-				 model.addAttribute("formErreurBanquePrincipale", "formErreur");
-				 model.addAttribute("formulaireNumeroModifBanquePrincipale", "formulaireNumeroModifBanquePrincipale");
-				 model.addAttribute("codeBanquePrincipaleErreur"," La Banque de code "+ codeBanque +" introuvable dans le système ." );	
-				 model.addAttribute("codeBanque", codeBanque);
-				 Page<Banque> banquesPage =banqueRepository.findAllBanquePage(pageable);
-				 model.addAttribute("banquePrincipales", banquesPage);
-				 return "espaceUtilisateur";  
-			}	
-
-			int page = 0;
-			int size = 50;			 
-			pageable = PageRequest.of(page, size);
-			Page<Banque> banquesPage =banqueRepository.findAllBanquePage(pageable);
-			model.addAttribute("banquePrincipales", banquesPage);
-			session.setAttribute("codeBanqueCache", codeBanque);	
-			model.addAttribute("formulaireGestionModifBanquePrincipale", "formulaireGestionModifBanquePrincipale");		
-			model.addAttribute("nomBanqueRecherche", banqueRecherche.getNomBanque());	
-			model.addAttribute("codeBanqueRecherche", banqueRecherche.getCodeBanque());	
-			model.addAttribute("menuNavigation", "menuNavigation");			
-	        return "espaceUtilisateur";	
-	    }
-
-	 	
-	 	/// Resultat de la modification des données d'un formulaire
-	 	@Transactional
-		@RequestMapping(value = {"/resultatModifBanquePrincipale" }, method = RequestMethod.POST)
-	    public String resultatModifBanquePrincipale(Model model, @ModelAttribute("banque") Banque banque, HttpSession session,@PageableDefault(size = 50) Pageable pageable, HttpServletRequest request) {
-			String resultat=null;
-			try {
-				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-			}
-			catch(Exception e) {
-				resultat="pageErreur";
-				return resultat;
-			}
-			List <String> codeBanqueExistant=banqueRepository.findAllCodeBanque();
+List <String> codeBanqueExistant=banqueRepository.findAllCodeBanque();
 			
 			List<String> codeAgenceBanque=agenceRepositoryRepository.findAllDistinctCodeAgenceBanque();
 			
@@ -648,11 +590,70 @@ public class BanquePrincipaleController {
 			if(codeBanqueExistant.isEmpty()) {
 				model.addAttribute("codeBanques",codeAgenceBanqueSansDoublon);
 			}
+					
+			//gestion Menu 
+			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+			model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+			model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
+			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+			model.addAttribute("accueilDeux", "accueilDeux");
+			model.addAttribute("actionTroisBouton", "actionTroisBouton");
+			model.addAttribute("identifiantSession", identifiantSession);
+			model.addAttribute("listeBanquePrincipale", "listeBanquePrincipale");
+			model.addAttribute("gestionBanquePrincipale", "gestionBanquePrincipale");
+			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
+			model.addAttribute("gestionConnexion", "gestionConnexion");
+			String codeBanque=banque.getCodeBanque().trim();
+			Banque banqueRecherche=banqueRepository.findBanquePrincipaleByCodeBanque(codeBanque);			
+			model.addAttribute("cheminAccueil", "Accueil >");
+			model.addAttribute("cheminGestionBanque", "Gestion Banque >");
+			model.addAttribute("cheminModifierBanque", "Modifier Banque >");
+			model.addAttribute("titre", "Gestion des Banques");
+			session.setAttribute("codeBanqueCache", codeBanque);	
+			if( banqueRecherche == null) {
+				 model.addAttribute("formErreurBanquePrincipale", "formErreur");
+				 model.addAttribute("formulaireNumeroModifBanquePrincipale", "formulaireNumeroModifBanquePrincipale");
+				 model.addAttribute("codeBanquePrincipaleErreur"," La Banque de code "+ codeBanque +" introuvable dans le système ." );	
+				 model.addAttribute("codeBanque", codeBanque);
+				 Page<Banque> banquesPage =banqueRepository.findAllBanquePage(pageable);
+				 model.addAttribute("banquePrincipales", banquesPage);
+				 return "espaceUtilisateur";  
+			}	
+
 			int page = 0;
 			int size = 50;			 
 			pageable = PageRequest.of(page, size);
 			Page<Banque> banquesPage =banqueRepository.findAllBanquePage(pageable);
-//			gestion Menu 
+			model.addAttribute("banquePrincipales", banquesPage);
+			session.setAttribute("codeBanqueCache", codeBanque);	
+			model.addAttribute("formulaireGestionModifBanquePrincipale", "formulaireGestionModifBanquePrincipale");		
+			model.addAttribute("nomBanqueRecherche", banqueRecherche.getNomBanque());	
+			model.addAttribute("codeBanqueRecherche", banqueRecherche.getCodeBanque());	
+			model.addAttribute("menuNavigation", "menuNavigation");			
+	        return "espaceUtilisateur";	
+	    }
+
+	 	
+	 	/// Resultat de la modification des données d'un formulaire
+	 	@Transactional
+		@RequestMapping(value = {"/resultatModifBanquePrincipale" }, method = RequestMethod.POST)
+	    public String resultatModifBanquePrincipale(Model model, @ModelAttribute("banque") Banque banque, HttpSession session,@PageableDefault(size = 50) Pageable pageable, HttpServletRequest request) {
+			String resultat=null;
+			try {
+				identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+			}
+			catch(Exception e) {
+				resultat="pageErreur";
+				return resultat;
+			}
+			
+			int page = 0;
+			int size = 50;			 
+			pageable = PageRequest.of(page, size);
+			Page<Banque> banquesPage =banqueRepository.findAllBanquePage(pageable);
+			//	gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -722,7 +723,7 @@ public class BanquePrincipaleController {
 	    }
 	 
 	 
-////	  Action Recherche Banque
+	 	//// Action Recherche Banque
 	 @Transactional
 	 @RequestMapping(value = {"/rechercheBanquePrincipale" }, method = RequestMethod.GET)
 	    public String rechercherBanquePrincipale(Model model, HttpSession session,@PageableDefault(size = 50) Pageable pageable, HttpServletRequest request) { 
@@ -735,7 +736,7 @@ public class BanquePrincipaleController {
 				return resultat;
 			}
 	
-//			gestion Menu 
+			//	gestion Menu 
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");

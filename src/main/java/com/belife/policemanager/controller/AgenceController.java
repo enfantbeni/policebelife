@@ -474,9 +474,6 @@ public class AgenceController {
 				resultat="pageErreur";
 				return resultat;
 			}
-			int page = 0;
-			int size = 100;			 
-			pageable = PageRequest.of(page, size);
 //			gestion Menu 
 			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
@@ -499,7 +496,6 @@ public class AgenceController {
 			model.addAttribute("cheminRechercherAgence", "Rechercher une Agence >");
 			model.addAttribute("titre", "Gestion des Agences de BELIFE ");
 		
-			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agenceRecherche", agenceRecherche);			
 			model.addAttribute("resultatRechercheAgence", "resultatRechercheAgence");	
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");	

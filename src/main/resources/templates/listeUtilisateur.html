@@ -67,6 +67,12 @@
 		       			     Utilisateur supprimé avec succès
  		       			</div>
 		    	   </div>
+		    	   
+		    	   <div  th:if="${succesModification}">
+		       			<div  >
+		       			     Données utilisateur modifiées avec succès.
+ 		       			</div>
+		    	   </div>
 		    	     
 		    	   <div  th:if="${succes}">
 		       			<div  th:replace="succesAjoutUtilisateur :: succesAjoutUtilisateur" ></div>
