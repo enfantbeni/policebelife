@@ -74,7 +74,7 @@ public class AgenceBanqueController  {
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionGuichet", " Agence de Banque >");
 			model.addAttribute("titre", " Agence de Banque");	
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			Page<AgenceBanque> agenceBanquesPage =agenceBanqueRepository.findAllAgenceBanquesPage(pageable);
 			model.addAttribute("agenceBanques", agenceBanquesPage);
 			model.addAttribute("listeBanque", "listeBanque");
@@ -107,7 +107,7 @@ public class AgenceBanqueController  {
 			model.addAttribute("listeBanque", "listeBanque");
 			model.addAttribute("gestionBanque", "gestionBanque");
 			model.addAttribute("menuNavigation", "menuNavigation");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 	        return modelAndView;
 		}
 		
@@ -141,6 +141,7 @@ public class AgenceBanqueController  {
 				model.addAttribute("cheminAccueil", "Accueil >");
 				model.addAttribute("cheminGestionGuichet", " Agence de Banque >");
 				model.addAttribute("titre", " Agence de Banque");	
+				model.addAttribute("gestionConnexion", "gestionConnexion");
 				Page<AgenceBanque> agenceBanquesPage =agenceBanqueRepository.findAllAgenceBanquesPage(pageable);
 				model.addAttribute("agenceBanques", agenceBanquesPage);
 				model.addAttribute("gestionBanque", "gestionBanque");
@@ -168,7 +169,7 @@ public class AgenceBanqueController  {
 				model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 				model.addAttribute("accueilDeux", "accueilDeux");
 				model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-
+				model.addAttribute("gestionConnexion", "gestionConnexion");
 				String codeGuichet=agenceBanque.getCodeGuichet().trim();
 				
 				session.setAttribute("codeAgenceBanqueCache", codeGuichet);
@@ -212,7 +213,7 @@ public class AgenceBanqueController  {
 				model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 				model.addAttribute("accueilDeux", "accueilDeux");
 				model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-				
+				model.addAttribute("gestionConnexion", "gestionConnexion");
 				model.addAttribute("cheminAccueil", "Accueil >");
 				model.addAttribute("cheminGestionAgence", " Agence Banque >");
 				model.addAttribute("titre", " Agence de Banque ");

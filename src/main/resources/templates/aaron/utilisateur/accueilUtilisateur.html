@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+     <title>Accueil utilisateur</title>
+     <link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+	 <script src="webjars/bootstrap/3.3.6/js/modal.js"></script>
+	 <script src="webjars/bootstrap/3.3.6/js/dropdown.js"></script>
+	 <script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+	 <link rel="stylesheet" type="text/css" href="css/styleCommun.css"/>
+	<link rel="stylesheet" type="text/css" href="css/espaceUtilisateurStyle.css"/>
+	<link rel="stylesheet" type="text/css" href="css/navigationOutils.css"/>
+	<script src="/webjars/angularjs/1.4.9/angular.js"></script>
+	<script src="/webjars/angularjs/1.4.9/angular-resource.js"></script>
+	<script src="/webjars/angularjs/1.4.9/angular-route.js"></script>
+	<script src="js/app.js"></script>
+    <script src="js/controller.js"></script> 
+</head>
+<body>
+  
+  <div class="container">
+
+    <div th:replace="aaron/header :: header"></div>		
+	        
+	<div class="row" id="contenuMain">
+	           		
+		  <section class="col-lg-12 ">
+		  	<div class="row">  <div th:replace="aaron/utilisateur/sidebarUtilisateur :: sidebarUtilisateur"></div>  </div>	
+		    <div class="row">  
+		    	<div class="col-lg-2">
+		    	
+		    	
+		    	    <br> <br> <br> <br><br><br>
+		    		 <nav class="navigation">
+					  <ul class="mainmenu">
+					    <li class="outilsWeight" ><a href="#" >Outils</a></li>
+					    <li><a href="aaronSoumission" title="Soumission">Soumission</a></li>
+<!-- 					    <li><a href="gestionConsultationLB" title="Consultation LB"> Consultation LB</a></li> -->
+<!-- 					    <li><a href="">Products</a> -->
+<!-- 					      <ul class="submenu"> -->
+<!-- 					        <li><a href="">Tops</a></li> -->
+<!-- 					        <li><a href="">Bottoms</a></li> -->
+<!-- 					        <li><a href="">Footwear</a></li> -->
+<!-- 					      </ul> -->
+<!-- 					    </li> -->
+<!-- 					    <li><a href="#" title="Consultation Alpha Inquery">Consultation Alpha Inquery</a></li> -->
+<!-- 					    <li><a href="#" title="Export Excel">Export Excel</a></li> -->
+					  </ul>
+					</nav> 
+					
+		    	 </div>
+		    	<div class="col-lg-10" >
+		    			<div th:replace="aaron/utilisateur/chemin :: chemin"></div> 				      
+				      <div th:replace="aaron/utilisateur/titre :: titre"></div>
+		    			<div th:if="${choisirSourcePrelevement}" >				      
+				        <div th:replace="aaron/soumission/choisirSourcePrelevement :: choisirSourcePrelevement"></div>  
+				      </div>
+				      
+				      <div th:if="${choisirGuichetBanque}" >				      
+				        <div th:replace="aaron/soumission/choisirGuichetBanque :: choisirGuichetBanque"></div>  
+				      </div>
+				      
+				      <div th:if="${accueilUtilisateurMessage}"  >				      
+				        <div th:replace="aaron/utilisateur/accueilUtilisateurMessage :: accueilUtilisateurMessage"></div>  
+				      </div>
+				      
+				      <div th:if="${soumissionProposition}" >				      
+				        <div th:replace="aaron/soumission/soumissionProposition :: soumissionProposition"></div>  
+				      </div>
+				      <div th:if="${soumissionPropositionFormModif}" >				      
+				        <div th:replace="aaron/soumission/soumissionPropositionFormModif :: soumissionPropositionFormModif"></div>  
+				      </div>
+				      
+				      <div th:if="${confirmationDonneeSoumission}" >				      
+				        <div th:replace="aaron/soumission/confirmationDonneeSoumission :: confirmationDonneeSoumission"></div>  
+				      </div>
+				      
+				      <div th:if="${resultatAjoutProposition}" >				      
+				        <div th:replace="aaron/soumission/resultatAjoutProposition :: resultatAjoutProposition"></div>  
+				      </div>
+				      <div th:if="${resultatAjoutPropositionModif}" >				      
+				        <div th:replace="aaron/soumission/resultatAjoutPropositionModif :: resultatAjoutPropositionModif"></div>  
+				      </div>
+				      
+				      <div th:if="${resultatAjoutPropositionErreur}" >				      
+				        <div th:replace="aaron/soumission/resultatAjoutPropositionErreur :: resultatAjoutPropositionErreur"></div>  
+				      </div>
+				      
+				      <div th:if="${voirDonneeSoumission}" >				      
+				        <div th:replace="aaron/soumission/voirDonneeSoumission :: voirDonneeSoumission"></div> 
+		    	      </div>
+		    	      <div th:if="${MessageSequenceNonPositionne}" >				      
+				        <div th:replace="aaron/soumission/messageSequenceNonPositionne :: messageSequenceNonPositionne"></div>  
+				      </div>
+				      
+				      <div th:if="${MessageSequenceEpuise}" >				      
+				        <div th:replace="aaron/soumission/messageSequenceEpuise ::messageSequenceEpuise"></div>  
+				      </div>
+				      
+				      <div th:if="${gestionEditionCompte}" >				      
+				        <div th:replace="editionCompte/gestionEditionCompte :: gestionEditionCompte"></div>  
+				      </div>
+				       <div th:if="${gestionLB}" >				      
+				        <div th:replace="lb/gestionLB :: gestionLB"></div>  
+				      </div>
+				   
+		    	
+		    	</div>
+		       
+		    
+		    </div>
+		    <div class="row">
+		    		  <div th:if="${listeSoumission}" >				      
+				        <div th:replace="aaron/soumission/listeSoumission :: listeSoumission"></div>  
+				      </div>
+				      
+				      <div th:if="${listeSoumissionDeux}" >				      
+				        <div th:replace="aaron/soumission/listeSoumissionDeux :: listeSoumissionDeux"></div>  
+				      </div>
+				      
+				      <div th:if="${listeAgentsDansAgence}" >				      
+				        <div th:replace="aaron/utilisateur/listeAgentsDansAgence :: listeAgentsDansAgence"></div>  
+				      </div>
+				      
+		    
+		    </div>       
+		  	        
+		  </section> 
+		  		  
+	 </div>
+	 
+	
+	 <div th:replace="aaron/footer :: footer"></div>
+	
+</div>
+
+  <script src="webjars/bootstrap/3.3.6/js/modal.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular-resource.js"></script>
+  <script src="/webjars/angularjs/1.4.9/angular-route.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/controller.js"></script> 
+  <script src="webjars/bootstrap/3.3.6/js/dropdown.js"></script>
+  <script src="pmControle.js"></script> 
+ 
+   
+
+</body>
+	<head>
+	 <link rel="stylesheet" type="text/css" href="css/espaceUtilisateurStyle.css"/>
+	</head>
+		
+</html>

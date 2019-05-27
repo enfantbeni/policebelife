@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Formulaire confirmation données soumission</title>
+</head>
+<body>
+
+		<div class="row" th:fragment="confirmationDonneeSoumission">
+		
+			<div class="col-lg-12" >
+        	      <div class="row ">
+        	      	   <div class="col-lg-12 sourceForm"> 
+        	      	   		
+        	      	   		<div class="row">
+					         	<div class="col-lg-2">  </div>
+			          			
+						          <div th:if="${MessageSequenceNonPositionne}">
+								         <div  class="col-lg-8 erreurPolice"  > <h4 style="text-align:center;"> Aucune sequence de police positionnée pour cette Agence </h4></div>  
+								  </div>
+								  <div class="col-lg-2"></div>		         	
+		   					</div>
+        	      	   
+        	      	   		 <div class="row">
+        	      	   		 	 <div class="col-lg-2"></div>
+        	      	   		     <div class="col-lg-10 "> <h3>Vérifier les informations saisies</h3>  </div>   	      	  		      
+        	      	   		 </div>
+        	      	   		 
+        	      	   		 
+        	      	    </div>
+        	      	   <div class="col-lg-12 sourceForm"> 
+        	      	     
+        	      	   		<form  th:action="@{/aaronResultatAjoutProposition}"  th:object="${Client}"  method="POST" > 
+						  		<div class="row ajoutDonneeUtilisateur">
+						  			<div class="col-lg-6">
+						  				
+						  			   <div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Numero de Police : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">              	
+												      	<input type="text" readonly name="numeroPolice" data-th-value="${numeroPolice}" class="form-control"  />                	
+							             	
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  				<input type="hidden" name="testEnvoye" data-th-value="${testEnvoye}"  />   
+						  									
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Produit : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							              		
+							                  <input type="text" readonly name="produit" data-th-value="${planDuree}" class="form-control"   />   
+							                               							                  	
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<input type="hidden" name="banque" data-th-value="${banque}" />
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission ">
+							                  <label> Genre Assuré : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							             	 
+							             	 	<input type="text" readonly name="genreAssure" data-th-value="${genreAssure}" class="form-control" />                	
+							             							             	 
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Nom Assuré : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" readonly name="nomAssure" data-th-value="${nomAssure}" class="form-control"  />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Nom Client  : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" readonly name="nomClient" data-th-value="${nomClient}" class="form-control" />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	
+						  			   	<div class="row"  th:if="${testIndividuel}" >
+						  			   		
+						  			   	
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission" >
+							                  <label > Numero Compte :  </label> 
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" required name="numeroCompte" readonly data-th-value="${numero}" class="form-control"  />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div th:if="${testIndividuel}" >
+							  			   	<div class="row">
+							  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+								                  <label> Code Guichet : </label>
+								             	 </div>
+								             	 <div class="col-md-8 col-xs-8 inputSoumission">
+								                  	<input type="text" name="codeSource" readonly  class="form-control"  data-th-value="${codeBanque}"  />
+								             	 </div>     
+							  			   	</div>
+						  			   	</div>
+						  			   	
+						  			   	<div th:if="${testGroupe}" >
+							  			   	<div class="row">
+							  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+								                  <label> Code société : </label>
+								             	 </div>
+								             	 <div class="col-md-8 col-xs-8 inputSoumission">
+								                  	<input type="text" name="codeSource" readonly  class="form-control"  data-th-value="${codeBanque}"   />
+								             	 </div>     
+							  			   	</div>
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Source de :<br><br> prélèvement </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="nomSource"   class="form-control"  data-th-value="${banque}"  readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Périodicité : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							             	 	<input type="text" name="periodicite"   class="form-control"  data-th-value="${periodicite}"  readonly />
+							             							             	 	
+							         
+							             	 </div>     
+						  			   	</div>
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Couverture : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input  type="text" name="couverture"  data-th-value="${couverture}" class="form-control"  readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Prime : </label>    
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input  type="text" name="prime" data-th-value="${prime}"  class="form-control"   readonly />
+							             	 </div>     
+						  			   	</div>	
+						  			   	
+						  			   	<div class="row" th:if="${testIndividuel}" >
+						  			  	    <div class="col-md-4 col-xs-4 labelSoumission"  >
+							                  <label> Matricule du client : </label>    
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input  type="text" name="matriculeClient" data-th-value="${matriculeClient}"  class="form-control"   readonly />
+							             	 </div>     
+						  			   	</div>	
+						  			   	
+						  			   	<div class="row" th:if="${testGroupe}">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission"  >
+							                    <label>Date de réalisation du : <br><br> contrat par l'agent </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="dateRealisation" data-th-value="${dateRealisation}" class="form-control" readonly  />
+							             	 </div>     
+						  			   	</div>					  			   	
+						  			   		  			  				  			   				  			
+						  			</div>	
+						  			
+						  								  		
+						  		    <div class="col-lg-6">
+						  		    
+						  		    	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Date de prélèvement : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="datePrelevement" data-th-value="${datePrelevement}" class="form-control" readonly  />
+							             	 </div>     
+						  			   	</div>
+						  		    	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Date de soumission : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text"  name="dateSoumission" data-th-value="${dateSoumission}" class="form-control"  readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Date de naissance : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="dateNaissance" data-th-value="${dateNaissance}"  class="form-control" readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Profession : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="profession" data-th-value="${profession}" class="form-control" readonly/>
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Employeur : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="employeur" data-th-value="${employeur}"  class="form-control"  readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Ville : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="ville"  class="form-control" data-th-value="${ville}" readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Adresse postale : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="adressePostale" data-th-value="${adressPostal}" class="form-control"  readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Telephone 1 : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="telephone1" data-th-value="${telephone1}" class="form-control" readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Telephone 2 : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="tel" name="telephone2" data-th-value="${telephone2}" class="form-control"  readonly />
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Code Agent : </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							             	 	<input type="tel" name="codeAgent" data-th-value="${codeAgent}" class="form-control"  readonly />
+							             			                  	
+							             	 	
+							             	 </div>     
+						  			   	</div>
+						  			   	
+						  			   	<div class="row">
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission">
+							                  <label> Nom commercial : <br><br> en pré-contrat </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="nomComPreContrat" data-th-value="${nomComPreContrat}" class="form-control" readonly  />
+							             	 </div>     
+						  			   	</div>	
+						  			   	
+						  			   	<div class="row"  th:if="${testIndividuel}" >
+						  			  	 	<div class="col-md-4 col-xs-4 labelSoumission" >
+							                    <label>Date de réalisation du : <br><br> contrat par l'agent </label>
+							             	 </div>
+							             	 <div class="col-md-8 col-xs-8 inputSoumission">
+							                  	<input type="text" name="dateRealisation" data-th-value="${dateRealisation}" class="form-control" readonly  />
+							             	 </div>     
+						  			   	</div>	
+						  		    		  		    	
+						  		    </div>
+						  		    
+						  		    
+						  		</div>  
+						  		<div class="row">
+						  					<div class="col-lg-6 validerSoumission"> </div>
+						  		 			<div class="col-lg-2 "><input type="submit" value=" Confirmer "  class="btn btn-primary pullright envoi" /> </div>			  		 
+						  					<div class="col-lg-4 validerSoumission"> </div>
+						  				</div>	
+			 				 </form>
+        	      	   
+        	      	   </div>
+			</div>
+			</div>
+			
+			
+			
+		</div>
+
+</body>
+</html>

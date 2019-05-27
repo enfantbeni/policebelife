@@ -1,6 +1,9 @@
 package com.belife.policemanager.controller;
 
-
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,42 +25,49 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.belife.policemanager.model.aaronentity.AaronUtilisateur;
+import com.belife.policemanager.model.aaronrepository.AaronUtilisateurRepository;
 import com.belife.policemanager.model.dto.UtilisateurDto;
 import com.belife.policemanager.model.entity.Agence;
-import com.belife.policemanager.model.entity.AgenceBanque;
+import com.belife.policemanager.model.entity.Connexion;
 import com.belife.policemanager.model.entity.Roles;
-import com.belife.policemanager.model.entity.Societe;
 import com.belife.policemanager.model.entity.SourcePolice;
 import com.belife.policemanager.model.entity.Utilisateur;
 import com.belife.policemanager.model.repository.AgenceRepository;
 import com.belife.policemanager.model.repository.AgentRepository;
+import com.belife.policemanager.model.repository.ConnexionRepository;
 import com.belife.policemanager.model.repository.RolesRepository;
 import com.belife.policemanager.model.repository.SocieteRepository;
 import com.belife.policemanager.model.repository.SourcePoliceRepository;
 import com.belife.policemanager.model.repository.UtilisateurRepository;
 
-
-
 @Controller
 public class UtilisateurController {
+
+	@Autowired
+    UtilisateurRepository utilisateurRepository; 
 	
-	 @Autowired
-     UtilisateurRepository utilisateurRepository; 
+	@Autowired
+    AaronUtilisateurRepository aaronUtilisateurRepository; 
 	 
 	 @Autowired
-     RolesRepository rolesRepository;
+    RolesRepository rolesRepository;
 	 
 	 @Autowired
-     SourcePoliceRepository sourcePoliceRepository;
+    SourcePoliceRepository sourcePoliceRepository;
 	 
 	 @Autowired
-     AgenceRepository agenceRepository;
+    AgenceRepository agenceRepository;
 	 
 	 @Autowired
-     AgentRepository agentRepository;
+    AgentRepository agentRepository;
 	 
 	 @Autowired
-     SocieteRepository societeRepository;
+    SocieteRepository societeRepository;
+	 
+	 @Autowired
+	 ConnexionRepository connexionRepository;
+		 
 	 
 	 private String fonctioInformaticien="Informaticien";
 	 private String fonctionMedecin="Medecin";
@@ -68,6 +78,16 @@ public class UtilisateurController {
 	 private String fonctionChefSousAgence="Chef sous agence";
 	 private String fonctionEmploye="Employé";
 	 private String fonctionAdministrateur="Administrateur";
+	 
+	 private String aaronInformaticien="aaron-Informaticien";
+	 private String aaronMedecin="aaron-Medecin";
+	 private String aaronSecretaire="aaron-Secretaire";
+	 private String aaronCommercial="aaron-Commercial";
+	 private String aaronUniteTechnique="aaron-Technicien";
+	 private String aaronChefAgence="aaron-Chef agence";
+	 private String aaronChefSousAgence="aaron-Chef sous agence";
+	 private String aaronEmploye="aaron-Employé";
+	 private String aaronAdministrateur="aaron-Administrateur";
 	 
 	 Roles r1=new Roles(" Gestion utilisateurs ","500",false);
 	 Roles r2=new Roles(" Gestion modules ","501",false);
@@ -82,31 +102,43 @@ public class UtilisateurController {
 	 
 	 @Transactional
 	@RequestMapping(value = {"/" }, method = RequestMethod.GET)
-    public String index(Model model) {    
-        return "redirect:/authentification";
-    }
+   public String index(Model model) {    
+       return "redirect:/authentification";
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/deconnexion" }, method = RequestMethod.GET)
-    public String deconnexion(Model model, HttpSession session) { 
+   public String deconnexion(Model model, HttpSession session) { 
+		String resultat=null;
+		try {
+			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+		}
+		catch(Exception e) {
+			resultat="pageErreur";
+			return resultat;
+		}
+		Utilisateur utili=utilisateurRepository.findByIdentifiant(identifiantSession);
+		Boolean connecter=false;
+	
 	    session.removeAttribute("identifiantSession");
 	    session.removeAttribute("identifiantCache");
 	    session.removeAttribute("codeGuichetCache");
 	    session.removeAttribute("codeSocieteCache");
 	    session.removeAttribute("codeAgenceCache"); 
 	    session.removeAttribute("nomSourceCache");
-        return "redirect:/authentification";
-    }
+//	    utilisateur.setConnecter(false);
+       return "redirect:/authentification";
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/authentification" }, method = RequestMethod.GET)
-    public String authentification(Model model) {    
-        return "authentification";
-    }
+   public String authentification(Model model) {    
+       return "authentification";
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/resultatModifDonnee" }, method = RequestMethod.POST)
-    public String resultatModifDonnee(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
+   public String resultatModifDonnee(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -151,13 +183,13 @@ public class UtilisateurController {
 		model.addAttribute("afficheTableau", "afficheTableau");	
 		utilisateurRenvoi=utilisateurRepository.findByIdentifiant(identifiant);	
 		model.addAttribute("utilisateurRenvoi", utilisateurRenvoi);	
-        return "espaceUtilisateur";
+       return "espaceUtilisateur";
 		
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/envoiDonneeCachee" }, method = RequestMethod.POST)
-    public String envoiDonneeCachee(Model model,  @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 		
+   public String envoiDonneeCachee(Model model,  @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 		
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -169,12 +201,12 @@ public class UtilisateurController {
 		String identifiant=utilisateur.getIdentifiant().trim();	
 		utilisateur=utilisateurRepository.findByIdentifiant(identifiant);
 		session.setAttribute("identifiantCache",identifiant);
-        return "redirect:/formModifDonneeUtilV2";
-    }
+       return "redirect:/formModifDonneeUtilV2";
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/envoiDonneeCacheeModif" }, method = RequestMethod.POST)
-    public String envoiDonneeCacheeModif(Model model,  @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 		
+   public String envoiDonneeCacheeModif(Model model,  @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 		
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -187,14 +219,14 @@ public class UtilisateurController {
 		utilisateur=utilisateurRepository.findByIdentifiant(identifiant);
 		session.setAttribute("identifiantCache",identifiant);
 		model.addAttribute("utilisateur", utilisateur);	
-        return "espaceUtilisateur";
-    }
+       return "espaceUtilisateur";
+   }
 	
 
 	
 	@Transactional
 	@RequestMapping(value = {"/sourcePolice" }, method = RequestMethod.GET)
-    public String sourcePrelevement(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
+   public String sourcePrelevement(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -214,7 +246,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		Boolean estSupprimer=false;
 		List<SourcePolice> sourcePolices=new ArrayList<SourcePolice>();
 		sourcePolices=sourcePoliceRepository.findAllSourcePrelevement(estSupprimer);
@@ -225,12 +257,12 @@ public class UtilisateurController {
 		model.addAttribute("formSourceGenre", "formSourceGenre");
 		model.addAttribute("sourcePolice", "sourcePolice");
 		model.addAttribute("menuNavigation", "menuNavigation");
-        return "espaceUtilisateur";
-    }
+       return "espaceUtilisateur";
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/contenuAccueilUtilisateur" }, method = RequestMethod.GET)
-    public String contenuAccueilUtilisateur(Model model, HttpSession session) { 
+   public String contenuAccueilUtilisateur(Model model, HttpSession session) { 
 		
 		String resultat=null;
 		try {
@@ -249,7 +281,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
 		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim();
 		Utilisateur utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
 		Agence agence=utilisateur.getIdAgence();
@@ -260,13 +292,13 @@ public class UtilisateurController {
 		model.addAttribute("identifiantSession", identifiantSession);
 		model.addAttribute("contenuAccueilUtilisateur", "contenuAccueilUtilisateur");
 		model.addAttribute("menuNavigation", "menuNavigation");
-        return "utilisateur/accueilUtilisateur";	
-    }
+       return "utilisateur/accueilUtilisateur";	
+   }
 	
 	
 	@Transactional
 	@RequestMapping(value = {"/accueilUtilisateurLien" }, method = RequestMethod.GET)
-    public String accueilUtilisateur(Model model, HttpSession session) {  
+   public String accueilUtilisateur(Model model, HttpSession session) {  
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -284,7 +316,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
 		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		String identifiantConnecte=session.getAttribute("identifiantSession").toString().trim();
 		Utilisateur utilisateur=utilisateurRepository.findByIdentifiant(identifiantConnecte);
 		Agence agence=utilisateur.getIdAgence();
@@ -296,12 +328,12 @@ public class UtilisateurController {
 		model.addAttribute("accueilUtilisateurMessage", "accueilUtilisateurMessage");
 		model.addAttribute("identifiantSession", identifiantSession);
 		model.addAttribute("menuNavigation", "menuNavigation");
-        return "utilisateur/accueilUtilisateur";
-    }
+       return "utilisateur/accueilUtilisateur";
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/listeModuleUtilisateur" }, method = RequestMethod.GET)
-    public String listeModuleUtilisateur(Model model, HttpSession session) {   
+   public String listeModuleUtilisateur(Model model, HttpSession session) {   
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -328,11 +360,174 @@ public class UtilisateurController {
 			return "pageErreur";
 		}
 			
-    }
+   }
+	
+	
+	
+	@Transactional
+	@RequestMapping(value = {"/accueil" }, method = RequestMethod.POST)
+   public String accueil(Model model,  @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
+		model.addAttribute("accueilAdmin", "accueilAdmin");
+		String identifiant=utilisateur.getIdentifiant().trim();
+		String identifiantSession=null;
+		String password=utilisateur.getPassword().trim();
+		Utilisateur utilisateurParIdentifiant=null;
+		Utilisateur utilisateurParPassword=null;
+		String utilisateurPassword=null;
+		
+		AaronUtilisateur aaronUtilisateurIdentifiant=null;
+		AaronUtilisateur aaronUtilisateurPassword=null;
+		
+		try {
+//			String connecter=session.getAttribute("connecter").toString();
+			Integer connect=session.getMaxInactiveInterval();
+			 Date accessed = new Date(session.getMaxInactiveInterval());
+			System.out.println("  Temps : "+connect );
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+
+		if( identifiant != null && identifiant.length() > 0  && password != null && password.length() > 0 ) {
+			
+			utilisateurParIdentifiant=utilisateurRepository.findByIdentifiant(identifiant);	
+			utilisateurParPassword=utilisateurRepository.findByPassword(password);
+			
+			aaronUtilisateurIdentifiant=aaronUtilisateurRepository.findByIdentifiant(identifiant);
+			aaronUtilisateurPassword=aaronUtilisateurRepository.findByPassword(password);	
+			
+			if(aaronUtilisateurIdentifiant!=null && aaronUtilisateurPassword!=null ) {
+				 session.setAttribute("identifiantSession", utilisateur.getIdentifiant().trim());
+			     String aaronFonction=aaronUtilisateurIdentifiant.getFonction();
+			     identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+				 model.addAttribute("identifiantSession", identifiantSession);
+			     if(aaronFonction.equals(aaronAdministrateur)) {
+			    	    session.setAttribute("connecter", "connecter");
+			    	 	model.addAttribute("cheminAccueil", "Accueil >");
+						model.addAttribute("accueilAdmin", "accueilAdmin");
+						model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+						model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+						model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+						model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+						model.addAttribute("gestionMenuAgent", "gestionMenuAgent"); 
+						model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+						model.addAttribute("gestionConnexion", "gestionConnexion");
+						model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
+						model.addAttribute("accueilDeux", "accueilDeux");
+						session.setAttribute("identifiantSession", utilisateur.getIdentifiant().trim());
+						identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+						model.addAttribute("identifiantSession", identifiantSession);					
+						return "aaron/espaceUtilisateur";
+			    	 
+			     }else if(aaronFonction.equals(aaronUniteTechnique)) {
+			    	    session.setAttribute("connecter", "connecter");
+			    	 	model.addAttribute("cheminAccueil", "Accueil >");
+//						gestion Menu 			
+						model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+						model.addAttribute("accueilUniteTechnique", "accueilUniteTechnique");	
+						model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");	
+						model.addAttribute("accueilUniteTechniqueMessage", "accueilUniteTechniqueMessage");	
+						return "aaron/espaceUtilisateur";
+			    	 		    	 
+			     }else {
+			    	   return "redirect:/aaronAccueilUtilisateurLien";
+			    	 
+			     }		
+			}
+			
+			
+			if(utilisateurParIdentifiant != null && utilisateurParPassword !=null ) {					
+				utilisateurPassword=utilisateurParIdentifiant.getPassword();			
+				String passNouveau=utilisateurPassword.trim();
+							
+				if( passNouveau.equals(password) ) {
+					 session.setAttribute("identifiantSession", utilisateur.getIdentifiant().trim());	
+					 identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+					 model.addAttribute("identifiantSession", identifiantSession);
+					 String fonction=utilisateurRepository.fonctionUtilisateur(identifiantSession);
+//					
+					 if(fonction.equals(fonctionAdministrateur)   ) {
+						 session.setAttribute("connecter", "connecter");
+						 model.addAttribute("cheminAccueil", "Accueil >");
+						 model.addAttribute("accueilAdmin", "accueilAdmin");
+//						 gestion Menu 
+						 model.addAttribute("gestionConnexion", "gestionConnexion");
+						 model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
+						 model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
+						 model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
+						 model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
+						 model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
+						 model.addAttribute("gestionMenuAgent", "gestionMenuAgent"); 
+						 model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
+						 model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
+						 model.addAttribute("accueilDeux", "accueilDeux");
+						 
+						 Date dateConnexion=new Date();
+						 SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy 'à' HH:mm:ss ");					
+						 String tempsConnexion=sdf.format( dateConnexion);
+						 InetAddress address=null;
+						 String adresseIP=null;
+						 try {
+							 address = InetAddress.getLocalHost();
+							 adresseIP= address.getHostAddress();
+						} catch (UnknownHostException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}						 
+						Utilisateur idUtilisateur=utilisateurRepository.findByIdentifiant(identifiantSession); 
+						Connexion conn=new Connexion(tempsConnexion,adresseIP,idUtilisateur);
+						connexionRepository.save(conn);
+						
+						 return "espaceUtilisateur";
+					 }
+					 else if(fonction.equals(fonctionUniteTechnique)  ) {
+						
+						 model.addAttribute("cheminAccueil", "Accueil >");
+//							gestion Menu 			
+							model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
+							model.addAttribute("accueilUniteTechnique", "accueilUniteTechnique");	
+							model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");	
+							model.addAttribute("accueilUniteTechniqueMessage", "accueilUniteTechniqueMessage");	
+						
+							return "espaceUtilisateur";
+						 
+					 }
+					 else if( fonction.equals(fonctionSecretaire)  ) {
+						 session.setAttribute("connecter", "connecter");
+						
+						 return "redirect:/accueilUtilisateurLien";
+					 }	
+					 else if( fonction.equals(fonctionChefAgence) ) {
+						 session.setAttribute("connecter", "connecter");
+					
+						 return "redirect:/accueilUtilisateurLien";
+					 }	
+//					 else if( fonction.equals(aaronChefAgence)  && utilisateurParPassword.getConnecter()==false) {
+//						 utilisateurParPassword.setConnecter(true);
+//						 return "redirect:/accueilUtilisateurLien";
+//					 }	
+//					 	
+				} 
+				
+				
+				
+			}
+		}		 
+		 model.addAttribute("hasError", " Identifiant ou mot de passe incorrect");
+		 model.addAttribute("password", password);
+		 model.addAttribute("identifiant", identifiant);
+       return "authentification";
+   }
+	
+	
+	
+	
+	
 	
 	@Transactional
 	@RequestMapping(value = {"/modulesUtilisateur" }, method = RequestMethod.GET)
-    public String modulesUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
+   public String modulesUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -359,72 +554,13 @@ public class UtilisateurController {
 		else {
 			return "pageErreur";
 		}    
-    }
+   }
 	
-	@Transactional
-	@RequestMapping(value = {"/accueil" }, method = RequestMethod.POST)
-    public String accueil(Model model,  @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session) { 
-		model.addAttribute("accueilAdmin", "accueilAdmin");
-		String identifiant=utilisateur.getIdentifiant().trim();
-		String identifiantSession=null;
-		String password=utilisateur.getPassword().trim();
-		Utilisateur utilisateurParIdentifiant=null;
-		String utilisateurPassword=null;
-		
-
-		if( identifiant != null && identifiant.length() > 0  && password != null && password.length() > 0 ) {
-			utilisateurParIdentifiant=utilisateurRepository.findByIdentifiant(identifiant);			
-			if(utilisateurParIdentifiant != null  ) {					
-				utilisateurPassword=utilisateurParIdentifiant.getPassword();			
-				String passNouveau=utilisateurPassword.trim();
-				if( passNouveau.equals(password) ) {
-					 session.setAttribute("identifiantSession", utilisateur.getIdentifiant().trim());	
-					 identifiantSession=session.getAttribute("identifiantSession").toString().trim();
-					 model.addAttribute("identifiantSession", identifiantSession);
-					 String fonction=utilisateurRepository.fonctionUtilisateur(identifiantSession);
-					 if(fonction.equals(fonctionAdministrateur)) {
-						 model.addAttribute("cheminAccueil", "Accueil >");
-						 model.addAttribute("accueilAdmin", "accueilAdmin");
-//							gestion Menu 
-							model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
-							model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
-							model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-							model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
-							model.addAttribute("gestionMenuAgence", "gestionMenuAgence");
-							model.addAttribute("gestionMenuAgent", "gestionMenuAgent"); 
-							model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
-							model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
-							model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-							model.addAttribute("accueilDeux", "accueilDeux");
-						 
-						 return "espaceUtilisateur";
-					 }
-					 else if(fonction.equals(fonctionUniteTechnique)) {
-						 model.addAttribute("cheminAccueil", "Accueil >");
-//							gestion Menu 			
-							model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");
-							model.addAttribute("accueilUniteTechnique", "accueilUniteTechnique");	
-							model.addAttribute("accueilDeuxUniteTechnique", "accueilDeuxUniteTechnique");	
-							model.addAttribute("accueilUniteTechniqueMessage", "accueilUniteTechniqueMessage");	
-						 return "espaceUtilisateur";
-						 
-					 }
-					 else {
-						 return "redirect:/accueilUtilisateurLien";
-					 }			 
-					 	
-				} 
-			}
-		}		 
-		 model.addAttribute("hasError", " Identifiant ou mot de passe incorrect");
-		 model.addAttribute("password", password);
-		 model.addAttribute("identifiant", identifiant);
-        return "authentification";
-    }
+	
 	
 	@Transactional
 	@RequestMapping(value = {"/accueilDeux" }, method = RequestMethod.GET)
-    public String accueilDeux(Model model, HttpSession session) { 
+   public String accueilDeux(Model model, HttpSession session) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -442,6 +578,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		model.addAttribute("accueilDeux", "accueilDeux");
 		model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");	
 		model.addAttribute("messageAccueilEspaceAdmin", "messageAccueilEspaceAdmin");
@@ -456,12 +593,12 @@ public class UtilisateurController {
 		else {
 			return "pageErreur";
 		}
-        
-    }
+       
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/listeUtilisateur" }, method = RequestMethod.GET)
-    public String listeUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionn, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
+   public String listeUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionn, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -483,6 +620,7 @@ public class UtilisateurController {
 		model.addAttribute("titre", "Gestion des utilisateurs");
 		model.addAttribute("cheminGestionUtilisateur", "Gestion des utilisateurs >");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		int page = 0;
 		int size = 100;			 
 		pageable = PageRequest.of(page, size);
@@ -500,11 +638,11 @@ public class UtilisateurController {
 		
 			return resultat;
 		
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/formulaireAjoutUtilisateur" }, method = RequestMethod.GET)
-    public String formulaireAjoutUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
+   public String formulaireAjoutUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -522,7 +660,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		Boolean estSupprimer=false;
 		List<String> agences=new ArrayList<String>();
 		agences=agenceRepository.findAllNomDirects();
@@ -549,11 +687,11 @@ public class UtilisateurController {
 			return "espaceUtilisateur";
 		}
 			return "pageErreur";	
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/ajoutUtilisateur" }, method = RequestMethod.POST)
-    public String ajoutUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, @ModelAttribute("utilisateurDto") UtilisateurDto utilisateurDto, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
+   public String ajoutUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, @ModelAttribute("utilisateurDto") UtilisateurDto utilisateurDto, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -574,8 +712,10 @@ public class UtilisateurController {
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
 		model.addAttribute("cheminAjouterUtilisateur", "Ajouter Utilisateur >");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		Utilisateur utilisateurSave=null;
+		Utilisateur utilisateurPassword=null;
+		AaronUtilisateur utilisateurAron=null;
 		String identifiant=utilisateurDto.getIdentifiant().trim();
 		String password=utilisateurDto.getPassword().trim();
 		String nomEtPrenom=utilisateurDto.getNomEtPrenom().trim();
@@ -591,8 +731,11 @@ public class UtilisateurController {
 		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		
 		if( identifiant != null && identifiant.length() > 0 && identifiant.length()<=10 && password != null && password.length() > 0 && password.length()>4 && nomEtPrenom != null && nomEtPrenom.length() > 0 && fonction != null && fonction.length() > 0 ) {
+			
 			utilisateurSave=utilisateurRepository.findByIdentifiant(identifiant);
-				if(utilisateurSave == null) {
+			utilisateurPassword=utilisateurRepository.findByPassword(password);
+			utilisateurAron=aaronUtilisateurRepository.findByPassword(password);
+				if(utilisateurSave == null  && utilisateurPassword==null && utilisateurAron==null) {
 					String status="A";
 					utilisateur.setStatus(status);
 					utilisateur.setFonction(fonction);
@@ -615,7 +758,12 @@ public class UtilisateurController {
 						return "espaceUtilisateur";
 				}				
 		}
-		
+		if(utilisateurSave!=null ) {
+			model.addAttribute("identifiantErreur", "Identifiant déjà existant.");
+		}
+		if(utilisateurPassword!=null || utilisateurAron!=null ) {
+			model.addAttribute("passwordErreur", " Mot de passe déjà existant.");
+		}
 		model.addAttribute("formErreur", "formErreur");
 		if(identifiant==null || identifiant.length()==0 || identifiant.length()>10) {
 			model.addAttribute("identifiantErreur", "Identifiant invalide");
@@ -639,18 +787,14 @@ public class UtilisateurController {
 			model.addAttribute("afficheTableau", "afficheTableau");
 			model.addAttribute("utilisateurs", utilisateurs);
 			model.addAttribute("formulaireAjoutUtil", "formulaireAjoutUtil");
-			if(identifiantSession.length()>0) {
-				return "espaceUtilisateur";
-			}
-			else {
-				return "pageErreur";
-			}
-        
-    }
+		
+				return "espaceUtilisateur";    
+   }
+	
 	
 	@Transactional
 	@RequestMapping(value = {"/numeroModifUtilisateur" }, method = RequestMethod.GET)
-    public String numeroModifUtilisateur(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
+   public String numeroModifUtilisateur(Model model, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -672,7 +816,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("formNumeroModifUtil", "formNumeroModifUtil");
@@ -693,11 +837,11 @@ public class UtilisateurController {
 		else {
 			 return "pageErreur";
 		}     
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/formModifDonneeUtil" }, method = RequestMethod.POST)
-    public String formModifDonneeUtil(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
+   public String formModifDonneeUtil(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -725,7 +869,7 @@ public class UtilisateurController {
 		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 		String identifiant=utilisateur.getIdentifiant().trim();
 		session.setAttribute("identifiantCache", utilisateur.getIdentifiant());
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiant);
 			
 		model.addAttribute("afficheTableau", "afficheTableau");
@@ -761,11 +905,11 @@ public class UtilisateurController {
 		else {
 			return "pageErreur";
 		}			
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/formModifDonneeUtilV2" }, method = RequestMethod.GET)
-    public String formModifDonneeUtilV2(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionUtilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
+   public String formModifDonneeUtilV2(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionUtilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -790,7 +934,7 @@ public class UtilisateurController {
 		model.addAttribute("titre", "Gestion des utilisateurs");
 		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
 		model.addAttribute("cheminModifierUtilisateur", "Modifier Utilisateur >");
-	
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		String identifiant=session.getAttribute("identifiantCache").toString().trim();
 		sessionUtilisateur.setAttribute("identifiant", utilisateur.getIdentifiant());
 		
@@ -830,13 +974,13 @@ public class UtilisateurController {
 		else {
 			return "pageErreur";
 		}			
-    }
+   }
 	
 	
 	
 	@Transactional
 	@RequestMapping(value = {"/messageUtilisateurNonExistant" }, method = RequestMethod.GET)
-    public String messageUtilisateurNonExistant(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {  
+   public String messageUtilisateurNonExistant(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {  
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -857,7 +1001,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("messageUtilisateurNonExistant", "messageUtilisateurNonExistant");
@@ -874,12 +1018,12 @@ public class UtilisateurController {
 		else {
 			return "pageErreur";
 		}
-        
-    }
+       
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/rechercheUtilisateur" }, method = RequestMethod.GET)
-    public String rechercheUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
+   public String rechercheUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -900,7 +1044,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		model.addAttribute("ajout", "ajout");
 		model.addAttribute("listeUtilisateur", "listeUtilisateur");
 		model.addAttribute("rechercheUtilisateur", "rechercheUtilisateur");
@@ -916,11 +1060,11 @@ public class UtilisateurController {
 		Page<Utilisateur> utilisateurs=utilisateurRepository.findAllUtilisateurPage(pageable);
 
 			return "espaceUtilisateur";
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/succesRecherche" }, method = RequestMethod.POST)
-    public String succesRecherche(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
+   public String succesRecherche(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -941,12 +1085,11 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantAffiche);
 		String identifiant=utilisateur.getIdentifiant().trim();
 		Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiant);
-		System.out.println(" Utilisateur " + utilisateurRecherche);
 		if( utilisateurRecherche == null) {
 			if(identifiantSession.length()>0)
 				return "redirect:/messageUtilisateurNonRetrouver";  
@@ -963,11 +1106,11 @@ public class UtilisateurController {
 		model.addAttribute("utilisateurs", utilisateurs);	
 	
 	    return "espaceUtilisateur";		
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/messageUtilisateurNonRetrouver" }, method = RequestMethod.GET)
-    public String messageUtilisateurNonRetrouver(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
+   public String messageUtilisateurNonRetrouver(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) { 
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -988,7 +1131,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("identifiantSession", identifiantAffiche);
 		model.addAttribute("ajout", "ajout");
@@ -1001,11 +1144,11 @@ public class UtilisateurController {
 		model.addAttribute("utilisateurs", utilisateurs);
 	
 			return "espaceUtilisateur";	     
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/supprimerUtilisateur" }, method = RequestMethod.GET)
-    public String supprimerUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
+   public String supprimerUtilisateur(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -1026,7 +1169,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("titre", "Gestion des utilisateurs");
@@ -1047,11 +1190,11 @@ public class UtilisateurController {
 		else {
 			return "pageErreur";
 		}     
-    }
+   }
 	
 	@Transactional
 	@RequestMapping(value = {"/succesSuppression" }, method = RequestMethod.POST)
-    public String SuccesSuppression(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
+   public String SuccesSuppression(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -1076,7 +1219,7 @@ public class UtilisateurController {
 		model.addAttribute("titre", "Gestion des utilisateurs");
 		model.addAttribute("cheminGestionUtilisateur", "Gestion Utilisateur >");
 		model.addAttribute("cheminSupprimerUtilisateur", "Supprimer Utilisateur >");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		String identifiant=utilisateur.getIdentifiant().trim();
 		Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiant);
 		String identifiantAffiche=session.getAttribute("identifiantSession").toString().trim();
@@ -1104,13 +1247,13 @@ public class UtilisateurController {
 		model.addAttribute("utilisateurs",utilisateurs);		
 		
 			return "espaceUtilisateur";		
-    }
+   }
 	
 	
 	
 	@Transactional
 	@RequestMapping(value = {"/resultatModif"}, method = RequestMethod.POST)
-    public String resultatModif(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur,  @ModelAttribute("utilisateurDto") UtilisateurDto utilisateurDto,  HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {  
+   public String resultatModif(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur,  @ModelAttribute("utilisateurDto") UtilisateurDto utilisateurDto,  HttpSession session, @PageableDefault(size = 100) Pageable pageable, HttpServletRequest request) {  
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -1131,7 +1274,7 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-		
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		model.addAttribute("identifiantSession", identifiantSession);
 		String identifiant=utilisateurDto.getIdentifiant().trim();
 		String fonction=utilisateurDto.getFonction().trim();
@@ -1170,11 +1313,11 @@ public class UtilisateurController {
 					///////
 					if(utilisateurParNomPrenom==null && utilisateurParIdentifiant==null ) {
 						
-//							model.addAttribute("formErreur", "formErreur");
-//							Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiantSession);
-//							model.addAttribute("utilisateurRecherche", utilisateurRecherche);
-//							model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
-//							model.addAttribute("identifiantErreur", "Identifiant utilisateur déjà existant");
+							model.addAttribute("formErreur", "formErreur");
+							Utilisateur utilisateurRecherche=utilisateurRepository.findByIdentifiant(identifiantSession);
+							model.addAttribute("utilisateurRecherche", utilisateurRecherche);
+							model.addAttribute("formModifDonneeUtil", "formModifDonneeUtil");
+							model.addAttribute("identifiantErreur", "Identifiant utilisateur déjà existant");
 							Agence agence=agenceRepository.findAgenceByCodeDirect(nomAgence);	
 							model.addAttribute("succes", "succes"); 
 							utilisateurSave.setIdAgence(agence);
@@ -1223,12 +1366,12 @@ public class UtilisateurController {
 		}		
 			return "espaceUtilisateur";
 		
-    }
+   }
 	
 	
 	@Transactional
 	@RequestMapping(value = {"/resultatModifV2" }, method = RequestMethod.POST)
-    public String resultatModifV2(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionUtilisateur, HttpSession session) {  
+   public String resultatModifV2(Model model, @ModelAttribute("utilisateur") Utilisateur utilisateur, HttpSession sessionUtilisateur, HttpSession session) {  
 		String resultat=null;
 		try {
 			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
@@ -1246,18 +1389,18 @@ public class UtilisateurController {
 		model.addAttribute("gestionMenuAgent", "gestionMenuAgent");
 		model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 		model.addAttribute("accueilDeux", "accueilDeux");
-	
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		return "espaceUtilisateur";
 	}
 	
 	
 	@Transactional
 	@RequestMapping(value = "/listeUtilisateurs")
-    public ModelAndView listeUtilisateursPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="100") int size,  @ModelAttribute("utilisateur") Utilisateur utilisateur, Model model, HttpSession session, HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
-       
-        PageRequest pageable = PageRequest.of(page-1, size);
-        Page<Utilisateur> utilisateurPage = utilisateurRepository.findAllUtilisateurPage(pageable);
+   public ModelAndView listeUtilisateursPageByPage(@RequestParam(name="page", defaultValue="0") int page,@RequestParam(name="size", defaultValue="100") int size,  @ModelAttribute("utilisateur") Utilisateur utilisateur, Model model, HttpSession session, HttpServletRequest request) {
+       ModelAndView modelAndView = new ModelAndView("espaceUtilisateur");
+      
+       PageRequest pageable = PageRequest.of(page-1, size);
+       Page<Utilisateur> utilisateurPage = utilisateurRepository.findAllUtilisateurPage(pageable);
 
 		model.addAttribute("utilisateurs", utilisateurPage);
 				
@@ -1281,11 +1424,8 @@ public class UtilisateurController {
 		model.addAttribute("menuNavigation", "menuNavigation");
 		model.addAttribute("afficheTableau", "afficheTableau");
 		
-        return modelAndView;
+       return modelAndView;
 	}	
 	
-	
-	
-	
-	
+
 }

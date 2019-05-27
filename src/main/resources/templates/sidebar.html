@@ -47,6 +47,10 @@
 						<a href="ajoutSequencePolice">Sequence Police</a>
 					</li>	
 					
+					<li th:if="${gestionConnexion}">
+						<a href="connexionUtilisateur">Connexion des utilisateurs</a>
+					</li>	
+					
 <!-- 					<li><a href="modulesUtilisateur">Gestion des Accès</a></li> -->
 <!-- 					<li><a href="sourcePolice"> Source de prélèvement </a></li>					 -->
 
@@ -77,7 +81,7 @@
                		   <ul class="dropdown-menu compte-menu">
  							<li class="dropdown-header"><span>Utilisateur actuel</span> </li>
  							<li class="divider"></li>
- 							<li><a href="#">Editer votre compte</a></li> 
+ 							<li><a href="gestionEditionCompte">Editer votre compte</a></li> 
  							<li><a href="deconnexion">Déconnexion</a></li>				
  			  		   </ul> 			 		      
            		</div>		  

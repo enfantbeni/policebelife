@@ -1,12 +1,5 @@
 package com.belife.policemanager.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,11 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.belife.policemanager.model.dto.AgentDto;
-import com.belife.policemanager.model.entity.Agence;
 import com.belife.policemanager.model.entity.AgenceBanque;
-import com.belife.policemanager.model.entity.Agent;
-import com.belife.policemanager.model.entity.Banque;
 import com.belife.policemanager.model.entity.Societe;
 import com.belife.policemanager.model.repository.AgenceRepository;
 import com.belife.policemanager.model.repository.BanqueRepository;
@@ -89,7 +77,7 @@ public class SocieteController {
 			model.addAttribute("cheminGestionSociete", " Sociéte >");
 			model.addAttribute("titre", " Sociétés ");
 			model.addAttribute("identifiantSession", identifiantSession);
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			Page<Societe> societesPage =societeRepository.findAllSocietePage(pageable);
 			model.addAttribute("societes", societesPage);
 						
@@ -108,7 +96,7 @@ public class SocieteController {
 	        Page<Societe> societePage = societeRepository.findAllSocietePage(pageable);
 
 			model.addAttribute("societes", societePage);
-					
+			model.addAttribute("gestionConnexion", "gestionConnexion");		
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -144,6 +132,7 @@ public class SocieteController {
 				return resultat;
 			}
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -186,6 +175,7 @@ public class SocieteController {
 				return resultat;
 			}
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");

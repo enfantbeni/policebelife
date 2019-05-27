@@ -98,7 +98,6 @@ public class SequencePoliceController {
 			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
 			 model.addAttribute("sequencePolices", seqPolicePage);	
 			
-			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence >");
 			model.addAttribute("titre", "Gestion de Sequence");
@@ -240,7 +239,7 @@ public class SequencePoliceController {
 		     PageRequest pageable = PageRequest.of(page, size);
 			String seq=sequenceDto.getSeq().trim();	
 			String nomAgence=sequenceDto.getNomAgence().trim();
-			
+		
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminAjouterSequencePolice", "Positionner une Sequence >");
 			model.addAttribute("titre", " Gestion de Sequence ");
@@ -325,6 +324,7 @@ public class SequencePoliceController {
 		     PageRequest pageable = PageRequest.of(page, size);
 			 Page<SequencePolice> seqPolicePage = sequencePoliceRepository.findAllSequencePolices(estSupprimer, pageable);
 			 List<String> sequences=sequenceRepository.findAllSeq();
+			
 			 model.addAttribute("sequences", sequences);
 			 model.addAttribute("sequencePolices", seqPolicePage);
 			model.addAttribute("cheminAccueil", "Accueil >");
@@ -360,6 +360,7 @@ public class SequencePoliceController {
 			model.addAttribute("cheminGestionSequencePolice", "Gestion Sequence Police >");
 			model.addAttribute("cheminAjouterSequencePolice", "Ajouter une Sequence Police >");
 			model.addAttribute("titre", " Gestion de Sequence ");
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			boolean estSupprimer=false;
 			List<SequencePolice> sequencePolices=new ArrayList<SequencePolice>();
 			List<Sequence> sequences=new ArrayList<Sequence>();
@@ -469,7 +470,7 @@ public class SequencePoliceController {
 				List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
 				List<SequenceDto> sequencesAffiche = transformerSequenceToSequenceDto(sequencesDto);
 				model.addAttribute("sequencesAffiche", sequencesAffiche);
-				
+				model.addAttribute("gestionConnexion", "gestionConnexion");
 		        return "espaceUtilisateur";	
 		    }
 	 
@@ -487,7 +488,6 @@ public class SequencePoliceController {
 				}
 				
 				String nomAgence=agence.getNomDirect();
-				
 				
 				 Boolean estSupprimer=false;
 			     List<SequenceDto> sequencesDto=new ArrayList<SequenceDto>();
@@ -519,7 +519,7 @@ public class SequencePoliceController {
 					resultat="pageErreur";
 					return resultat;
 				}
-				
+			
 				int page = 0;
 				 int size = 20;
 				 if (request.getParameter("page") != null && !request.getParameter("page").isEmpty()) {

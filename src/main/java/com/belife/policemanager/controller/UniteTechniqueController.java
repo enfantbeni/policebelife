@@ -60,7 +60,6 @@ public class UniteTechniqueController {
 			
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("titre", "Gestion des Agences");
-			Boolean estSupprimer=false;
 			
 //			gestion Menu 			
 			model.addAttribute("gestionMenuUniteTechnique", "gestionMenuUniteTechnique");

@@ -1,9 +1,5 @@
 package com.belife.policemanager.controller;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -21,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.belife.policemanager.model.dto.AgentDto;
-import com.belife.policemanager.model.entity.Agence;
-import com.belife.policemanager.model.entity.AgenceBanque;
 import com.belife.policemanager.model.entity.Agent;
 import com.belife.policemanager.model.entity.Commercial;
 import com.belife.policemanager.model.entity.Societe;
@@ -79,6 +72,7 @@ public class AgentController {
 		model.addAttribute("cheminAccueil", "Accueil >");
 		model.addAttribute("cheminGestionAgent", " Agent >");
 		model.addAttribute("titre", " Agents ");
+		model.addAttribute("gestionConnexion", "gestionConnexion");
 		String tatus="actif";		
 		model.addAttribute("identifiantSession", identifiantSession);
 		model.addAttribute("listeAgent", "listeAgent");
@@ -113,7 +107,8 @@ public class AgentController {
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgent", " Agent >");
 			model.addAttribute("titre", " Agents ");
-			String tatus="actif";		
+			String tatus="actif";	
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgent", "listeAgent");
 			model.addAttribute("gestionAgent", "gestionAgent");
@@ -135,6 +130,7 @@ public class AgentController {
 				return resultat;
 			}
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -189,7 +185,7 @@ public class AgentController {
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
 			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			String codeAgent=session.getAttribute("codeAgentCache").toString().trim();
 			model.addAttribute("codeAgent", codeAgent);
 			

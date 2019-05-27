@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Changer mot de passe</title>
+</head>
+<body>
+<!--  	<form th:action="@{/resultatChangerMotDePasse}" th:object="${Agence}" class="col-md-12 col-xs-12 formulaireGestionAgence" th:fragment="changerMotDePasse" method="POST"> -->
+      <form th:action="@{/resultatChangerMotDePasse}" th:object="${Agence}" class="col-md-12 col-xs-12 formulaireGestionAgence" th:fragment="changerMotDePasse" method="POST">
+      
+             <div class="row labelAjout">
+                  <h2>Changer de mot de passe</h2>
+             </div>
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-4 erreur"  th:if="${formErreurAgence}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>   
+	                     	  <li  th:if="${codeAgenceErreur}" th:utext="${codeAgenceErreur}"> </li>
+	                           <li  th:if="${codeDirectErreur}" th:utext="${codeDirectErreur}"> </li>              						   
+							   <li  th:if="${nomDirectErreur}" th:utext="${nomDirectErreur}"> </li>
+							                         	   
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-4"></div>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+              
+              
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Ancien mot de passe : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input type="text" required name="codeAgence" class="form-control" maxlength="40" />					
+             	 </div> 
+             	 <div class="col-md-4 col-xs-4"> </div>  
+             	          
+             </div>
+             
+              <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Nouveau mot de passe : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input type="text" required name="codeDirect" class="form-control" maxlength="40"/>					
+             	 </div> 
+             	 <div class="col-md-4 col-xs-4"> </div> 
+             	          
+             </div>
+                
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Confirmer mot de passe : </label>
+             	 </div>
+             	 
+             	 <div class="col-md-4 col-xs-4">             	    
+             	    <input type="text" required name="nomDirect" class="form-control" maxlength="40" />					
+             	 </div>  
+             	 <div class="col-md-4 col-xs-4"> </div>       
+             </div> 
+                
+             <input type="hidden" name="estSupprimer" />
+                                  
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+</body>
+</html>

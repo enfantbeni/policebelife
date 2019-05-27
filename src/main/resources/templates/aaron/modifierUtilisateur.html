@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Insert title here</title>
+</head>
+<body>
+    
+    <div class="row " th:fragment="modifierUtilisateur">
+           
+           <div class="col-lg-12 formulaireModif" th:if="${formulaireModif}">
+		       <div  th:replace="formulaireModifUtilisateur :: modifierUtilisateur" ></div>
+		    </div>
+		    
+		    
+		    
+		    
+		    <div class="col-lg-12 listeUser" >
+		       <h2>Liste des utilisateurs</h2>
+		       <table width="100%" border="0" cellspacing="1" cellpadding="2">
+                    <tr class="entete-tableau"><th>   id</th><th> Nom et prenom </th><th> Identifiant </th><th> Fonction </th></tr>
+					<tr th:each ="utilisateur : ${utilisateurs}">
+  						<td width="100" th:utext="${utilisateur.estSupprimer}"></td>
+  						<td width="100" th:utext="${utilisateur.nomEtPrenom}" ></td>
+  						<td width="100" th:utext="${utilisateur.identifiant}"></td>
+  						<td width="100" th:utext="${utilisateur.fonction}"></td>
+					</tr>
+					
+			  </table>
+		    </div>
+     </div>
+</body>
+</html>

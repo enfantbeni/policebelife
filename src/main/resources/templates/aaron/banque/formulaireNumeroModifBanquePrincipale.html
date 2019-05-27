@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="utf-8">
+<title> Formulaire numero modification Banque</title>
+</head>
+<body>
+
+		<div class="row " th:fragment="formulaireNumeroModifBanquePrincipale">
+           
+            <form th:action="@{/aaronFormulaireNumeroModifBanquePrincipale}" th:object="${BanquePrincipale}" class="col-md-12 col-xs-12" method="POST">
+             <div class="row labelAjout">
+                  <h2>Modifier une Banque par son code </h2>
+             </div>
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-6 erreur"  th:if="${formErreurBanquePrincipale}" > 
+				  	 <div class="alert alert-danger">
+	
+	                     <ul>                        
+							   <li  th:if="${nomBanquePrincipaleErreur}" th:utext="${nomBanquePrincipaleErreur}"> </li>
+							   <li  th:if="${codeBanquePrincipaleErreur}" th:utext="${codeBanquePrincipaleErreur}"> </li>
+							 
+							                         	   
+	                     </ul>
+	                     
+	                  </div> 
+	             </div>
+	             <div class="col-lg-2"></div>
+             </div>
+             
+                        
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 np">
+                  	<label> Code Banque : </label>
+             	 </div>
+             	 <div class="col-md-4 col-xs-4">
+                  	<input type="text" name="codeBanque" required maxlength="20" class="form-control" data-th-value="${codeBanque}"  autocomplete="off"/>
+             	 </div>           
+             </div>  
+             <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-4 col-xs-4">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>  
+             	 <div class="col-md-4 col-xs-2">
+                  	<label>  </label>
+             	 </div>         
+             </div> 
+             
+                              
+          </form>        
+           
+           
+     </div>
+
+</body>
+</html>

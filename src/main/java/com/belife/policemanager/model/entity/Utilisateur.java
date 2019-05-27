@@ -35,6 +35,8 @@ private String password;
 private String status;
 @Column(name = "dateCreation")
 private Date dateCreation;
+
+
 @OneToMany(targetEntity=com.belife.policemanager.model.entity.UtilisateurRoles.class, mappedBy = "idRoles")
 List<Roles> roles;
 @ManyToOne
@@ -134,6 +136,7 @@ public String getStatus() {
 public void setStatus(String status) {
 	this.status = status;
 }
+
 
 
 

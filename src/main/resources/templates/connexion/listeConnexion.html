@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head  >
+<meta charset="utf-8">
+<title>Liste des connexion</title>
+</head>
+<body>
+
+	<div class="col-lg-12 listeSourcePrelevement" th:fragment="listeConnexion"  >
+	    <h2> Liste des connexions </h2>
+		<table width="100%" border="0" cellspacing="1" cellpadding="2" id="tableUtilisateur" class="table-bordered table">
+                    <tr class="entete-tableau"><th style="padding-left:10px">  Nom utilisateur </th><th> Date connexion </th> <th> Adresse machine </th> </tr>
+					<tr th:each ="connexionUtilisateur,c : ${connUtilisateurs}"> 
+<!-- 					    <td  width="100" th:utext="${connUtilisateurs.size*(connUtilisateurs.number)+c.index+1}" style="padding-left:10px" ></td>  									 -->
+  						<td  width="100" th:utext="${connexionUtilisateur.adresseMachine}" ></td> 
+  						<td  width="100" th:utext="${connexionUtilisateur.tempsConnexion}" ></td>					
+  						<td  width="100" th:utext="${connexionUtilisateur.adresseMachine}" ></td>
+  					
+					</tr>	
+		 </table>
+		 
+		 
+<!-- 		 <nav class="page" aria-label="Pagination" th:if="${agences.totalPages gt 0}">	 -->
+<!-- 		    <ul class="pagination justify-content-center font-weight-bold"> -->
+		    
+<!-- 		        <li class="page-item" th:classappend="${agences.number eq 0} ? 'disabled'"> -->
+<!-- 		            <a class="page-link" -->
+<!-- 		               th:href="@{/listeAgences?page={id}(id=${agences.number lt 2 ? 1 :agences.number})}" -->
+<!-- 		               aria-label="Previous" title="Previous Page" data-toggle="tooltip"> -->
+<!-- 		                <span aria-hidden="true">&lt; Précédent </span> -->
+<!-- 		            </a> -->
+<!-- 		        </li> -->
+		        
+<!-- 		        <li class="page-item" th:classappend="${i eq agences.number + 1} ? 'active'" th:each="i : ${#numbers.sequence( 1, agences.totalPages, 1)}"> -->
+<!-- 		            <a class="page-link" th:href="@{/listeAgences?page={id}(id=${i})}" th:text="${i}" -->
+<!-- 		               th:title="${'Page '+ i}" data-toggle="tooltip"> -->
+<!-- 		            </a> -->
+<!-- 		        </li> -->
+		        
+<!-- 		        <li class="page-item" th:classappend="${agences.number+1  eq agences.totalPages} ? 'disabled'"> -->
+<!-- 		            <a class="page-link" -->
+<!-- 		               th:href="@{/listeAgences?page={id}(id=${agences.number+1  eq agences.totalPages ?agences.number+1 :agences.number + 2})}" -->
+<!-- 		               aria-label="Next" title="Next Page" data-toggle="tooltip"> -->
+<!-- 		                <span aria-hidden="true"> Suivant &gt;</span> -->
+<!-- 		            </a> -->
+<!-- 		        </li> -->
+		        
+<!-- 		    </ul> -->
+		    
+<!-- 		</nav>	 -->
+	</div>
+</body>
+</html>

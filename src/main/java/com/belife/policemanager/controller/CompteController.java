@@ -31,8 +31,32 @@ public class CompteController {
 		model.addAttribute("gestionEditionCompte", "gestionEditionCompte");
 		model.addAttribute("identifiantSession", identifiantSession);
 		model.addAttribute("titre", " Edition Compte");
-		model.addAttribute("menuNavigation", "menuNavigation");
+//		model.addAttribute("menuNavigation", "menuNavigation");
         return "utilisateur/accueilUtilisateur";
 
 	}
+    
+    @RequestMapping(value = {"/changerMotDePasse" }, method = RequestMethod.GET)
+    public String changerMotDePasse(Model model,  HttpSession session) { 		
+		String resultat=null;
+		try {
+			identifiantSession=session.getAttribute("identifiantSession").toString().trim();
+		}
+		catch(Exception e) {
+			resultat="pageErreur";
+			return resultat;
+		}
+		
+		model.addAttribute("cheminAccueil",  "Accueil >");
+		model.addAttribute("cheminEditionCompte",  "Edition Compte >");
+		model.addAttribute("gestionEditionCompte", "gestionEditionCompte");
+		model.addAttribute("identifiantSession", identifiantSession);
+		model.addAttribute("titre", " Edition Compte");
+		model.addAttribute("changerMotDePasse", "changerMotDePasse");
+//		model.addAttribute("menuNavigation", "menuNavigation");
+        return "espaceUtilisateur";
+
+	}
+    
+    
 }

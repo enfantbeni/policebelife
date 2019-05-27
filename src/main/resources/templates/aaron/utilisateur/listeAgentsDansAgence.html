@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Liste des agents dans une agence</title>
+</head>
+<body>
+
+		
+		<div class="card"  th:fragment="listeAgentsDansAgence" >
+		  <div class="card-header">
+		    <h2> Liste des agents </h2>
+		  </div>	  
+		  <div class="card-body">
+		  
+		  
+		    	<table width="100%" border="0" cellspacing="1" cellpadding="2" class="table-bordered">
+                    <tr class="entete-tableau"><th style="padding-left:10px"> Numero </th><th> Code Agent </th> <th> Nom Agent </th></tr>
+					<tr th:each ="agent,a : ${agents}" >  															
+ 						<td style="padding-left:10px" width="100" th:utext="${agentsPage.size*(agentsPage.number)+a.index+1}"  ></td>
+  						<td  width="100" th:utext="${agent.codeAgent}" ></td>
+  						<td  width="100" th:utext="${agent.nomAgent}" ></td>				
+					</tr>					            
+		 	   </table>
+	
+		<nav class="page" aria-label="Pagination" th:if="${agentsPage.totalPages gt 0}">
+		    <ul class="pagination justify-content-center font-weight-bold">
+		        <li class="page-item" th:classappend="${agentsPage.number eq 0} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/agentsPage?page={id}(id=${agentsPage.number lt 2 ? 1 : agentsPage.number})}"
+		               aria-label="Previous" title="Previous Page" data-toggle="tooltip">
+		                <span aria-hidden="true">&lt; Précédent </span>
+		            </a>
+		        </li>
+		        <li class="page-item" th:classappend="${i eq agentsPage.number + 1} ? 'active'"
+		            th:each="i : ${#numbers.sequence( 1, agentsPage.totalPages, 1)}">
+		            <a class="page-link" th:href="@{/agentsPage?page={id}(id=${i})}" th:text="${i}"
+		               th:title="${'Page '+ i}" data-toggle="tooltip"></a>
+		        </li>
+		        <li class="page-item" th:classappend="${agentsPage.number+1  eq agentsPage.totalPages} ? 'disabled'">
+		            <a class="page-link"
+		               th:href="@{/agentsPage?page={id}(id=${agentsPage.number+1  eq agentsPage.totalPages ?agentsPage.number+1 :agentsPage.number + 2})}"
+		               aria-label="Next" title="Next Page" data-toggle="tooltip">
+		                <span aria-hidden="true"> Suivant &gt;</span>
+		            </a>
+		        </li>
+		    </ul>
+		</nav>
+		 	 
+
+
+		  </div>
+		</div>
+	
+
+
+</body>
+</html>

@@ -13,17 +13,27 @@
 	<div class="col-lg-8" >
 		<div class="row"><div class="col-lg-2 "> </div><div class="col-lg-10 sourceForm"> <h3> Modifier votre compte </h3>  </div>  </div>
 		<br><br><br><br>
-		<form  th:action="#"  th:object="${clientDto}"  method="POST" enctype="multipart/form-data" >  
-			<div class="row"><div class="col-lg-4 labelSoumission"><label>Identifiant :</label>  </div> <div class="col-lg-6 inputSoumission"> <input type="text" data-th-value="${identifiantSession}" readonly class="form-control" />  </div>  </div>
-			<div class="row">  <div class="col-lg-4 "  ></div><div  class="col-lg-8 "><img src="images/user.png" alt="img_utilisateur" WIDTH=50 HEIGHT=50 title=""></div>   </div>    
-			<div class="row"><div class="col-lg-4 labelSoumission"><label>Avatar  : </label> </div> <div class="col-lg-8 inputSoumission"> <input type="file"  />  </div>  </div>
-			<div class="row"><div class="col-lg-4 labelSoumission"><label> Nom complet  : </label></div> <div class="col-lg-6 inputSoumission"> <input type="text" required class="form-control"/>  </div>  </div>
-			<div class="row"><div class="col-lg-4 labelSoumission"><label>Adresse Email :</label>  </div> <div class="col-lg-6 inputSoumission"> <input type="email" required class="form-control"/>  </div>  </div>
-			<div class="row">
-					<div class="col-lg-4 validerSoumission"> </div>
-				    <div class="col-lg-8 "><input type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /> </div>			  		 				
-			</div>	
-		</form>
+		
+		
+		<div>
+<!-- 			<h3><a href="changerMotDePasse" title="Changer mot de passe">Changer mot de passe</a></h3> -->
+			
+			<h3><a href="#" title="Changer mot de passe">Changer mot de passe</a></h3>
+			
+		
+		</div>
+		
+<!-- 		<form  th:action="editionCompte"  th:object="${clientDto}"  method="POST"  >   -->
+<!-- 			<div class="row"><div class="col-lg-4 labelSoumission"><label>Identifiant :</label>  </div> <div class="col-lg-6 inputSoumission"> <input type="text" data-th-value="${identifiantSession}" readonly class="form-control" />  </div>  </div> -->
+<!-- 			<div class="row">  <div class="col-lg-4 "  ></div><div  class="col-lg-8 "><img src="images/user.png" alt="img_utilisateur" WIDTH=50 HEIGHT=50 title=""></div>   </div>     -->
+<!-- 			<div class="row"><div class="col-lg-4 labelSoumission"><label>Avatar  : </label> </div> <div class="col-lg-8 inputSoumission"> <input type="file"  />  </div>  </div> -->
+<!-- 			<div class="row"><div class="col-lg-4 labelSoumission"><label> Nom complet  : </label></div> <div class="col-lg-6 inputSoumission"> <input type="text" required class="form-control"/>  </div>  </div> -->
+<!-- 			<div class="row"><div class="col-lg-4 labelSoumission"><label>Adresse Email :</label>  </div> <div class="col-lg-6 inputSoumission"> <input type="email" required class="form-control"/>  </div>  </div> -->
+<!-- 			<div class="row"> -->
+<!-- 					<div class="col-lg-4 validerSoumission"> </div> -->
+<!-- 				    <div class="col-lg-8 "><input type="submit" value=" Valider "  class="btn btn-primary pullright envoi" /> </div>			  		 				 -->
+<!-- 			</div>	 -->
+<!-- 		</form> -->
 	</div>
 	
 	<div class="col-lg-2"></div>

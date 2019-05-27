@@ -68,6 +68,7 @@ public class BanquePrincipaleController {
 			int size = 50;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -113,7 +114,7 @@ public class BanquePrincipaleController {
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
 			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			
 			String status="A";
 			List <String> nomBanques=societeRepository.findAllNomSociete(status);
@@ -168,7 +169,6 @@ public class BanquePrincipaleController {
 		                if(entier!=0) {
 //							nombreZero++;
 //							estTrouver=true;
-		               System.out.println(" Nombre :"+ entier);
 		                	String chaineExtraite=null;
 							 chaineExtraite=code.substring(0,j);
 							codeAgenceBanque.add(chaineExtraite);
@@ -179,7 +179,7 @@ public class BanquePrincipaleController {
 		        }
 		             k++;
 		       }
-		             System.out.println(" Chaine extraite : " + codeAgenceBanque);
+	
 			 
 			
 //			for(int i=0; i<codeAgenceBanque.size();i++) {
@@ -301,7 +301,7 @@ public class BanquePrincipaleController {
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
 			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");	
 			String nomBanque=banque.getNomBanque().trim();
 			String codeBanque=banque.getCodeBanque().trim();
 			String status="A";
@@ -433,7 +433,7 @@ public class BanquePrincipaleController {
 				resultat="pageErreur";
 				return resultat;
 			}	
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			List <String> codeBanqueExistant=banqueRepository.findAllCodeBanque();
 			
 			List<String> codeAgenceBanque=agenceRepositoryRepository.findAllDistinctCodeAgenceBanque();
@@ -546,7 +546,7 @@ public class BanquePrincipaleController {
 			model.addAttribute("listeBanquePrincipale", "listeBanquePrincipale");
 			model.addAttribute("gestionBanquePrincipale", "gestionBanquePrincipale");
 			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			String codeBanque=banque.getCodeBanque().trim();
 			Banque banqueRecherche=banqueRepository.findBanquePrincipaleByCodeBanque(codeBanque);			
 			model.addAttribute("cheminAccueil", "Accueil >");
@@ -1113,7 +1113,7 @@ public class BanquePrincipaleController {
 		        Page<Banque> banquesPage =banqueRepository.findAllBanquePage(pageable);
 
 				model.addAttribute("banquePrincipales", banquesPage);
-						
+				model.addAttribute("gestionConnexion", "gestionConnexion");		
 				//			gestion Menu 
 				model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 				model.addAttribute("gestionMenuBanque", "gestionMenuBanque");

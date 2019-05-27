@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title> Formulaire informations Agence</title>
+</head>
+<body>
+		<form th:action="@{/aaronSequenceEtDate}" th:object="${Agence}" class="col-md-12 col-xs-12 formulaireGestionSequencePolice" th:fragment="formulaireInformationAgence" method="POST">
+             <div class="row labelAjout">
+                  <h2>Selectionner une Agence </h2>
+             </div>
+             
+             <div class="row">
+	             <div class="col-lg-4"></div>
+	             <div class="col-lg-6 " > 
+				  	<h4>Pour Voir les sequences et leur date de création pour une Agence </h4>
+	             </div>
+	             <div class="col-lg-2"></div>
+             </div>
+             
+             <input type="hidden" name="id" value=" " />
+              
+             <div class="row ajoutDonnee">
+                 <div class="col-md-4 col-xs-4 ft">
+                  	<label> Agence : </label>
+             	 </div>
+             	 
+             	 	<div class="col-md-4 col-xs-4 ">
+		             	 <select name="nomDirect" class="form-control" data-th-value="${nomAgence}" required   >                      
+					         <option  th:each="nomAgence : ${nomAgences}" th:value="${nomAgence}" th:utext="${nomAgence}" />
+					     </select>
+			      	</div> 
+             	          
+             </div>
+              
+                     
+              <div class="row">
+                 <div class="col-md-4 col-xs-4">
+                  	<label>  </label>
+             	 </div>
+             	 <div class="col-md-8 col-xs-8">
+                  	<input type="submit" value=" Valider " class="btn btn-primary pullright envoi" />
+             	 </div>           
+             </div>           
+          </form>
+
+
+</body>
+</html>

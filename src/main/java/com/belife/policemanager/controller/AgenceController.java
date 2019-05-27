@@ -1,6 +1,5 @@
 package com.belife.policemanager.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.belife.policemanager.model.entity.Agence;
-import com.belife.policemanager.model.entity.Utilisateur;
 import com.belife.policemanager.model.repository.AgenceRepository;
 import com.belife.policemanager.model.repository.BanqueRepository;
 import com.belife.policemanager.model.repository.RolesRepository;
@@ -69,6 +67,7 @@ public class AgenceController {
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("titre", "Gestion des Agences de BELIFE");
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			Boolean estSupprimer=false;
 			model.addAttribute("identifiantSession", identifiantSession);
 			model.addAttribute("listeAgence", "listeAgence");
@@ -106,6 +105,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -143,6 +143,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -158,7 +159,7 @@ public class AgenceController {
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminAjouterAgence", "Ajouter une Agence >");
 			model.addAttribute("titre", "Gestion des Agences de BELIFE ");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			
 			Agence agenceSave=null;
 			Agence nomDirectSave=null;
@@ -226,6 +227,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -238,7 +240,7 @@ public class AgenceController {
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminModifierAgence", "Modifier une Agence >");
 			model.addAttribute("titre", "Gestion des Agences de BELIFE");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("formulaireNumeroModifAgence", "formulaireNumeroModifAgence");
@@ -265,6 +267,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -279,7 +282,7 @@ public class AgenceController {
 			model.addAttribute("titre", "Gestion des Agences de BELIFE");
 			String codeDirect=agence.getCodeDirect().trim();
 			Agence agenceRecherche=agenceRepository.findAgenceByCodeDirect(codeDirect);				
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			if( agenceRecherche == null) {
 				 return "redirect:/messageAgenceNonExistante";  
 			}							
@@ -316,6 +319,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -324,7 +328,7 @@ public class AgenceController {
 			model.addAttribute("gestionMenuSociete", "gestionMenuSociete");
 			model.addAttribute("accueilDeux", "accueilDeux");
 			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			String codeAgence=agence.getCodeAgence().trim();
 			String codeDirect=agence.getCodeDirect().trim();
 			String nomDirect=agence.getNomDirect().trim();
@@ -434,6 +438,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -446,7 +451,7 @@ public class AgenceController {
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminRechercherAgence", "Rechercher une Agence >");
 			model.addAttribute("titre", "Gestion des Agences de BELIFE");
-	
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("formulaireNumeroRechercheAgence", "formulaireNumeroRechercheAgence");
@@ -473,6 +478,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -482,7 +488,7 @@ public class AgenceController {
 			model.addAttribute("accueilDeux", "accueilDeux");
 			model.addAttribute("gestionMenuAgenceBanque", "gestionMenuAgenceBanque");
 			String codeDirect=agence.getCodeDirect().trim();
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			session.setAttribute("codeAgenceCache", codeDirect);
 			Agence agenceRecherche=agenceRepository.findAgenceByCodeDirect(codeDirect);
 			if( agenceRecherche == null) {				
@@ -519,6 +525,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -535,7 +542,7 @@ public class AgenceController {
 			model.addAttribute("codeAgence", codeAgenceCache);	
 			model.addAttribute("messageAgenceNonExistante", "messageAgenceNonExistante");		
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("identifiantSession", identifiantSession);
@@ -561,6 +568,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -572,7 +580,7 @@ public class AgenceController {
 			model.addAttribute("cheminAccueil", "Accueil >");
 			model.addAttribute("cheminGestionAgence", "Gestion Agence >");
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);
 			model.addAttribute("agences", agences);
 			model.addAttribute("formulaireNumeroSupprimerAgence", "formulaireNumeroSupprimerAgence");
@@ -598,7 +606,9 @@ public class AgenceController {
 			int page = 0;
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
-//			gestion Menu 
+//			gestion Menu
+			model.addAttribute("gestionConnexion", "gestionConnexion");
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -660,9 +670,9 @@ public class AgenceController {
 			model.addAttribute("cheminSupprimerAgence", "Supprimer Agence >");
 			String codeAgenceSuppression=session.getAttribute("codeAgenceCache").toString().trim();
 			Agence agenceSuppression=agenceRepository.findAgenceByCodeDirect(codeAgenceSuppression);
-	
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			agenceRepository.save(agenceSuppression);
-					
+			model.addAttribute("gestionConnexion", "gestionConnexion");		
 			model.addAttribute("codeAgence", codeAgenceSuppression);
 			model.addAttribute("resultatSuppressionAgence", "resultatSuppressionAgence");	
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");
@@ -691,6 +701,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -707,7 +718,7 @@ public class AgenceController {
 			session.setAttribute("codeAgenceCache",codeDirect);						
 			model.addAttribute("dialog_boxAgence", "dialog_boxAgence");	
 			model.addAttribute("dialog_backgroundAgence", "dialog_backgroundAgence");				
-		
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("codeAgence", codeDirect);	
 			model.addAttribute("actionTroisBouton", "actionTroisBouton");
 		
@@ -735,6 +746,7 @@ public class AgenceController {
 			int size = 100;			 
 			pageable = PageRequest.of(page, size);
 			//gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
@@ -749,7 +761,7 @@ public class AgenceController {
 			session.removeAttribute("codeAgenceCache");
 			String codeDirect=agence.getCodeDirect();
 			Agence agenceRecherche=agenceRepository.findAgenceByCodeDirect(codeDirect);
-			
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			Page<Agence> agences =agenceRepository.findAllAgencePage(pageable);	
 			model.addAttribute("agences", agences);
 			session.setAttribute("codeAgenceCache", codeDirect);	
@@ -774,6 +786,7 @@ public class AgenceController {
 			model.addAttribute("agences", agencePage);
 					
 //			gestion Menu 
+			model.addAttribute("gestionConnexion", "gestionConnexion");
 			model.addAttribute("gestionMenuUtilisateur", "gestionMenuUtilisateur");
 			model.addAttribute("gestionMenuBanque", "gestionMenuBanque");
 			model.addAttribute("gestionMenuGuichet", "gestionMenuGuichet");
