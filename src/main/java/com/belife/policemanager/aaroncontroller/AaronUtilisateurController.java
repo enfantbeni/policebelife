@@ -294,6 +294,7 @@ public class AaronUtilisateurController {
 		AaronUtilisateur utilisateur=aaronUtilisateurRepository.findByIdentifiant(identifiantConnecte);
 		AaronAgence agence=utilisateur.getIdAgence();
 		String nomAgence=agence.getNomDirect();
+		
 		model.addAttribute("nomAgence", nomAgence);
 		session.setAttribute("nomAgenceActif", nomAgence);
 		model.addAttribute("cheminAccueil", "Accueil >");
